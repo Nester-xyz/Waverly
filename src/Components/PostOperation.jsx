@@ -70,7 +70,7 @@ const PostOperation = ({ submit, setSubmit }) => {
       const request = {
         UpdaterPublicKeyBase58Check: pub_key,
         BodyObj: {
-          Body: bodyText,
+          Body: `${bodyText} \n\n Posted via @waverlyapp`,
           VideoURLs: [],
           ImageURLs: imgURLar,
         },
@@ -113,23 +113,20 @@ const PostOperation = ({ submit, setSubmit }) => {
             onChange={(e) => setBodyText(e.target.value)}
           ></textarea>
           <div
-            className={`mt-7 mb-3 w-[11rem] rounded-lg ${
-              divImg === "" ? "border-2" : "border-none"
-            }`}
+            className={`mt-7 mb-3 w-[11rem] rounded-lg ${divImg === "" ? "border-2" : "border-none"
+              }`}
           >
             <div
-              className={`${
-                divImg ? "hidden" : "block"
-              } mt-16 ml-1 text-center text-[#a9a9b0] text-lg placeholder`}
+              className={`${divImg ? "hidden" : "block"
+                } mt-16 ml-1 text-center text-[#a9a9b0] text-lg placeholder`}
             >
               Preview Image Here
             </div>
             <img
               src={divImg}
               alt=""
-              className={`object-cover ${
-                textBoxActive2 ? "h-[8rem]" : "h-[10rem]"
-              } w-[11rem] rounded-lg  -mt-1 ${divImg === "" && "hidden"}`}
+              className={`object-cover ${textBoxActive2 ? "h-[8rem]" : "h-[10rem]"
+                } w-[11rem] rounded-lg  -mt-1 ${divImg === "" && "hidden"}`}
             />
           </div>
         </div>
@@ -170,7 +167,7 @@ const PostOperation = ({ submit, setSubmit }) => {
                 {embedText.length >= 20 ? (
                   <div>
                     <iframe
-                    title="myFrame"
+                      title="myFrame"
                       width="320"
                       height="60"
                       src={
