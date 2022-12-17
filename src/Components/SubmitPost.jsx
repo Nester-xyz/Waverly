@@ -26,7 +26,7 @@ export default function SubmitPost({ response, toggleSubmit }) {
         <label id="label" htmlFor="check">
           <div className="check-icon"></div>
         </label>
-        
+
         <a
           href={`https://diamondapp.com/posts/${response?.submittedTransactionResponse?.PostEntryResponse.PostHashHex}`}
           target="_blank"

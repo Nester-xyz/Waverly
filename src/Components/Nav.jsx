@@ -4,8 +4,9 @@ import { CgLogOff } from "react-icons/cg";
 import { IconContext } from "react-icons";
 import Deso from "deso-protocol";
 import { useNavigate } from "react-router-dom";
-const Nav = ({ logIn }) => {
+const Nav = ({ logIn, setSettingActive }) => {
   // change this accordingly. Make it props or wahtever you wish
+  const [menuActive, setMenuActive] = useState(false);
   const [profile, setProfile] = useState(
     "https://images.deso.org/a5306f0faf3e77360a11f4ea79a9a2fd449eca16f4e708e70bd88d8da1e08430.gif"
   );
@@ -64,13 +65,39 @@ const Nav = ({ logIn }) => {
 
         {logIn ? (
           <div className="flex gap-3 items-center">
-            <div>
+            <div className="relative">
               <img
                 src={profile}
-                className="select-none w-11 h-11 rounded-full "
+                className="select-none w-11 h-11 rounded-full logout mr-5 scale-90 "
                 alt="prof img"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setMenuActive(!menuActive);
+                }}
               />
-            </div>
+              <div
+                className={`absolute right-5 w-36 bg-white border-2 shadow-lg rounded-lg ${
+                  menuActive ? "block" : "hidden"
+                }`}
+              >
+                <div
+                  className="cursor-pointer border-b-2 px-3 py-1"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSettingActive(true);
+                  }}
+                >
+                  Setting
+                </div>
+                <div
+                  className="cursor-pointer px-3 py-1"
+                  onClick={handleLogOut}
+                >
+                  Logout
+                </div>
+              </div>
+
+              {/* </div>
             <div>
               <button onClick={handleLogOut} className="logout mr-5  scale-90">
                 <IconContext.Provider
@@ -78,7 +105,7 @@ const Nav = ({ logIn }) => {
                 >
                   <CgLogOff style={{ size: "200px" }} />
                 </IconContext.Provider>
-              </button>
+              </button> */}
             </div>
           </div>
         ) : (
