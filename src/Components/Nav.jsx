@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import img from "../img/waverly default.png";
 import { CgLogOff } from "react-icons/cg";
 import { IconContext } from "react-icons";
+import { GrSettingsOption } from "react-icons/gr";
+import { RiLogoutCircleRLine } from "react-icons/ri";
+import { CgProfile } from "react-icons/cg";
 import Deso from "deso-protocol";
 import { useNavigate } from "react-router-dom";
 const Nav = ({ logIn, setSettingActive }) => {
   // change this accordingly. Make it props or wahtever you wish
   const [menuActive, setMenuActive] = useState(false);
+  // const [modalOpen, setmodalOpen] = useState(false);
   const [profile, setProfile] = useState(
     "https://images.deso.org/a5306f0faf3e77360a11f4ea79a9a2fd449eca16f4e708e70bd88d8da1e08430.gif"
   );
@@ -81,18 +85,30 @@ const Nav = ({ logIn, setSettingActive }) => {
                 }`}
               >
                 <div
-                  className="cursor-pointer border-b-2 px-3 py-1"
+                  className="cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 hover:bg-orange-300 hover:rounded-t-[0.31rem]"
                   onClick={(e) => {
                     e.preventDefault();
                     setSettingActive(true);
                   }}
                 >
-                  Setting
+                  <CgProfile />
+                  Profile
                 </div>
                 <div
-                  className="cursor-pointer px-3 py-1"
+                  className="cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 hover:bg-orange-300"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSettingActive(true);
+                  }}
+                >
+                  <GrSettingsOption />
+                  Settings
+                </div>
+                <div
+                  className="cursor-pointer px-3 py-1 lato flex items-center gap-2 hover:bg-orange-300 hover:rounded-b-[0.31rem]"
                   onClick={handleLogOut}
                 >
+                  <RiLogoutCircleRLine />
                   Logout
                 </div>
               </div>

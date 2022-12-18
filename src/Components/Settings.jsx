@@ -3,7 +3,7 @@ import { IoArrowBackCircleOutline } from "react-icons/io5";
 
 const Settings = ({ setSettingActive }) => {
   return (
-    <div className="mt-20 w-[40rem] h-[25rem]">
+    <div className="mt-20 w-[40rem] ">
       <button
         onClick={(e) => {
           console.count("1");
@@ -15,7 +15,7 @@ const Settings = ({ setSettingActive }) => {
       </button>
       <div>
         <div>
-          <div>hellow</div>
+          <div className="ml-10 mt-48 lato">Settings</div>
         </div>
       </div>
     </div>
