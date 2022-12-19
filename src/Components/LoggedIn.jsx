@@ -4,7 +4,12 @@ import MintOperation from "./MintOperation";
 import TipOperation from "./TipOperation";
 import Settings from "./Settings";
 // login button
-const LoggedIn = ({ logIn, settingActive, setSettingActive }) => {
+const LoggedIn = ({
+  logIn,
+  settingActive,
+  setSettingActive,
+  setMenuActive,
+}) => {
   const [submit, setSubmit] = useState(false);
   const [activeTab, setActiveTab] = useState("post");
   let tab;
@@ -15,7 +20,13 @@ const LoggedIn = ({ logIn, settingActive, setSettingActive }) => {
   if (activeTab === "tip")
     tab = <TipOperation submit={submit} setSubmit={setSubmit} />;
   return (
-    <div className="content-start w-[40rem] h-[25rem] border-red-300 border scale ">
+    <div
+      className="content-start w-[40rem] h-[25rem] border-red-300 border scale "
+      onClick={(e) => {
+        e.preventDefault();
+        setMenuActive(false);
+      }}
+    >
       {/* top */}
       {settingActive ? (
         <Settings setSettingActive={setSettingActive} />

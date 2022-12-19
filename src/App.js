@@ -9,6 +9,7 @@ import Settings from "./Components/Settings";
 function App() {
   const [logIn, setLogIn] = useState(false);
   const [settingActive, setSettingActive] = useState(false);
+  const [menuActive, setMenuActive] = useState(false);
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
@@ -21,7 +22,12 @@ function App() {
     <>
       <Router>
         <div>
-          <Nav logIn={logIn} setSettingActive={setSettingActive} />
+          <Nav
+            logIn={logIn}
+            setSettingActive={setSettingActive}
+            menuActive={menuActive}
+            setMenuActive={setMenuActive}
+          />
 
           <Routes>
             {logIn ? (
@@ -32,6 +38,8 @@ function App() {
                   <LoggedIn
                     settingActive={settingActive}
                     setSettingActive={setSettingActive}
+                    menuActive={menuActive}
+                    setMenuActive={setMenuActive}
                   />
                 }
               />
