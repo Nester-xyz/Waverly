@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import img from "../img/waverly default.png";
-import { CgLogOff } from "react-icons/cg";
-import { IconContext } from "react-icons";
+// import { CgLogOff } from "react-icons/cg";
+import { HiMoon, HiSun } from "react-icons/hi2";
+
 import { GrSettingsOption } from "react-icons/gr";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
@@ -68,6 +69,27 @@ const Nav = ({ logIn, setSettingActive, menuActive, setMenuActive }) => {
 
         {logIn ? (
           <div className="flex gap-3 items-center">
+            <div
+              className="text-[2rem] rounded-full border-black -border-20 bg-black"
+              onClick={{}}
+            >
+              <HiMoon
+                style={{
+                  color: "white",
+                  fontSize: "40px",
+                  padding: "7px",
+                }}
+              />
+            </div>
+            <div className="text-[2rem] rounded-full border-black -border-20 bg-black">
+              <HiSun
+                style={{
+                  color: "white",
+                  fontSize: "40px",
+                  padding: "7px",
+                }}
+              />
+            </div>
             <div className="relative group">
               <img
                 src={profile}

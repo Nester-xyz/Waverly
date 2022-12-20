@@ -28,9 +28,10 @@ export default function SubmitPost({ response, toggleSubmit }) {
         </label>
 
         <a
-          href={`https://diamondapp.com/posts/${response?.submittedTransactionResponse?.PostEntryResponse.PostHashHex}`}
           target="_blank"
           rel="noreferrer"
+          href={`https://diamondapp.com/posts/${response?.submittedTransactionResponse?.PostEntryResponse.PostHashHex}`}
+          onClick={`https://diamondapp.com/posts/${response?.submittedTransactionResponse?.PostEntryResponse.PostHashHex}`}
         >
           <button
             className={`bigbtn absolute gap-2 flex items-center top-[17rem] bg-[#efefef] left-[13.5rem] focus:outline-none  ${
