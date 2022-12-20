@@ -152,7 +152,7 @@ export default class TipOperation extends Component {
               name="username"
               id="userName"
               value={this.state.username}
-              className="w-40 border-2 "
+              className="w-40 border-2 lato"
               onChange={this.handleChange}
             />
             {this.state.isValid ? (
@@ -175,7 +175,7 @@ export default class TipOperation extends Component {
               id="posts"
               value={this.state.numberOfPost}
               placeholder="10"
-              className="w-20 border-2 "
+              className="w-20 border-2 lato"
               onChange={this.handleChange}
             />
           </div>
@@ -217,8 +217,7 @@ export default class TipOperation extends Component {
         </div>
         {/* Submit Button & Calculations */}
         <div className="flex justify-between items-center mt-4">
-          <div className="lato">
-          </div>
+          <div className="lato"></div>
           <div className="flex items-center space-x-5">
             <div className="lato">
               Calculation &nbsp;~$
