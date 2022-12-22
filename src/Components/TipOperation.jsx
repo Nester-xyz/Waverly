@@ -144,7 +144,7 @@ export default class TipOperation extends Component {
         <div className="mt-10 ml-10  space-y-2">
           {/*  userName */}
           <div className="flex space-x-3">
-            <label htmlFor="UserName" className="lato">
+            <label htmlFor="UserName" className="lato select-none">
               Enter username:
             </label>
             <input
@@ -158,7 +158,7 @@ export default class TipOperation extends Component {
             {this.state.isValid ? (
               ""
             ) : (
-              <div className="mt-[0.3rem] ml-4 text-lg flex items-center gap-2 lato text-red-600">
+              <div className="mt-[0.3rem] ml-4 text-lg flex items-center gap-2 lato text-red-600 select-none">
                 <FaUserAltSlash style={{ color: "red", fontSize: "23px" }} />{" "}
                 User not found.
               </div>
@@ -166,7 +166,7 @@ export default class TipOperation extends Component {
           </div>
           {/* no of post */}
           <div className="flex pt-2 space-x-2">
-            <label className="lato" htmlFor="posts">
+            <label className="lato select-none" htmlFor="posts">
               Number of posts:
             </label>
             <input
@@ -181,10 +181,10 @@ export default class TipOperation extends Component {
           </div>
           {/* diamonds */}
           <div className="lato flex space-x-1 items-center">
-            <label className="lato" htmlFor="">
+            <label className="lato select-none" htmlFor="">
               Diamond Level:
             </label>
-            <div className="flex">
+            <div className="flex select-none">
               <button
                 className={`logout lato scale-75 ${
                   this.state.diamonds === "1" &&
@@ -219,7 +219,7 @@ export default class TipOperation extends Component {
         <div className="flex justify-between items-center mt-4">
           <div className="lato"></div>
           <div className="flex items-center space-x-5">
-            <div className="lato">
+            <div className="lato select-none">
               Calculation &nbsp;~$
               {parseFloat(
                 ((Number(this.diamondData[Number(this.state.diamonds)]) / 1e9) *

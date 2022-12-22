@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 const Nav = ({ logIn, setSettingActive, menuActive, setMenuActive }) => {
   // change this accordingly. Make it props or wahtever you wish
   // const [modalOpen, setmodalOpen] = useState(false);
+  const [Switch, setSwitch] = useState(true);
   const [profile, setProfile] = useState(
     "https://images.deso.org/a5306f0faf3e77360a11f4ea79a9a2fd449eca16f4e708e70bd88d8da1e08430.gif"
   );
@@ -56,6 +57,11 @@ const Nav = ({ logIn, setSettingActive, menuActive, setMenuActive }) => {
 
   logIn && getProfileImage();
 
+  const themeToggler = () => {
+    setSwitch(!Switch);
+    console.log("toggled");
+  };
+
   return (
     <div className="absolute w-[40rem] navbar">
       <div className="flex justify-between ">
@@ -69,27 +75,33 @@ const Nav = ({ logIn, setSettingActive, menuActive, setMenuActive }) => {
 
         {logIn ? (
           <div className="flex gap-3 items-center">
-            <div
-              className="text-[2rem] rounded-full border-black -border-20 bg-black"
-              onClick={{}}
-            >
-              <HiMoon
-                style={{
-                  color: "white",
-                  fontSize: "40px",
-                  padding: "7px",
-                }}
-              />
-            </div>
-            <div className="text-[2rem] rounded-full border-black -border-20 bg-black">
-              <HiSun
-                style={{
-                  color: "white",
-                  fontSize: "40px",
-                  padding: "7px",
-                }}
-              />
-            </div>
+            {Switch ? (
+              <div
+                className="scale-90 rounded-full cursor-pointer logout "
+                onClick={themeToggler}
+              >
+                <HiMoon
+                  style={{
+                    color: "#151633",
+                    fontSize: "40px",
+                    padding: "3px",
+                  }}
+                />
+              </div>
+            ) : (
+              <div
+                className="scale-90 text-xs rounded-full cursor-pointer logout"
+                onClick={themeToggler}
+              >
+                <HiSun
+                  style={{
+                    color: "#cbc308",
+                    fontSize: "40px",
+                    padding: "3px",
+                  }}
+                />
+              </div>
+            )}
             <div className="relative group">
               <img
                 src={profile}
@@ -104,7 +116,7 @@ const Nav = ({ logIn, setSettingActive, menuActive, setMenuActive }) => {
                 className={`absolute right-5 w-36 bg-white border-2 shadow-lg rounded-lg hidden group-hover:block z-50`}
               >
                 <div
-                  className="cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 hover:bg-orange-300 hover:rounded-t-[0.31rem]"
+                  className="select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 hover:bg-orange-300 hover:rounded-t-[0.31rem]"
                   onClick={(e) => {
                     e.preventDefault();
                     setSettingActive(true);
@@ -114,7 +126,7 @@ const Nav = ({ logIn, setSettingActive, menuActive, setMenuActive }) => {
                   Profile
                 </div>
                 <div
-                  className="cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 hover:bg-orange-300"
+                  className="select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 hover:bg-orange-300"
                   onClick={(e) => {
                     e.preventDefault();
                     setSettingActive(true);
@@ -124,7 +136,7 @@ const Nav = ({ logIn, setSettingActive, menuActive, setMenuActive }) => {
                   Settings
                 </div>
                 <div
-                  className="cursor-pointer px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 hover:bg-orange-300 hover:rounded-b-[0.31rem]"
+                  className="select-none cursor-pointer px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 hover:bg-orange-300 hover:rounded-b-[0.31rem]"
                   onClick={handleLogOut}
                 >
                   <RiLogoutCircleRLine />
