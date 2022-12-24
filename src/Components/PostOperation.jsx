@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { WaverlyContext } from "../Contexts/WaverlyContext";
 import SubmitPost from "./SubmitPost";
 import Deso from "deso-protocol";
 import { RiImageAddFill } from "react-icons/ri";
@@ -16,6 +17,7 @@ const PostOperation = ({ submit, setSubmit }) => {
   const [setLoading, setSetLoading] = useState(false);
   const [submitResponse, setSubmitResponse] = useState();
   const [embedText, setEmbedText] = useState("");
+  const { Dark } = useContext(WaverlyContext);
   if (submit === true) {
     return <SubmitPost response={submitResponse} toggleSubmit={setSubmit} />;
   }
@@ -99,7 +101,7 @@ const PostOperation = ({ submit, setSubmit }) => {
   };
 
   return (
-    <div>
+    <div className={`${Dark ? "dark-mode" : "light-mode"}`}>
       <div>
         {/* text area */}
         <div className="flex">
@@ -113,20 +115,23 @@ const PostOperation = ({ submit, setSubmit }) => {
             onChange={(e) => setBodyText(e.target.value)}
           ></textarea>
           <div
-            className={`mt-7 mb-3 w-[11rem] rounded-lg ${divImg === "" ? "border-2" : "border-none"
-              }`}
+            className={`mt-7 mb-3 w-[11rem] rounded-lg ${
+              divImg === "" ? "border-2" : "border-none"
+            }`}
           >
             <div
-              className={`${divImg ? "hidden" : "block"
-                } mt-16 ml-1 text-center text-[#a9a9b0] text-lg placeholder`}
+              className={`${
+                divImg ? "hidden" : "block"
+              } mt-16 ml-1 text-center text-[#a9a9b0] text-lg placeholder`}
             >
               Preview Image Here
             </div>
             <img
               src={divImg}
               alt=""
-              className={`object-cover ${textBoxActive2 ? "h-[8rem]" : "h-[10rem]"
-                } w-[11rem] rounded-lg  -mt-1 ${divImg === "" && "hidden"}`}
+              className={`object-cover ${
+                textBoxActive2 ? "h-[8rem]" : "h-[10rem]"
+              } w-[11rem] rounded-lg  -mt-1 ${divImg === "" && "hidden"}`}
             />
           </div>
         </div>

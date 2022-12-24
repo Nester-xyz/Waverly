@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.08cb00b5.css",
+    "main.js": "/static/js/main.dcc3354d.js",
+    "static/js/787.c4e7f8f9.chunk.js": "/static/js/787.c4e7f8f9.chunk.js",
+    "static/media/mont_font.otf": "/static/media/mont_font.a1c041a8d8e27fc771db.otf",
+    "static/media/waverly default.png": "/static/media/waverly default.cba46da7ecd5001cadd8.png",
+    "index.html": "/index.html",
+    "main.08cb00b5.css.map": "/static/css/main.08cb00b5.css.map",
+    "main.dcc3354d.js.map": "/static/js/main.dcc3354d.js.map",
+    "787.c4e7f8f9.chunk.js.map": "/static/js/787.c4e7f8f9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.08cb00b5.css",
+    "static/js/main.dcc3354d.js"
+  ]
+}

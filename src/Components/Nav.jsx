@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { WaverlyContext } from "../Contexts/WaverlyContext";
 import img from "../img/waverly default.png";
+import darkimg from "../img/waverly dark.png";
 // import { CgLogOff } from "react-icons/cg";
 import { HiMoon, HiSun } from "react-icons/hi2";
 
@@ -8,9 +10,10 @@ import { RiLogoutCircleRLine } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
 import Deso from "deso-protocol";
 import { useNavigate } from "react-router-dom";
-const Nav = ({ logIn, setSettingActive, menuActive, setMenuActive }) => {
-  // change this accordingly. Make it props or wahtever you wish
+function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
+  // change this accordingly. Make it props or whatever you wish
   // const [modalOpen, setmodalOpen] = useState(false);
+  const { Dark, setDark } = useContext(WaverlyContext);
   const [Switch, setSwitch] = useState(true);
   const [profile, setProfile] = useState(
     "https://images.deso.org/a5306f0faf3e77360a11f4ea79a9a2fd449eca16f4e708e70bd88d8da1e08430.gif"
@@ -62,12 +65,20 @@ const Nav = ({ logIn, setSettingActive, menuActive, setMenuActive }) => {
     console.log("toggled");
   };
 
+  const DarkToggle = () => {
+    setDark(!Dark);
+  };
+
   return (
-    <div className="absolute w-[40rem] navbar">
+    <div
+      className={`absolute w-[40rem] navbar ${
+        Dark ? "dark-mode" : "light-mode"
+      }`}
+    >
       <div className="flex justify-between ">
         <nav>
           <img
-            src={img}
+            src={!Dark ? img : darkimg}
             alt=""
             className="select-none w-36 h-30 mt-1 cursor-pointer"
           />
@@ -77,8 +88,11 @@ const Nav = ({ logIn, setSettingActive, menuActive, setMenuActive }) => {
           <div className="flex gap-3 items-center">
             {Switch ? (
               <div
-                className="scale-90 rounded-full cursor-pointer logout "
-                onClick={themeToggler}
+                className="scale-90 rounded-full cursor-pointer "
+                onClick={() => {
+                  themeToggler();
+                  DarkToggle();
+                }}
               >
                 <HiMoon
                   style={{
@@ -90,8 +104,11 @@ const Nav = ({ logIn, setSettingActive, menuActive, setMenuActive }) => {
               </div>
             ) : (
               <div
-                className="scale-90 text-xs rounded-full cursor-pointer logout"
-                onClick={themeToggler}
+                className="scale-90 text-xs rounded-full cursor-pointer"
+                onClick={() => {
+                  themeToggler();
+                  DarkToggle();
+                }}
               >
                 <HiSun
                   style={{
@@ -145,14 +162,14 @@ const Nav = ({ logIn, setSettingActive, menuActive, setMenuActive }) => {
               </div>
 
               {/* </div>
-            <div>
-              <button onClick={handleLogOut} className="logout mr-5  scale-90">
-                <IconContext.Provider
-                  value={{ color: "#ff7521", size: "27px" }}
-                >
-                  <CgLogOff style={{ size: "200px" }} />
-                </IconContext.Provider>
-              </button> */}
+                  <div>
+                    <button onClick={handleLogOut} className="logout mr-5  scale-90">
+                      <IconContext.Provider
+                        value={{ color: "#ff7521", size: "27px" }}
+                      >
+                        <CgLogOff style={{ size: "200px" }} />
+                      </IconContext.Provider>
+                    </button> */}
             </div>
           </div>
         ) : (
@@ -161,7 +178,7 @@ const Nav = ({ logIn, setSettingActive, menuActive, setMenuActive }) => {
       </div>
     </div>
   );
-};
+}
 
 export default Nav;
 
