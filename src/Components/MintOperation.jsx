@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { WaverlyContext } from "../Contexts/WaverlyContext";
 import "./Unlockable.css";
 import { RiImageAddFill } from "react-icons/ri";
 import { IconContext } from "react-icons";
@@ -16,6 +17,7 @@ const MintOperation = ({ submit, setSubmit }) => {
   });
   const [img, setImg] = useState("");
   const [loading, setLoading] = useState(false);
+  const { Dark } = useContext(WaverlyContext);
   const [isUnlockable, setIsUnlockable] = useState(false);
   const [submitMintResponse, setSubmitMintResponse] = useState();
   if (submit === true) {
@@ -121,7 +123,7 @@ const MintOperation = ({ submit, setSubmit }) => {
           {/* textarea  */}
           <textarea
             id="textbox"
-            className="placeholder rounded-xl textbox border-2 resize-none text-lg pt-2 bg-[#efefef] w-[17.4rem] h-[5rem] mt-4 px-5  focus:outline-none"
+            className="placeholder text-black rounded-xl textbox border-2 resize-none text-lg pt-2 bg-[#efefef] w-[17.4rem] h-[5rem] mt-4 px-5  focus:outline-none"
             rows="5"
             cols="1"
             placeholder="Your title here"
@@ -132,12 +134,14 @@ const MintOperation = ({ submit, setSubmit }) => {
           {/* Image upload and number of copies starts here */}
           <div className="flex items-center">
             {/* Image upload starts here */}
-            <div className="img-upload">
+            <div className={`img-upload`}>
               <button
-                className="logout mr-5  scale-75"
+                className={`${
+                  Dark ? "darktheme" : "logout"
+                } mr-5 scale-75 rounded-full`}
                 onClick={handleUploadImage}
               >
-                <IconContext.Provider value={{ color: "#444", size: "27px" }}>
+                <IconContext.Provider value={{ size: "27px" }}>
                   <RiImageAddFill style={{ size: "200px" }} />
                 </IconContext.Provider>
               </button>
@@ -153,7 +157,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                 min="1"
                 name="copies"
                 id="copy"
-                className="lato border w-14 h-8 ml-3"
+                className="lato border w-14 h-8 ml-3 text-black"
                 onChange={onChange}
                 placeholder="1"
               />
@@ -175,7 +179,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                     min="0"
                     name="minimumBid"
                     id="minimumBid"
-                    className="lato border w-14 h-8"
+                    className="lato border w-14 h-8 text-black"
                     onChange={onChange}
                     placeholder="0"
                   />
@@ -196,7 +200,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                     min="0"
                     name="buyNowPrice"
                     id="buyNow"
-                    className="border w-14 h-8"
+                    className="border w-14 h-8 text-black"
                     onChange={onChange}
                     placeholder="0"
                   />
@@ -229,7 +233,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                     min="0"
                     name="creatorRoyalty"
                     id="creator"
-                    className="lato border w-10 h-8"
+                    className="lato border w-10 h-8 text-black"
                     onChange={onChange}
                     placeholder="10"
                   />
@@ -249,7 +253,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                     min="0"
                     name="coinHolder"
                     id="creator"
-                    className="lato border w-10 h-8"
+                    className="lato border w-10 h-8 text-black"
                     onChange={onChange}
                     placeholder="5"
                   />

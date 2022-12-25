@@ -101,13 +101,13 @@ const PostOperation = ({ submit, setSubmit }) => {
   };
 
   return (
-    <div className={`${Dark ? "dark-mode" : "light-mode"}`}>
+    <div>
       <div>
         {/* text area */}
         <div className="flex">
           <textarea
             id="textbox"
-            className="rounded-xl textbox border-2 resize-none text-lg pt-2 bg-[#efefef] w-[25rem] mt-4 px-5 mx-5 focus:outline-none placeholder"
+            className="rounded-xl textbox border-2 resize-none text-black text-lg pt-2 bg-[#efefef] w-[25rem] color-black mt-4 px-5 mx-5 focus:outline-none placeholder"
             rows={`${textBoxActive2 ? "5" : "6"}`}
             cols="1"
             placeholder="Enter your post"
@@ -148,10 +148,12 @@ const PostOperation = ({ submit, setSubmit }) => {
             {/* img upload btn start here */}
             <div className="img-upload">
               <button
-                className="logout mr-5  scale-75"
+                className={`${
+                  Dark ? "darktheme" : "logout"
+                } mr-5 scale-75 rounded-full`}
                 onClick={handleUploadImage}
               >
-                <IconContext.Provider value={{ color: "#444", size: "27px" }}>
+                <IconContext.Provider value={{ size: "27px" }}>
                   <RiImageAddFill style={{ size: "200px" }} />
                 </IconContext.Provider>
               </button>
@@ -159,10 +161,12 @@ const PostOperation = ({ submit, setSubmit }) => {
             {/* img upload btn ends here */}
             <div className="embedbtn">
               <button
-                className="logout mr-5  scale-75"
+                className={`${
+                  Dark ? "darktheme" : "logout"
+                } mr-5 rounded-full scale-75`}
                 onClick={() => setTextBoxActive2(!textBoxActive2)}
               >
-                <IconContext.Provider value={{ color: "#444", size: "27px" }}>
+                <IconContext.Provider value={{ size: "27px" }}>
                   <ImEmbed style={{ size: "200px" }} />
                 </IconContext.Provider>
               </button>

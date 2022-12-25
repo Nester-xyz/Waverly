@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { WaverlyContext } from "../Contexts/WaverlyContext";
 import PostOperation from "./PostOperation";
 import MintOperation from "./MintOperation";
 import TipOperation from "./TipOperation";
@@ -12,6 +13,7 @@ const LoggedIn = ({
 }) => {
   const [submit, setSubmit] = useState(false);
   const [activeTab, setActiveTab] = useState("post");
+  const { Dark } = useContext(WaverlyContext);
   let tab;
   if (activeTab === "post")
     tab = <PostOperation submit={submit} setSubmit={setSubmit} />;
@@ -21,7 +23,9 @@ const LoggedIn = ({
     tab = <TipOperation submit={submit} setSubmit={setSubmit} />;
   return (
     <div
-      className="content-start w-[40rem] h-[25rem] border-red-300 border scale "
+      className={`content-start w-[40rem] h-[25rem] border-red-300 border scale ${
+        Dark ? "dark-mode" : "light-mode"
+      }`}
       onClick={(e) => {
         e.preventDefault();
         setMenuActive(false);
@@ -36,9 +40,9 @@ const LoggedIn = ({
             <div className="w-full grid grid-cols-3 gap-10 mt-20 px-5 rounded-lg">
               <button
                 onClick={() => setActiveTab("post")}
-                className={`bigbtn select-none ${
+                className={`bigbtn  select-none ${
                   activeTab === "post"
-                    ? "logout-active bg-[#efefef]"
+                    ? `logout-active bg-[#efefef]`
                     : "bg-[#efefef]"
                 }`}
               >

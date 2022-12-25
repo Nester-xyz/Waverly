@@ -29,6 +29,21 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+.bigdark {
+  font-family: "PT Sans", sans-serif;
+  padding: 10px 30px;
+  /* background: #efefef; */
+  border: none;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.2rem;
+  text-align: center;
+  color: black;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
 .bigbtn {
   font-family: "PT Sans", sans-serif;
   padding: 10px 30px;
@@ -78,6 +93,10 @@ input[type="number"] {
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
 }
 
+.darknav {
+  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3);
+}
+
 .logout {
   height: 50px;
   width: 50px;
@@ -122,6 +141,36 @@ input[type="number"] {
     inset 2px 2px 4px rgba(0, 0, 0, 0.15);
 }
 
+.profile-dark {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+}
+
+.darktheme {
+  color: white;
+  border: solid;
+  border-color: white;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.darktheme:hover {
+  background-color: #ff5733;
+}
+
+.darktheme-active {
+  border-color: orange;
+}
 .textbox {
   transition: 0.2s ease-in-out;
 }
@@ -147,7 +196,7 @@ input[type="number"] {
 }
 
 .dark-mode {
-  background: #413e3e;
+  background: #333;
   box-shadow: 20px 20px 60px #373535, -20px -20px 60px #4b4747;
-  color: "black";
+  color: white;
 }

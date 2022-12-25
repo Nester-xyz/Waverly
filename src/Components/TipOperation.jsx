@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import { WaverlyContext } from "../Contexts/WaverlyContext";
 import Deso from "deso-protocol";
 import { MagnifyingGlass } from "react-loader-spinner";
 import { FaUserAltSlash } from "react-icons/fa";
@@ -15,6 +16,7 @@ const TipOperations = () => {
   const [tipLevel, setTipLevel] = useState("0");
   const [isUsername, setIsUsername] = useState(false);
   const [isValid, setIsValid] = useState(true);
+  const { Dark } = useContext(WaverlyContext);
 
   useEffect(() => {
     let response;
@@ -140,7 +142,7 @@ const TipOperations = () => {
             name="username"
             id="userName"
             value={username}
-            className="w-40 border-2 lato"
+            className="w-40 border-2 lato text-black"
             onChange={(e) => {
               setUsername(e.target.value);
               setLoading(false);
@@ -168,7 +170,7 @@ const TipOperations = () => {
             id="posts"
             value={numberOfPost}
             placeholder="10"
-            className="w-20 border-2 lato"
+            className="w-20 border-2 lato text-black"
             onChange={(e) => {
               setNumberOfPost(e.target.value);
               setLoading(false);
@@ -182,26 +184,41 @@ const TipOperations = () => {
           <label className="lato select-none" htmlFor="">
             Diamond Level:
           </label>
-          <div className="flex select-none">
+          <div className="flex select-none text-black">
             <button
-              className={`logout lato scale-75 ${
-                diamonds === "1" && "logout-active border-blue-400 border-2"
+              className={`${
+                Dark ? "darktheme" : "logout"
+              } rounded-full lato scale-75 ${
+                diamonds === "1" &&
+                `${
+                  Dark ? "darktheme-active" : "logout-active"
+                } border-blue-400 border-2`
               }`}
               onClick={() => setDiamonds("1")}
             >
               1💎
             </button>
             <button
-              className={`logout lato scale-75 ${
-                diamonds === "2" && "logout-active border-blue-400 border-2"
+              className={`${
+                Dark ? "darktheme" : "logout"
+              } lato rounded-full scale-75 ${
+                diamonds === "2" &&
+                `${
+                  Dark ? "darktheme-active" : "logout-active"
+                } border-blue-400 border-2`
               }`}
               onClick={() => setDiamonds("2")}
             >
               2💎
             </button>
             <button
-              className={`logout lato scale-75 ${
-                diamonds === "3" && "logout-active border-blue-400 border-2"
+              className={`${
+                Dark ? "darktheme" : "logout"
+              } rounded-full lato scale-75 ${
+                diamonds === "3" &&
+                `${
+                  Dark ? "darktheme-active" : "logout-active"
+                } border-blue-400 border-2`
               }`}
               onClick={() => setDiamonds("3")}
             >
