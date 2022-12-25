@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { WaverlyContext } from "../Contexts/WaverlyContext";
-import img from "../img/waverly default.png";
-import darkimg from "../img/waverly dark.png";
+import img from "../img/waverlydefault.png";
+import darkimg from "../img/waverlydark.png";
 // import { CgLogOff } from "react-icons/cg";
 import { HiMoon, HiSun } from "react-icons/hi2";
 

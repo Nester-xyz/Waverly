@@ -16,7 +16,7 @@ export default function SubmitPost({ response, toggleSubmit }) {
 
   return (
     // main border
-    <div className="w-[40rem]   ">
+    <div className="w-[40rem]  overflow-x-hidden  ">
       <button
         onClick={() => toggleSubmit(false)}
         className={`absolute top-20 left-5 text-3xl rounded-full focus:outline-none  ${
@@ -28,7 +28,7 @@ export default function SubmitPost({ response, toggleSubmit }) {
       <div className="w-[56rem] -mt-12 -ml-28">
         <input type="checkbox" id="check" />
         <label id="label" htmlFor="check">
-          <div className="check-icon"></div>
+          <div className="check-icon "></div>
         </label>
         <div className="">
           <a
