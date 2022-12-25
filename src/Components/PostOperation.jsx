@@ -149,7 +149,7 @@ const PostOperation = ({ submit, setSubmit }) => {
             <div className="img-upload">
               <button
                 className={`${
-                  Dark ? "darktheme" : "logout"
+                  Dark ? "darktheme hover:border-orange-300" : "logout"
                 } mr-5 scale-75 rounded-full`}
                 onClick={handleUploadImage}
               >
@@ -162,7 +162,7 @@ const PostOperation = ({ submit, setSubmit }) => {
             <div className="embedbtn">
               <button
                 className={`${
-                  Dark ? "darktheme" : "logout"
+                  Dark ? "darktheme hover:border-orange-300" : "logout"
                 } mr-5 rounded-full scale-75`}
                 onClick={() => setTextBoxActive2(!textBoxActive2)}
               >
@@ -207,7 +207,11 @@ const PostOperation = ({ submit, setSubmit }) => {
           <div className="right-button">
             <button
               onClick={handleSubmitPost}
-              className="select-none btn focus:outline-none bg-[#efefef] bigbtn"
+              className={`select-none btn focus:outline-none  ${
+                Dark
+                  ? "bigbtn-dark hover:border-[#ff7521] "
+                  : "bigbtn bg-[#efefef]"
+              }`}
               disabled={setLoading}
             >
               {setLoading ? (

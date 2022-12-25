@@ -127,71 +127,43 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
                   setMenuActive(!menuActive);
                 }}
               />
-              {Dark ? (
+              <div
+                className={`absolute right-5 w-32 bg-white border-3 shadow-lg rounded-lg hidden group-hover:block z-50`}
+              >
                 <div
-                  className={`absolute right-5 text-white w-32 bg-[#2d2a2a] shadow-lg border rounded-lg hidden group-hover:block z-50`}
+                  className={`select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${
+                    Dark ? "hover:bg-orange-400" : "hover:bg-blue-300"
+                  } hover:rounded-t-[0.31rem]`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSettingActive(true);
+                  }}
                 >
-                  <div
-                    className="select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 hover:bg-[#FF5733] hover:rounded-t-[0.31rem]"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setSettingActive(true);
-                    }}
-                  >
-                    <CgProfile />
-                    Profile
-                  </div>
-                  <div
-                    className="select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 hover:bg-[#FF5733]"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setSettingActive(true);
-                    }}
-                  >
-                    <FiSettings />
-                    Settings
-                  </div>
-                  <div
-                    className="select-none cursor-pointer px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 hover:bg-orange-300 hover:rounded-b-[0.31rem]"
-                    onClick={handleLogOut}
-                  >
-                    <RiLogoutCircleRLine />
-                    Logout
-                  </div>
+                  <CgProfile />
+                  Profile
                 </div>
-              ) : (
                 <div
-                  className={`absolute right-5 w-32 bg-white border-3 shadow-lg rounded-lg hidden group-hover:block z-50`}
+                  className={`select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${
+                    Dark ? "hover:bg-orange-400" : "hover:bg-blue-300"
+                  }`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSettingActive(true);
+                  }}
                 >
-                  <div
-                    className="select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 hover:bg-orange-300 hover:rounded-t-[0.31rem]"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setSettingActive(true);
-                    }}
-                  >
-                    <CgProfile />
-                    Profile
-                  </div>
-                  <div
-                    className="select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 hover:bg-orange-300"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setSettingActive(true);
-                    }}
-                  >
-                    <FiSettings />
-                    Settings
-                  </div>
-                  <div
-                    className="select-none cursor-pointer px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 hover:bg-orange-300 hover:rounded-b-[0.31rem]"
-                    onClick={handleLogOut}
-                  >
-                    <RiLogoutCircleRLine />
-                    Logout
-                  </div>
+                  <FiSettings />
+                  Settings
                 </div>
-              )}
+                <div
+                  className={`select-none cursor-pointer rounded-b-lg px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${
+                    Dark ? "hover:bg-orange-400" : "hover:bg-blue-300"
+                  }`}
+                  onClick={handleLogOut}
+                >
+                  <RiLogoutCircleRLine />
+                  Logout
+                </div>
+              </div>
 
               {/* </div>
                   <div>

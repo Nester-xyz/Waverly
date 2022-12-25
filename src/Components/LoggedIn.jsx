@@ -40,31 +40,45 @@ const LoggedIn = ({
             <div className="w-full grid grid-cols-3 gap-10 mt-20 px-5 rounded-lg">
               <button
                 onClick={() => setActiveTab("post")}
-                className={`bigbtn  select-none ${
+                className={`select-none
+                ${Dark? `bigbtn-dark ${
+                  activeTab === "post"
+                    ? `bigbtn-dark-active`
+                    : "bigbtn-dark-inactive"
+                }`: ` bigbtn ${
                   activeTab === "post"
                     ? `logout-active bg-[#efefef]`
                     : "bg-[#efefef]"
                 }`}
+                `}
               >
                 POST
               </button>
               <button
                 onClick={() => setActiveTab("mint")}
-                className={`bigbtn select-none ${
+                className={` select-none ${Dark? `bigbtn-dark ${
                   activeTab === "mint"
-                    ? "logout-active bg-[#efefef]"
+                    ? `bigbtn-dark-active`
+                    : "bigbtn-dark-inactive"
+                }`: ` bigbtn ${
+                  activeTab === "mint"
+                    ? `logout-active bg-[#efefef]`
                     : "bg-[#efefef]"
-                }`}
+                }`}`}
               >
                 MINT
               </button>
               <button
                 onClick={() => setActiveTab("tip")}
-                className={`bigbtn select-none ${
+                className={` select-none ${Dark? `bigbtn-dark ${
                   activeTab === "tip"
-                    ? "logout-active bg-[#efefef]"
+                    ? `bigbtn-dark-active`
+                    : "bigbtn-dark-inactive"
+                }`: ` bigbtn ${
+                  activeTab === "tip"
+                    ? `logout-active bg-[#efefef]`
                     : "bg-[#efefef]"
-                }`}
+                }`}`}
               >
                 TIP
               </button>

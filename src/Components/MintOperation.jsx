@@ -137,7 +137,7 @@ const MintOperation = ({ submit, setSubmit }) => {
             <div className={`img-upload`}>
               <button
                 className={`${
-                  Dark ? "darktheme" : "logout"
+                  Dark ? "darktheme hover:border-orange-300" : "logout"
                 } mr-5 scale-75 rounded-full`}
                 onClick={handleUploadImage}
               >
@@ -313,7 +313,9 @@ const MintOperation = ({ submit, setSubmit }) => {
       </div>
       <div className="right-button absolute top-48 mt-1 left-[29.5rem]">
         <button
-          className="select-none btn focus:outline-none bg-[#efefef] bigbtn"
+          className={`select-none btn focus:outline-none ${
+            Dark ? "bigbtn-dark hover:border-[#ff7521] " : "bigbtn bg-[#efefef]"
+          }`}
           onClick={handleMintBtn}
           disabled={loading}
         >

@@ -10,6 +10,7 @@ const TipOperations = () => {
   const [numberOfPost, setNumberOfPost] = useState(10);
   const [rate, setRate] = useState("1");
   const [username, setUsername] = useState("");
+  // eslint-disable-next-line
   const [pub_key, setPub_key] = useState("");
   const [loading, setLoading] = useState(false);
   const [postHexes, setPostHexes] = useState([]);
@@ -189,10 +190,11 @@ const TipOperations = () => {
               className={`${
                 Dark ? "darktheme" : "logout"
               } rounded-full lato scale-75 ${
-                diamonds === "1" &&
-                `${
-                  Dark ? "darktheme-active" : "logout-active"
-                } border-blue-400 border-2`
+                diamonds === "1"
+                  ? `${
+                      Dark ? "darktheme-active" : "logout-active "
+                    } border-blue-400 border-2`
+                  : `hover:border-orange-300`
               }`}
               onClick={() => setDiamonds("1")}
             >
@@ -201,11 +203,12 @@ const TipOperations = () => {
             <button
               className={`${
                 Dark ? "darktheme" : "logout"
-              } lato rounded-full scale-75 ${
-                diamonds === "2" &&
-                `${
-                  Dark ? "darktheme-active" : "logout-active"
-                } border-blue-400 border-2`
+              } rounded-full lato scale-75 ${
+                diamonds === "2"
+                  ? `${
+                      Dark ? "darktheme-active" : "logout-active "
+                    } border-blue-400 border-2`
+                  : `hover:border-orange-300`
               }`}
               onClick={() => setDiamonds("2")}
             >
@@ -215,10 +218,11 @@ const TipOperations = () => {
               className={`${
                 Dark ? "darktheme" : "logout"
               } rounded-full lato scale-75 ${
-                diamonds === "3" &&
-                `${
-                  Dark ? "darktheme-active" : "logout-active"
-                } border-blue-400 border-2`
+                diamonds === "3"
+                  ? `${
+                      Dark ? "darktheme-active" : "logout-active "
+                    } border-blue-400 border-2`
+                  : `hover:border-orange-300`
               }`}
               onClick={() => setDiamonds("3")}
             >
@@ -241,7 +245,11 @@ const TipOperations = () => {
             ).toFixed(4)}
           </div>
           <button
-            className="select-none btn focus:outline-none bg-[#efefef] bigbtn mt-2"
+            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${
+              Dark
+                ? "bigbtn-dark hover:border-[#ff7521] "
+                : "bigbtn bg-[#efefef]"
+            }`}
             onClick={handleTipButton}
             disabled={loading}
           >

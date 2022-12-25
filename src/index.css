@@ -76,6 +76,28 @@ input[type="number"] {
     inset 2px 2px 4px rgba(0, 0, 0, 0.15);
 }
 
+.bigbtn-dark {
+  font-family: "PT Sans", sans-serif;
+  padding: 10px 30px;
+  background: #555;
+  border-width: 2px;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.2rem;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.bigbtn-dark-active{
+  border-color: #ff7521;
+}
+.bigbtn-dark-inactive{
+  border-color: #fff;
+}
 .welcomewaverly {
   font-family: Mont;
   color: #ff7521;
@@ -162,14 +184,13 @@ input[type="number"] {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  background-color: #555;
 }
 
-.darktheme:hover {
-  background-color: #ff5733;
-}
+
 
 .darktheme-active {
-  border-color: orange;
+  border-color: #ff7521;
 }
 .textbox {
   transition: 0.2s ease-in-out;
