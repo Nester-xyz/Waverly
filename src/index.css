@@ -92,10 +92,10 @@ input[type="number"] {
   transition: 0.2s ease-in-out;
 }
 
-.bigbtn-dark-active{
+.bigbtn-dark-active {
   border-color: #ff7521;
 }
-.bigbtn-dark-inactive{
+.bigbtn-dark-inactive {
   border-color: #fff;
 }
 .welcomewaverly {
@@ -186,8 +186,6 @@ input[type="number"] {
   cursor: pointer;
   background-color: #555;
 }
-
-
 
 .darktheme-active {
   border-color: #ff7521;

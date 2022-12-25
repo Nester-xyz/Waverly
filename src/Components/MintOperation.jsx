@@ -16,8 +16,10 @@ const MintOperation = ({ submit, setSubmit }) => {
     coinHolder: "5",
   });
   const [img, setImg] = useState("");
+  const [NOC, setNOC] = useState(1);
   const [loading, setLoading] = useState(false);
   const { Dark } = useContext(WaverlyContext);
+  // eslint-disable-next-line
   const [isUnlockable, setIsUnlockable] = useState(false);
   const [submitMintResponse, setSubmitMintResponse] = useState();
   if (submit === true) {
@@ -115,168 +117,101 @@ const MintOperation = ({ submit, setSubmit }) => {
   };
 
   return (
-    <div className="flex relative mt-2 space-x-3 px-2 py-1">
-      <div className="flex-col">
-        {/* TextArea, Image Icon, No. Of Copies, Price */}
-        <div className="border-2 rounded-lg px-3 border-[#efefef] ">
-          {/* Text area, Number of copies, image starts here */}
-          {/* textarea  */}
-          <textarea
-            id="textbox"
-            className="placeholder text-black rounded-xl textbox border-2 resize-none text-lg pt-2 bg-[#efefef] w-[17.4rem] h-[5rem] mt-4 px-5  focus:outline-none"
-            rows="5"
-            cols="1"
-            placeholder="Your title here"
-            name="title"
-            onChange={onChange}
-          ></textarea>
-          {/* textarea ends here */}
-          {/* Image upload and number of copies starts here */}
-          <div className="flex items-center">
-            {/* Image upload starts here */}
-            <div className={`img-upload`}>
-              <button
-                className={`${
-                  Dark ? "darktheme hover:border-orange-300" : "logout"
-                } mr-5 scale-75 rounded-full`}
-                onClick={handleUploadImage}
-              >
-                <IconContext.Provider value={{ size: "27px" }}>
-                  <RiImageAddFill style={{ size: "200px" }} />
-                </IconContext.Provider>
-              </button>
-            </div>
-            {/* Image upload over */}
-            {/* Number of copies starts here */}
-            <div className="flex text-lg">
-              <label className="lato text-[1.1rem] " htmlFor="">
-                Number of copies:
-              </label>
-              <input
-                type="number"
-                min="1"
-                name="copies"
-                id="copy"
-                className="lato border w-14 h-8 ml-3 text-black"
+    <div className="flex relative mt-2 space-x-3 px-2 py-1 ml-[0.8rem]">
+      <div>
+        <div className="flex-col">
+          {/* TextArea, Image Icon, No. Of Copies, Price */}
+          <div className="border-2 w-[37rem] rounded-lg px-3 border-[#efefef] flex justify-between">
+            {/* Text area, Number of copies, image starts here */}
+            {/* Top Left  */}
+            <div className="">
+              <textarea
+                id="textbox"
+                className="placeholder text-black rounded-xl textbox border-2 resize-none text-lg pt-2 bg-[#efefef] w-[24rem] h-[5rem] mt-4 px-5  focus:outline-none"
+                rows="5"
+                cols="1"
+                placeholder="Your title here"
+                name="title"
                 onChange={onChange}
-                placeholder="1"
-              />
-            </div>
-            {/* Number of copies ends here */}
-          </div>
-        </div>
-        <div>
-          {/* Pricing */}
-          <div className="flex-col pl-3 mt-2 space-y-2 border-2 rounded-lg px-3 py-2 border-[#efefef]">
-            <div>
-              <div className="flex justify-between text-lg items-center gap-2">
-                <label className="lato text-[18px]" htmlFor="minimumBid">
-                  Minimum Bid:
-                </label>
-                <div className="mr-7 flex gap-3">
-                  <input
-                    type="number"
-                    min="0"
-                    name="minimumBid"
-                    id="minimumBid"
-                    className="lato border w-14 h-8 text-black"
-                    onChange={onChange}
-                    placeholder="0"
-                  />
-                  <label className="lato" htmlFor="minimumBid">
-                    $DESO
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div className="flex justify-between text-lg items-center gap-2">
-                <label className="lato" htmlFor="buyNow">
-                  Buy Now:
-                </label>
-                <div className="lato mr-7 flex gap-3">
-                  <input
-                    type="number"
-                    min="0"
-                    name="buyNowPrice"
-                    id="buyNow"
-                    className="border w-14 h-8 text-black"
-                    onChange={onChange}
-                    placeholder="0"
-                  />
-                  <label className="lato" htmlFor="buyNow">
-                    $DESO
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="flex-col space-y-2">
-        {/* Preview Image and Royalty */}
-        <div className="border-2 py-1 border-[#efefef] rounded-lg pr-1 pl-3">
-          <div className="flex items-center">
-            <div className="flex">
-              {/* Royalty */}
-              {/* <div className="text-xl">Royalty:</div> */}
-              <div className="flex-col space-y-3 text-lg w-fit">
-                <div className="flex items-center gap-1">
-                  <label
-                    htmlFor="creator"
-                    className="leading-[1rem] text-center lato"
+              ></textarea>
+              {/* textarea ends here */}
+              {/* Image upload and number of copies starts here */}
+              <div className="flex items-center">
+                {/* Image upload starts here */}
+                <div className={`img-upload`}>
+                  <button
+                    className={`${
+                      Dark ? "darktheme hover:border-orange-300" : "logout"
+                    } mr-5 scale-75 rounded-full`}
+                    onClick={handleUploadImage}
                   >
-                    Creator Royalty
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    name="creatorRoyalty"
-                    id="creator"
-                    className="lato border w-10 h-8 text-black"
-                    onChange={onChange}
-                    placeholder="10"
-                  />
-                  <label className="lato" htmlFor="minimumBid">
-                    %
-                  </label>
+                    <IconContext.Provider value={{ size: "27px" }}>
+                      <RiImageAddFill style={{ size: "200px" }} />
+                    </IconContext.Provider>
+                  </button>
                 </div>
-                <div className="flex  items-center gap-1">
-                  <label
-                    htmlFor="creator"
-                    className="leading-[1rem] text-center lato"
-                  >
-                    Coin Holder Royalty
+                {/* Image upload over */}
+                {/* Number of copies starts here */}
+                <div className="flex text-lg items-center -mt-1">
+                  <label className="lato text-[1.1rem] select-none" htmlFor="">
+                    Number of copies:
                   </label>
                   <input
                     type="number"
-                    min="0"
-                    name="coinHolder"
-                    id="creator"
-                    className="lato border w-10 h-8 text-black"
-                    onChange={onChange}
-                    placeholder="5"
+                    min="1"
+                    name="copies"
+                    id="copy"
+                    className="lato border w-14 h-8 ml-3 text-black"
+                    onChange={(e) => {
+                      setNOC(e.target.value);
+                    }}
+                    value={NOC}
                   />
-                  <label className="lato" htmlFor="minimumBid">
-                    %
-                  </label>
+                  <div className="flex ml-2">
+                    {/* btn */}{" "}
+                    <div className={`img-upload select-none`}>
+                      <button
+                        className={`${
+                          Dark ? "darktheme hover:border-orange-300" : "logout"
+                        }  scale-75 rounded-full lato text-xl`}
+                        onClick={() => {
+                          setNOC(parseInt(NOC) + 1);
+                        }}
+                      >
+                        +1
+                      </button>
+                    </div>
+                    <div className={`img-upload select-none`}>
+                      <button
+                        className={`${
+                          Dark ? "darktheme hover:border-orange-300" : "logout"
+                        }  scale-75 rounded-full lato text-xl`}
+                        onClick={() => {
+                          setNOC(parseInt(NOC) + 5);
+                        }}
+                      >
+                        +5
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+            {/* Top Right */}
             <div>
-              {/* Preview Image */}
               <div>
                 <div
                   className={` ${
                     img === "" ? "border-2" : "border-none"
-                  } w-[7rem] ml-2 rounded-lg h-[7rem]`}
+                  } w-[10rem] ml-2 rounded-lg h-[9rem] mt-1`}
                 >
                   <div
-                    className={`mt-7 ml-1 text-lg text-center text-[#a9a9b0]
+                    className={`mt-11 select-none ml-1 text-xl text-center text-[#a9a9b0]
                   ${img ? "hidden" : "block"}
                   placeholder`}
                   >
-                    Preview Image Here
+                    Preview <br />
+                    Image Here
                   </div>
                   <img
                     src={img}
@@ -288,51 +223,158 @@ const MintOperation = ({ submit, setSubmit }) => {
                   {/* <img src={""} alt=""/> */}
                 </div>
               </div>
+
+              {/* Number of copies ends here */}
             </div>
           </div>
-        </div>
-        <div>
-          {/* Unlockable Content */}
-          <div className={`border-2 p-1 border-[#efefef] rounded-lg`}>
-            <div className=" flex justify-center items-center space-x-2">
-              <div className="select-none flex text-lg space-x-2 lato mw -mt-0.5">
-                Enable Unlockable Content
+          <div>
+            {/* Pricing */}
+            <div className="flex-col pl-3 mt-2 space-y-2 border-2 rounded-lg px-3 py-2 border-[#efefef]">
+              <div>
+                <div className="flex justify-between text-lg items-center gap-2">
+                  <label
+                    className="lato text-[18px] select-none"
+                    htmlFor="minimumBid"
+                  >
+                    Minimum Bid:
+                  </label>
+                  <div className="mr-7 flex gap-3">
+                    <input
+                      type="number"
+                      min="0"
+                      name="minimumBid"
+                      id="minimumBid"
+                      className="lato border w-14 h-8 text-black"
+                      onChange={onChange}
+                      placeholder="0"
+                    />
+                    <label className="lato select-none" htmlFor="minimumBid">
+                      $DESO
+                    </label>
+                  </div>
+                </div>
               </div>
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  name="isUnlockable"
-                  className="checkbox-switch"
-                  onClick={() => setIsUnlockable(!isUnlockable)}
-                />
-                <div className="slider"></div>
-              </label>
+              <div>
+                <div className="flex justify-between text-lg items-center gap-2">
+                  <label className="lato select-none" htmlFor="buyNow">
+                    Buy Now:
+                  </label>
+                  <div className="lato mr-7 flex gap-3">
+                    <input
+                      type="number"
+                      min="0"
+                      name="buyNowPrice"
+                      id="buyNow"
+                      className="border w-14 h-8 text-black"
+                      onChange={onChange}
+                      placeholder="0"
+                    />
+                    <label className="lato select-none" htmlFor="buyNow">
+                      $DESO
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="right-button absolute top-48 mt-1 left-[29.5rem]">
-        <button
-          className={`select-none btn focus:outline-none ${
-            Dark ? "bigbtn-dark hover:border-[#ff7521] " : "bigbtn bg-[#efefef]"
-          }`}
-          onClick={handleMintBtn}
-          disabled={loading}
-        >
-          {loading ? (
-            <Puff
-              stroke="#ff7521"
-              strokeOpacity={1}
-              speed={0.75}
-              width={73}
-              height={25}
-              strokeWidth={5}
-              fillOpacity={0.5}
-            />
-          ) : (
-            "SUBMIT"
-          )}
-        </button>
+
+        <div className="flex-col space-y-2 mt-2">
+          {/* Preview Image and Royalty */}
+          <div className="border-2 py-1 border-[#efefef] rounded-lg pr-1 pl-3">
+            {/* <div className="text-xl">Royalty:</div> */}
+            <div className="flex-col space-y-3 text-lg">
+              <div className="flex items-center justify-between">
+                <label
+                  htmlFor="creator"
+                  className="leading-[1rem] text-center lato select-none"
+                >
+                  Creator Royalty
+                </label>
+                <div className="flex gap-3 items-center mr-20">
+                  <input
+                    type="number"
+                    min="0"
+                    name="creatorRoyalty"
+                    id="creator"
+                    className="lato border w-14 h-8 text-black"
+                    onChange={onChange}
+                    placeholder="10"
+                  />
+                  <label className="lato select-none" htmlFor="minimumBid">
+                    %
+                  </label>
+                </div>
+              </div>
+              <div className="flex  items-center justify-between">
+                <label
+                  htmlFor="creator"
+                  className="leading-[1rem] text-center lato select-none"
+                >
+                  Coin Holder Royalty
+                </label>
+                <div className="flex items-center gap-3 mr-20">
+                  <input
+                    type="number"
+                    min="0"
+                    name="coinHolder"
+                    id="creator"
+                    className="lato border w-14 h-8 text-black "
+                    onChange={onChange}
+                    placeholder="5"
+                  />
+                  <label className="lato select-none" htmlFor="minimumBid">
+                    %
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            {/* Unlockable Content
+            <div className={`border-2 p-1 border-[#efefef] rounded-lg`}>
+              <div className=" flex justify-center items-center space-x-2">
+                <div className="select-none flex text-lg space-x-2 lato mw -mt-0.5">
+                  Enable Unlockable Content
+                </div>
+                <label className="switch">
+                  <input
+                    type="checkbox"
+                    name="isUnlockable"
+                    className="checkbox-switch"
+                    onClick={() => setIsUnlockable(!isUnlockable)}
+                  />
+                  <div className="slider"></div>
+                </label>
+              </div>
+            </div> */}
+          </div>
+        </div>
+        <div className="right-button flex justify-end mt-3 mb-3">
+          <button
+            className={`select-none btn focus:outline-none ${
+              Dark
+                ? "bigbtn-dark hover:border-[#ff7521] "
+                : "bigbtn bg-[#efefef]"
+            }`}
+            onClick={handleMintBtn}
+            disabled={loading}
+          >
+            {loading ? (
+              <Puff
+                stroke="#ff7521"
+                strokeOpacity={1}
+                speed={0.75}
+                width={73}
+                height={25}
+                strokeWidth={5}
+                fillOpacity={0.5}
+              />
+            ) : (
+              "SUBMIT"
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ const LoggedIn = ({
     tab = <TipOperation submit={submit} setSubmit={setSubmit} />;
   return (
     <div
-      className={`content-start w-[40rem] h-[25rem] border-red-300 border scale ${
+      className={`content-start w-[40rem] h-[25rem] border-red-300 border scale  ${
         Dark ? "dark-mode" : "light-mode"
       }`}
       onClick={(e) => {
@@ -37,54 +37,66 @@ const LoggedIn = ({
       ) : (
         <div>
           {!submit && (
-            <div className="w-full grid grid-cols-3 gap-10 mt-20 px-5 rounded-lg">
+            <div className="w-full grid grid-cols-3 gap-10 mt-20 px-5 pb-2 rounded-lg">
               <button
                 onClick={() => setActiveTab("post")}
                 className={`select-none
-                ${Dark? `bigbtn-dark ${
-                  activeTab === "post"
-                    ? `bigbtn-dark-active`
-                    : "bigbtn-dark-inactive"
-                }`: ` bigbtn ${
-                  activeTab === "post"
-                    ? `logout-active bg-[#efefef]`
-                    : "bg-[#efefef]"
-                }`}
+                ${
+                  Dark
+                    ? `bigbtn-dark ${
+                        activeTab === "post"
+                          ? `bigbtn-dark-active`
+                          : "bigbtn-dark-inactive"
+                      }`
+                    : ` bigbtn ${
+                        activeTab === "post"
+                          ? `logout-active bg-[#efefef]`
+                          : "bg-[#efefef]"
+                      }`
+                }
                 `}
               >
                 POST
               </button>
               <button
                 onClick={() => setActiveTab("mint")}
-                className={` select-none ${Dark? `bigbtn-dark ${
-                  activeTab === "mint"
-                    ? `bigbtn-dark-active`
-                    : "bigbtn-dark-inactive"
-                }`: ` bigbtn ${
-                  activeTab === "mint"
-                    ? `logout-active bg-[#efefef]`
-                    : "bg-[#efefef]"
-                }`}`}
+                className={` select-none ${
+                  Dark
+                    ? `bigbtn-dark ${
+                        activeTab === "mint"
+                          ? `bigbtn-dark-active`
+                          : "bigbtn-dark-inactive"
+                      }`
+                    : ` bigbtn ${
+                        activeTab === "mint"
+                          ? `logout-active bg-[#efefef]`
+                          : "bg-[#efefef]"
+                      }`
+                }`}
               >
                 MINT
               </button>
               <button
                 onClick={() => setActiveTab("tip")}
-                className={` select-none ${Dark? `bigbtn-dark ${
-                  activeTab === "tip"
-                    ? `bigbtn-dark-active`
-                    : "bigbtn-dark-inactive"
-                }`: ` bigbtn ${
-                  activeTab === "tip"
-                    ? `logout-active bg-[#efefef]`
-                    : "bg-[#efefef]"
-                }`}`}
+                className={` select-none ${
+                  Dark
+                    ? `bigbtn-dark ${
+                        activeTab === "tip"
+                          ? `bigbtn-dark-active`
+                          : "bigbtn-dark-inactive"
+                      }`
+                    : ` bigbtn ${
+                        activeTab === "tip"
+                          ? `logout-active bg-[#efefef]`
+                          : "bg-[#efefef]"
+                      }`
+                }`}
               >
                 TIP
               </button>
             </div>
           )}
-          {tab}
+          <div className="overflow-scroll h-[16.3rem]">{tab}</div>
         </div>
       )}{" "}
     </div>
