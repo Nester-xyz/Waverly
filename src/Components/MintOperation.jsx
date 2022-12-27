@@ -77,7 +77,7 @@ const MintOperation = ({ submit, setSubmit }) => {
       const request = {
         UpdaterPublicKeyBase58Check: pub_key,
         NFTPostHashHex: postHash,
-        NumCopies: parseInt(NOC),
+        NumCopies: NOC.length != 0 ? parseInt(NOC) : 1,
         NFTRoyaltyToCreatorBasisPoints:
           parseInt(data.creatorRoyalty.toString()) * 100,
         NFTRoyaltyToCoinBasisPoints: parseInt(data.coinHolder.toString()) * 100,
@@ -99,6 +99,7 @@ const MintOperation = ({ submit, setSubmit }) => {
         creatorRoyalty: "10",
         coinHolder: "5",
       });
+      setNOC("1");
       setLoading(false);
       setSubmit(true);
     } catch (error) {
@@ -174,7 +175,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                         className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
                           }  scale-75 rounded-full lato text-xl`}
                         onClick={() => {
-                          setNOC(parseInt(NOC) + 1);
+                          setNOC(parseInt(NOC + 0) + 1);
                         }}
                       >
                         +1
@@ -185,7 +186,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                         className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
                           }  scale-75 rounded-full lato text-xl`}
                         onClick={() => {
-                          setNOC(parseInt(NOC) + 5);
+                          setNOC(parseInt(NOC + 0) + 5);
                         }}
                       >
                         +5
