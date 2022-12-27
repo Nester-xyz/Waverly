@@ -70,16 +70,6 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
 
   logIn && getProfileImage();
 
-  // const themeToggler = () => {
-  //   setSwitch(!Switch);
-  //   console.log("toggled");
-  // };
-
-  // const DarkToggle = () => {
-  //   setDark(!Dark);
-  //   localStorage.setItem("dark", !Dark);
-  // };
-
   return (
     <div className={`absolute w-[40rem] ${!Dark ? "navbar" : "darknav"}`}>
       <div className="flex justify-between ">
@@ -93,39 +83,6 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
 
         {logIn ? (
           <div className="flex gap-4 items-center">
-            {/* {!Dark ? (
-              <div
-                className="scale-90 rounded-full cursor-pointer "
-                onClick={() => {
-                  themeToggler();
-                  DarkToggle();
-                }}
-              >
-                <HiMoon
-                  style={{
-                    color: "#151633",
-                    fontSize: "40px",
-                    padding: "2.5px",
-                  }}
-                />
-              </div>
-            ) : (
-              <div
-                className="scale-90 text-xs rounded-full cursor-pointer"
-                onClick={() => {
-                  themeToggler();
-                  DarkToggle();
-                }}
-              >
-                <HiSun
-                  style={{
-                    color: "#FDB813",
-                    fontSize: "40px",
-                    padding: "1px",
-                  }}
-                />
-              </div>
-            )} */}
             <div className="relative group">
               <img
                 src={profile}
@@ -138,11 +95,12 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
                 }}
               />
               <div
-                className={`absolute right-5 w-32 bg-white border-3 shadow-lg rounded-lg hidden group-hover:block z-50`}
+                className={`${Dark ? "dark-mode" : ""
+                  } absolute right-5 w-32 bg-white border-3 shadow-lg rounded-lg hidden group-hover:block z-50`}
               >
                 <a href={`https://www.diamondapp.com/u/${username}`} target="_blank" rel="noreferrer">
                   <div
-                    className={`select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${Dark ? "hover:bg-orange-400" : "hover:bg-blue-300"
+                    className={`select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${Dark ? "hover:bg-[#f69552]" : "hover:bg-blue-300"
                       } hover:rounded-t-[0.31rem]`}
                     onClick={() => {
                       setSettingActive(false);
@@ -153,7 +111,7 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
                   </div>
                 </a>
                 <div
-                  className={`select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${Dark ? "hover:bg-orange-400" : "hover:bg-blue-300"
+                  className={`select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${Dark ? "hover:bg-[#f69552]" : "hover:bg-blue-300"
                     }`}
                   onClick={(e) => {
                     e.preventDefault();
@@ -164,7 +122,7 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
                   Settings
                 </div>
                 <div
-                  className={`select-none cursor-pointer rounded-b-lg px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${Dark ? "hover:bg-orange-400" : "hover:bg-blue-300"
+                  className={`select-none cursor-pointer rounded-b-lg px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${Dark ? "hover:bg-[#f69552]" : "hover:bg-blue-300"
                     }`}
                   onClick={handleLogOut}
                 >

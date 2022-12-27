@@ -16,7 +16,7 @@ const MintOperation = ({ submit, setSubmit }) => {
     coinHolder: "5",
   });
   const [img, setImg] = useState("");
-  const [NOC, setNOC] = useState(1);
+  const [NOC, setNOC] = useState("1");
   const [loading, setLoading] = useState(false);
   const { Dark } = useContext(WaverlyContext);
   // eslint-disable-next-line
@@ -66,8 +66,8 @@ const MintOperation = ({ submit, setSubmit }) => {
   const handleMintBtn = async () => {
     let postHash;
     try {
-      setLoading(true);
       if (data.title.toString().length !== 0 || img.length !== 0) {
+        setLoading(true);
         postHash = await submitTransactionPost();
       } else {
         console.log("Submission not completed!");
@@ -77,7 +77,7 @@ const MintOperation = ({ submit, setSubmit }) => {
       const request = {
         UpdaterPublicKeyBase58Check: pub_key,
         NFTPostHashHex: postHash,
-        NumCopies: parseInt(data.copies.toString()),
+        NumCopies: parseInt(NOC),
         NFTRoyaltyToCreatorBasisPoints:
           parseInt(data.creatorRoyalty.toString()) * 100,
         NFTRoyaltyToCoinBasisPoints: parseInt(data.coinHolder.toString()) * 100,
@@ -88,6 +88,7 @@ const MintOperation = ({ submit, setSubmit }) => {
         BuyNowPriceNanos: parseInt(data.buyNowPrice.toString()) * 1000000000,
         MinFeeRateNanosPerKB: 1000,
       };
+      console.log(request);
       const response = await deso.nft.createNft(request);
       console.log(response);
       setData({
@@ -140,9 +141,8 @@ const MintOperation = ({ submit, setSubmit }) => {
                 {/* Image upload starts here */}
                 <div className={`img-upload`}>
                   <button
-                    className={`${
-                      Dark ? "darktheme hover:border-orange-300" : "logout"
-                    } mr-5 scale-75 rounded-full`}
+                    className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
+                      } mr-5 scale-75 rounded-full`}
                     onClick={handleUploadImage}
                   >
                     <IconContext.Provider value={{ size: "27px" }}>
@@ -171,9 +171,8 @@ const MintOperation = ({ submit, setSubmit }) => {
                     {/* btn */}{" "}
                     <div className={`img-upload select-none`}>
                       <button
-                        className={`${
-                          Dark ? "darktheme hover:border-orange-300" : "logout"
-                        }  scale-75 rounded-full lato text-xl`}
+                        className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
+                          }  scale-75 rounded-full lato text-xl`}
                         onClick={() => {
                           setNOC(parseInt(NOC) + 1);
                         }}
@@ -183,9 +182,8 @@ const MintOperation = ({ submit, setSubmit }) => {
                     </div>
                     <div className={`img-upload select-none`}>
                       <button
-                        className={`${
-                          Dark ? "darktheme hover:border-orange-300" : "logout"
-                        }  scale-75 rounded-full lato text-xl`}
+                        className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
+                          }  scale-75 rounded-full lato text-xl`}
                         onClick={() => {
                           setNOC(parseInt(NOC) + 5);
                         }}
@@ -201,9 +199,8 @@ const MintOperation = ({ submit, setSubmit }) => {
             <div>
               <div>
                 <div
-                  className={` ${
-                    img === "" ? "border-2" : "border-none"
-                  } w-[10rem] ml-2 rounded-lg h-[9rem] mt-1`}
+                  className={` ${img === "" ? "border-2" : "border-none"
+                    } w-[10rem] ml-2 rounded-lg h-[9rem] mt-1`}
                 >
                   <div
                     className={`mt-11 select-none ml-1 text-xl text-center text-[#a9a9b0]
@@ -216,9 +213,8 @@ const MintOperation = ({ submit, setSubmit }) => {
                   <img
                     src={img}
                     alt=""
-                    className={`object-cover w-[11rem] h-[7rem] rounded-lg   ${
-                      img ? "block" : "hidden"
-                    }`}
+                    className={`object-cover w-[11rem] h-[7rem] rounded-lg   ${img ? "block" : "hidden"
+                      }`}
                   />
                   {/* <img src={""} alt=""/> */}
                 </div>
@@ -352,11 +348,10 @@ const MintOperation = ({ submit, setSubmit }) => {
         </div>
         <div className="right-button flex justify-end mt-3 mb-3">
           <button
-            className={`select-none btn focus:outline-none ${
-              Dark
-                ? "bigbtn-dark hover:border-[#ff7521] "
-                : "bigbtn bg-[#efefef]"
-            }`}
+            className={`select-none btn focus:outline-none ${Dark
+              ? "bigbtn-dark hover:border-[#ff7521] "
+              : "bigbtn bg-[#efefef]"
+              }`}
             onClick={handleMintBtn}
             disabled={loading}
           >
