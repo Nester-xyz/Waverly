@@ -77,7 +77,7 @@ const MintOperation = ({ submit, setSubmit }) => {
       const request = {
         UpdaterPublicKeyBase58Check: pub_key,
         NFTPostHashHex: postHash,
-        NumCopies: NOC.length != 0 ? parseInt(NOC) : 1,
+        NumCopies: NOC.length !== 0 ? parseInt(NOC) : 1,
         NFTRoyaltyToCreatorBasisPoints:
           parseInt(data.creatorRoyalty.toString()) * 100,
         NFTRoyaltyToCoinBasisPoints: parseInt(data.coinHolder.toString()) * 100,

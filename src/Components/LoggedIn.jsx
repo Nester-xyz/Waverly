@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { WaverlyContext } from "../Contexts/WaverlyContext";
 import PostOperation from "./PostOperation";
 import MintOperation from "./MintOperation";
@@ -12,14 +12,6 @@ const LoggedIn = ({
   setSettingActive,
   setMenuActive,
 }) => {
-  const { dark, setDark } = useContext(WaverlyContext);
-  useEffect(() => {
-    const isDark = localStorage.getItem("dark");
-    if (isDark === true) {
-      setDark(true);
-    }
-  }, [dark]);
-
   const [submit, setSubmit] = useState(false);
   const [activeTab, setActiveTab] = useState("post");
   const { Dark } = useContext(WaverlyContext);
