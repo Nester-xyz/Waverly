@@ -3,7 +3,6 @@ import { WaverlyContext } from "../Contexts/WaverlyContext";
 import img from "../img/waverlydefault.png";
 import darkimg from "../img/waverlydark.png";
 // import { CgLogOff } from "react-icons/cg";
-import { HiMoon, HiSun } from "react-icons/hi2";
 
 import { FiSettings } from "react-icons/fi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
@@ -14,7 +13,8 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
   // change this accordingly. Make it props or whatever you wish
   // const [modalOpen, setmodalOpen] = useState(false);
   const { Dark, setDark } = useContext(WaverlyContext);
-  const [Switch, setSwitch] = useState(true);
+  // const [Switch, setSwitch] = useState(true);
+  const [username, setUsername] = useState("Waverly");
   const [profile, setProfile] = useState(
     "https://images.deso.org/a5306f0faf3e77360a11f4ea79a9a2fd449eca16f4e708e70bd88d8da1e08430.gif"
   );
@@ -27,7 +27,7 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
         setDark(true);
       }
     }
-  }, [])
+  }, [Dark, setDark])
 
   const handleLogOut = async () => {
     try {
@@ -53,6 +53,7 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
       const response1 = await deso.user.getSingleProfile(request1);
       const request2 = pub_key;
       const response2 = await deso.user.getSingleProfilePicture(request2);
+      setUsername(response1.Profile.Username);
       if (response1.Profile.ExtraData != null) {
         if (response1.Profile.ExtraData.NFTProfilePictureUrl != null) {
           setProfile(response1.Profile.ExtraData.NFTProfilePictureUrl);
@@ -69,15 +70,15 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
 
   logIn && getProfileImage();
 
-  const themeToggler = () => {
-    setSwitch(!Switch);
-    console.log("toggled");
-  };
+  // const themeToggler = () => {
+  //   setSwitch(!Switch);
+  //   console.log("toggled");
+  // };
 
-  const DarkToggle = () => {
-    setDark(!Dark);
-    localStorage.setItem("dark", !Dark);
-  };
+  // const DarkToggle = () => {
+  //   setDark(!Dark);
+  //   localStorage.setItem("dark", !Dark);
+  // };
 
   return (
     <div className={`absolute w-[40rem] ${!Dark ? "navbar" : "darknav"}`}>
@@ -92,7 +93,7 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
 
         {logIn ? (
           <div className="flex gap-4 items-center">
-            {!Dark ? (
+            {/* {!Dark ? (
               <div
                 className="scale-90 rounded-full cursor-pointer "
                 onClick={() => {
@@ -124,7 +125,7 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
                   }}
                 />
               </div>
-            )}
+            )} */}
             <div className="relative group">
               <img
                 src={profile}
@@ -139,17 +140,18 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
               <div
                 className={`absolute right-5 w-32 bg-white border-3 shadow-lg rounded-lg hidden group-hover:block z-50`}
               >
-                <div
-                  className={`select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${Dark ? "hover:bg-orange-400" : "hover:bg-blue-300"
-                    } hover:rounded-t-[0.31rem]`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setSettingActive(true);
-                  }}
-                >
-                  <CgProfile />
-                  Profile
-                </div>
+                <a href={`https://www.diamondapp.com/u/${username}`} target="_blank" rel="noreferrer">
+                  <div
+                    className={`select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${Dark ? "hover:bg-orange-400" : "hover:bg-blue-300"
+                      } hover:rounded-t-[0.31rem]`}
+                    onClick={() => {
+                      setSettingActive(false);
+                    }}
+                  >
+                    <CgProfile />
+                    Profile
+                  </div>
+                </a>
                 <div
                   className={`select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${Dark ? "hover:bg-orange-400" : "hover:bg-blue-300"
                     }`}
