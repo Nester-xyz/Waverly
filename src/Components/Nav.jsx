@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { WaverlyContext } from "../Contexts/WaverlyContext";
 import img from "../img/waverlydefault.png";
 import darkimg from "../img/waverlydark.png";
@@ -19,6 +19,15 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
     "https://images.deso.org/a5306f0faf3e77360a11f4ea79a9a2fd449eca16f4e708e70bd88d8da1e08430.gif"
   );
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const isDark = localStorage.getItem("dark");
+      if (isDark === "true") {
+        setDark(true);
+      }
+    }
+  }, [])
 
   const handleLogOut = async () => {
     try {
@@ -67,6 +76,7 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
 
   const DarkToggle = () => {
     setDark(!Dark);
+    localStorage.setItem("dark", !Dark);
   };
 
   return (
@@ -82,7 +92,7 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
 
         {logIn ? (
           <div className="flex gap-4 items-center">
-            {Switch ? (
+            {!Dark ? (
               <div
                 className="scale-90 rounded-full cursor-pointer "
                 onClick={() => {
@@ -118,9 +128,8 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
             <div className="relative group">
               <img
                 src={profile}
-                className={`${
-                  Dark ? "profile-dark" : "logout"
-                } select-none w-11 h-11 rounded-full  mr-5 scale-90`}
+                className={`${Dark ? "profile-dark" : "logout"
+                  } select-none w-11 h-11 rounded-full  mr-5 scale-90`}
                 alt="prof img"
                 onClick={(e) => {
                   e.preventDefault();
@@ -131,9 +140,8 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
                 className={`absolute right-5 w-32 bg-white border-3 shadow-lg rounded-lg hidden group-hover:block z-50`}
               >
                 <div
-                  className={`select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${
-                    Dark ? "hover:bg-orange-400" : "hover:bg-blue-300"
-                  } hover:rounded-t-[0.31rem]`}
+                  className={`select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${Dark ? "hover:bg-orange-400" : "hover:bg-blue-300"
+                    } hover:rounded-t-[0.31rem]`}
                   onClick={(e) => {
                     e.preventDefault();
                     setSettingActive(true);
@@ -143,9 +151,8 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
                   Profile
                 </div>
                 <div
-                  className={`select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${
-                    Dark ? "hover:bg-orange-400" : "hover:bg-blue-300"
-                  }`}
+                  className={`select-none cursor-pointer border-b-[0.1rem] px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${Dark ? "hover:bg-orange-400" : "hover:bg-blue-300"
+                    }`}
                   onClick={(e) => {
                     e.preventDefault();
                     setSettingActive(true);
@@ -155,9 +162,8 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
                   Settings
                 </div>
                 <div
-                  className={`select-none cursor-pointer rounded-b-lg px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${
-                    Dark ? "hover:bg-orange-400" : "hover:bg-blue-300"
-                  }`}
+                  className={`select-none cursor-pointer rounded-b-lg px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${Dark ? "hover:bg-orange-400" : "hover:bg-blue-300"
+                    }`}
                   onClick={handleLogOut}
                 >
                   <RiLogoutCircleRLine />

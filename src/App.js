@@ -13,8 +13,12 @@ function App() {
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const isDark = localStorage.getItem("dark");
     if (isLoggedIn === "true") {
       setLogIn(true);
+    }
+    if (isDark === true) {
+      setDark(true);
     }
   }, []);
 
