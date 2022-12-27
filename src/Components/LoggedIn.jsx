@@ -12,13 +12,13 @@ const LoggedIn = ({
   setSettingActive,
   setMenuActive,
 }) => {
-  const { dark, setDark } = useContext(WaverlyContext)
+  const { dark, setDark } = useContext(WaverlyContext);
   useEffect(() => {
     const isDark = localStorage.getItem("dark");
     if (isDark === true) {
       setDark(true);
     }
-  }, [dark])
+  }, [dark]);
 
   const [submit, setSubmit] = useState(false);
   const [activeTab, setActiveTab] = useState("post");
@@ -32,8 +32,9 @@ const LoggedIn = ({
     tab = <TipOperation submit={submit} setSubmit={setSubmit} />;
   return (
     <div
-      className={`content-start w-[40rem] h-[25rem] border-red-300 border scale  ${Dark ? "dark-mode" : "light-mode"
-        }`}
+      className={`content-start w-[40rem] h-[25rem] border scale  ${
+        Dark ? "dark-mode" : "light-mode"
+      }`}
       onClick={(e) => {
         e.preventDefault();
         setMenuActive(false);
@@ -49,53 +50,64 @@ const LoggedIn = ({
               <button
                 onClick={() => setActiveTab("post")}
                 className={`select-none
-                ${Dark
-                    ? `bigbtn-dark ${activeTab === "post"
-                      ? `bigbtn-dark-active`
-                      : "bigbtn-dark-inactive"
-                    }`
-                    : ` bigbtn ${activeTab === "post"
-                      ? `logout-active bg-[#efefef]`
-                      : "bg-[#efefef]"
-                    }`
-                  }
+                ${
+                  Dark
+                    ? `bigbtn-dark ${
+                        activeTab === "post"
+                          ? `bigbtn-dark-active`
+                          : "bigbtn-dark-inactive"
+                      }`
+                    : ` bigbtn ${
+                        activeTab === "post"
+                          ? `logout-active bg-[#efefef]`
+                          : "bg-[#efefef]"
+                      }`
+                }
                 `}
               >
                 POST
               </button>
               <button
                 onClick={() => setActiveTab("mint")}
-                className={` select-none ${Dark
-                  ? `bigbtn-dark ${activeTab === "mint"
-                    ? `bigbtn-dark-active`
-                    : "bigbtn-dark-inactive"
-                  }`
-                  : ` bigbtn ${activeTab === "mint"
-                    ? `logout-active bg-[#efefef]`
-                    : "bg-[#efefef]"
-                  }`
-                  }`}
+                className={` select-none ${
+                  Dark
+                    ? `bigbtn-dark ${
+                        activeTab === "mint"
+                          ? `bigbtn-dark-active`
+                          : "bigbtn-dark-inactive"
+                      }`
+                    : ` bigbtn ${
+                        activeTab === "mint"
+                          ? `logout-active bg-[#efefef]`
+                          : "bg-[#efefef]"
+                      }`
+                }`}
               >
                 MINT
               </button>
               <button
                 onClick={() => setActiveTab("tip")}
-                className={` select-none ${Dark
-                  ? `bigbtn-dark ${activeTab === "tip"
-                    ? `bigbtn-dark-active`
-                    : "bigbtn-dark-inactive"
-                  }`
-                  : ` bigbtn ${activeTab === "tip"
-                    ? `logout-active bg-[#efefef]`
-                    : "bg-[#efefef]"
-                  }`
-                  }`}
+                className={` select-none ${
+                  Dark
+                    ? `bigbtn-dark ${
+                        activeTab === "tip"
+                          ? `bigbtn-dark-active`
+                          : "bigbtn-dark-inactive"
+                      }`
+                    : ` bigbtn ${
+                        activeTab === "tip"
+                          ? `logout-active bg-[#efefef]`
+                          : "bg-[#efefef]"
+                      }`
+                }`}
               >
                 TIP
               </button>
             </div>
           )}
-          <div className="overflow-x-hidden overflow-y-auto h-[16.3rem]">{tab}</div>
+          <div className="overflow-x-hidden overflow-y-auto h-[16.3rem]">
+            {tab}
+          </div>
         </div>
       )}{" "}
     </div>

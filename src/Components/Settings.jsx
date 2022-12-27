@@ -20,15 +20,16 @@ const Settings = ({ setSettingActive }) => {
           console.count("1");
           setSettingActive(false);
         }}
-        className={`absolute top-20 left-5 text-3xl  focus:outline-none rounded-full bg-[#efefef] ${Dark ? "darktheme hover:border-[#ff7521]" : "logout"
-          }`}
+        className={`absolute top-20 left-5 text-3xl  focus:outline-none rounded-full bg-[#efefef] ${
+          Dark ? "darktheme hover:border-[#ff7521]" : "logout"
+        }`}
       >
         <IoArrowBackCircleOutline />
       </button>
       <div>
         <div>
-          <div className="ml-[10rem] mt-52 text-3xl lato">
-            Theme Toggle
+          <div className=" mt-40 ml-3 mr-3 text-3xl lato flex gap-96 border-2 items-center rounded-lg">
+            <div className="lato ml-3 text-2xl select-none">Theme Switch:</div>
             {!Dark ? (
               <div
                 className="scale-90 rounded-full cursor-pointer "
