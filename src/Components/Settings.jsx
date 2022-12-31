@@ -57,13 +57,6 @@ const Settings = ({ setSettingActive, shower, setShower }) => {
             <div className="group">
               <div
                 className="border flex gap-2 items-center px-2 hover:border-[#ff7521]"
-                // onClick={() => {
-                //   if (shower === "diamond") {
-                //     setShower("heart");
-                //   } else {
-                //     setShower("diamond");
-                //   }
-                // }}
                 onClick={() => {
                   setMenuActive(!menuActive);
                 }}
@@ -71,10 +64,14 @@ const Settings = ({ setSettingActive, shower, setShower }) => {
                 {shower} <AiOutlineDown />
               </div>
               <div
-                className={`absolute right-2 top-9 border-2 bg-[#444] px-2 hidden group-hover:block`}
+                className={`absolute right-2 top-9 border-2 ${
+                  Dark ? "bg-[#444]" : "bg-white"
+                } px-2 hidden group-hover:block`}
               >
                 <div
-                  className="cursor-pointer hover:text-[#ff7521] flex items-center gap-1"
+                  className={`cursor-pointer flex items-center gap-1 ${
+                    Dark ? "hover:text-[#ff7521]" : "hover:text-sky-500"
+                  }`}
                   onClick={() => {
                     setShower("heart");
                   }}
@@ -86,7 +83,9 @@ const Settings = ({ setSettingActive, shower, setShower }) => {
                 </div>
                 <hr />
                 <div
-                  className="cursor-pointer hover:text-[#ff7521] flex items-center gap-1"
+                  className={`cursor-pointer flex items-center gap-1 ${
+                    Dark ? "hover:text-[#ff7521]" : "hover:text-sky-500"
+                  }`}
                   onClick={() => {
                     setShower("diamond");
                   }}
