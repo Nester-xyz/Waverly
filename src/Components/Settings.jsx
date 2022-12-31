@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { WaverlyContext } from "../Contexts/WaverlyContext";
 import { HiMoon, HiSun } from "react-icons/hi2";
+import { BsGithub } from "react-icons/bs";
 const Settings = ({ setSettingActive }) => {
   const { Dark, setDark } = useContext(WaverlyContext);
   const themeToggler = () => {
@@ -28,7 +29,7 @@ const Settings = ({ setSettingActive }) => {
       </button>
       <div>
         <div>
-          <div className=" mt-40 ml-3 mr-3 text-3xl lato flex gap-96 border-2 items-center rounded-lg">
+          <div className=" mt-40 ml-3 mr-3 flex gap-96 border-2 items-center rounded-lg">
             <div className="lato ml-3 text-2xl select-none">Theme Switch:</div>
             {!Dark ? (
               <div
@@ -63,6 +64,22 @@ const Settings = ({ setSettingActive }) => {
                 />
               </div>
             )}
+          </div>
+        </div>
+        <div className="select-none mt-2 ml-3 mr-3 border-2 rounded-lg flex">
+          <div className="flex gap-[21rem] mt-2 lato text-2xl ml-3 ">
+            Want to contribute?
+            <a
+              className={`${
+                Dark ? "text-white" : "text-[#151633]"
+              } scale-125 mr-3 cursor-pointer`}
+              href="https://github.com/DeWhales-xyz/Waverly"
+              onClick="https://github.com/DeWhales-xyz/Waverly"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <BsGithub />
+            </a>
           </div>
         </div>
       </div>
