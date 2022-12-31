@@ -6,28 +6,16 @@ import { FaUserAltSlash } from "react-icons/fa";
 import { useState } from "react";
 
 const HeartOperation = () => {
-  const [diamonds, setDiamonds] = useState("1");
   const [numberOfPost, setNumberOfPost] = useState(10);
-  const [rate, setRate] = useState("1");
   const [username, setUsername] = useState("");
   // eslint-disable-next-line
   const [pub_key, setPub_key] = useState("");
   const [loading, setLoading] = useState(false);
   const [postHexes, setPostHexes] = useState([]);
-  const [tipLevel, setTipLevel] = useState("0");
+  const [heartPosts, setHeartPosts] = useState("0");
   const [isUsername, setIsUsername] = useState(false);
   const [isValid, setIsValid] = useState(true);
   const { Dark } = useContext(WaverlyContext);
-
-  useEffect(() => {
-    let response;
-    async function handleExchangeRate() {
-      const deso = new Deso();
-      response = await deso.metaData.getExchangeRate();
-      setRate(response.USDCentsPerDeSoBlockchainDotCom);
-    }
-    handleExchangeRate();
-  }, []);
 
   let public_key;
 
@@ -73,28 +61,27 @@ const HeartOperation = () => {
     // cool got the hexes here
   }
 
-  const sendDiamonds = async () => {
+  const sendHearts = async () => {
+    console.log(numberOfPost);
+    console.log(username);
+
     try {
       const deso = new Deso();
       console.log(postHexes.length);
       for (let i = 0; i < postHexes.length; i++) {
         try {
           const sender_pub_key = localStorage.getItem("user_key");
-          const receiver_pub_key = public_key;
-          const diamond_level = Number(diamonds);
           const request = {
-            ReceiverPublicKeyBase58Check: receiver_pub_key,
-            SenderPublicKeyBase58Check: sender_pub_key,
-            DiamondPostHashHex: postHexes[i],
-            DiamondLevel: diamond_level,
-            MinFeeRateNanosPerKB: 1001,
-            InTutorial: false,
+            ReaderPublicKeyBase58Check: sender_pub_key,
+            LikedPostHashHex: postHexes[i],
+            MinFeeRateNanosPerKB: 1000,
+            IsUnlike: false,
           };
-          const response = await deso.social.sendDiamonds(request);
+          const response = await deso.social.createLikeStateless(request);
           console.log(response);
-          setTipLevel(`${i + 1}`);
+          setHeartPosts(`${i + 1}`);
         } catch (error) {
-          setTipLevel(`${i + 1}`);
+          setHeartPosts(`${i + 1}`);
           continue;
         }
       }
@@ -103,7 +90,7 @@ const HeartOperation = () => {
     }
   };
 
-  const handleTipButton = async () => {
+  const handleHeartButton = async () => {
     // get the profile publicKeyBase58Check using username
     if (username.length !== 0) {
       setLoading(true);
@@ -111,14 +98,12 @@ const HeartOperation = () => {
       // fetch post of user
       await fetchPosts();
       // send diamonds required data posthash hex collection array of no of Posts to fetch
-      await sendDiamonds();
-      setDiamonds("1");
+      await sendHearts();
       setNumberOfPost(10);
       setUsername("");
       setPub_key("");
       setLoading(false);
       setPostHexes([]);
-      setTipLevel("0");
       setIsUsername(false);
     }
   };
@@ -174,7 +159,7 @@ const HeartOperation = () => {
           />
         </div>
       </div>
-      {/* Submit Button & Calculations */}
+      {/* Submit Button */}
       <div className="flex justify-between items-center mt-4">
         <div className="lato"></div>
         <div className="flex items-center space-x-5">
@@ -184,13 +169,13 @@ const HeartOperation = () => {
                 ? "bigbtn-dark hover:border-[#ff7521] "
                 : "bigbtn bg-[#efefef]"
             }`}
-            onClick={handleTipButton}
+            onClick={handleHeartButton}
             disabled={loading}
           >
             {loading === false && "SUBMIT"}
             {loading === true &&
               (isUsername ? (
-                `${tipLevel}/${numberOfPost} ✅`
+                `${heartPosts}/${numberOfPost} ✅`
               ) : (
                 <MagnifyingGlass
                   visible={true}

@@ -89,16 +89,16 @@ const LoggedIn = ({
               </button>
               {shower === "diamond" && (
                 <button
-                  onClick={() => setActiveTab("heart")}
+                  onClick={() => setActiveTab("tip")}
                   className={` select-none ${
                     Dark
                       ? `bigbtn-dark ${
-                          activeTab === "heart"
+                          activeTab === "tip"
                             ? `bigbtn-dark-active`
                             : "bigbtn-dark-inactive"
                         }`
                       : ` bigbtn ${
-                          activeTab === "heart"
+                          activeTab === "tip"
                             ? `logout-active bg-[#efefef]`
                             : "bg-[#efefef]"
                         }`
@@ -124,7 +124,7 @@ const LoggedIn = ({
                         }`
                   }`}
                 >
-                  HEART
+                  TIP
                 </button>
               )}
             </div>
