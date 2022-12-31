@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { WaverlyContext } from "../Contexts/WaverlyContext";
 import Deso from "deso-protocol";
 import { MagnifyingGlass } from "react-loader-spinner";
@@ -164,11 +164,10 @@ const HeartOperation = () => {
         <div className="lato"></div>
         <div className="flex items-center space-x-5">
           <button
-            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${
-              Dark
+            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${Dark
                 ? "bigbtn-dark hover:border-[#ff7521] "
                 : "bigbtn bg-[#efefef]"
-            }`}
+              }`}
             onClick={handleHeartButton}
             disabled={loading}
           >

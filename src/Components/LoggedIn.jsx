@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { WaverlyContext } from "../Contexts/WaverlyContext";
 import PostOperation from "./PostOperation";
 import MintOperation from "./MintOperation";
@@ -31,9 +31,8 @@ const LoggedIn = ({
     tab = <HeartOperation submit={submit} setSubmit={setSubmit} />;
   return (
     <div
-      className={`content-start w-[40rem] h-[25rem] border scale  ${
-        Dark ? "dark-mode" : "light-mode"
-      }`}
+      className={`content-start w-[40rem] h-[25rem] border scale  ${Dark ? "dark-mode" : "light-mode"
+        }`}
       onClick={(e) => {
         e.preventDefault();
         setMenuActive(false);
@@ -55,57 +54,48 @@ const LoggedIn = ({
               <button
                 onClick={() => setActiveTab("post")}
                 className={`select-none
-                ${
-                  Dark
-                    ? `bigbtn-dark ${
-                        activeTab === "post"
-                          ? `bigbtn-dark-active`
-                          : "bigbtn-dark-inactive"
-                      }`
-                    : ` bigbtn ${
-                        activeTab === "post"
-                          ? `logout-active bg-[#efefef]`
-                          : "bg-[#efefef]"
-                      }`
-                }
+                ${Dark
+                    ? `bigbtn-dark ${activeTab === "post"
+                      ? `bigbtn-dark-active`
+                      : "bigbtn-dark-inactive"
+                    }`
+                    : ` bigbtn ${activeTab === "post"
+                      ? `logout-active bg-[#efefef]`
+                      : "bg-[#efefef]"
+                    }`
+                  }
                 `}
               >
                 POST
               </button>
               <button
                 onClick={() => setActiveTab("mint")}
-                className={` select-none ${
-                  Dark
-                    ? `bigbtn-dark ${
-                        activeTab === "mint"
-                          ? `bigbtn-dark-active`
-                          : "bigbtn-dark-inactive"
-                      }`
-                    : ` bigbtn ${
-                        activeTab === "mint"
-                          ? `logout-active bg-[#efefef]`
-                          : "bg-[#efefef]"
-                      }`
-                }`}
+                className={` select-none ${Dark
+                    ? `bigbtn-dark ${activeTab === "mint"
+                      ? `bigbtn-dark-active`
+                      : "bigbtn-dark-inactive"
+                    }`
+                    : ` bigbtn ${activeTab === "mint"
+                      ? `logout-active bg-[#efefef]`
+                      : "bg-[#efefef]"
+                    }`
+                  }`}
               >
                 MINT
               </button>
               {shower === "diamond" ? (
                 <button
                   onClick={() => setActiveTab("tip")}
-                  className={` select-none ${
-                    Dark
-                      ? `bigbtn-dark ${
-                          activeTab === "tip"
-                            ? `bigbtn-dark-active`
-                            : "bigbtn-dark-inactive"
-                        }`
-                      : ` bigbtn ${
-                          activeTab === "tip"
-                            ? `logout-active bg-[#efefef]`
-                            : "bg-[#efefef]"
-                        }`
-                  }`}
+                  className={` select-none ${Dark
+                      ? `bigbtn-dark ${activeTab === "tip"
+                        ? `bigbtn-dark-active`
+                        : "bigbtn-dark-inactive"
+                      }`
+                      : ` bigbtn ${activeTab === "tip"
+                        ? `logout-active bg-[#efefef]`
+                        : "bg-[#efefef]"
+                      }`
+                    }`}
                 >
                   TIP
                 </button>
@@ -113,19 +103,16 @@ const LoggedIn = ({
               {shower === "heart" ? (
                 <button
                   onClick={() => setActiveTab("heart")}
-                  className={` select-none ${
-                    Dark
-                      ? `bigbtn-dark ${
-                          activeTab === "heart"
-                            ? `bigbtn-dark-active`
-                            : "bigbtn-dark-inactive"
-                        }`
-                      : ` bigbtn ${
-                          activeTab === "heart"
-                            ? `logout-active bg-[#efefef]`
-                            : "bg-[#efefef]"
-                        }`
-                  }`}
+                  className={` select-none ${Dark
+                      ? `bigbtn-dark ${activeTab === "heart"
+                        ? `bigbtn-dark-active`
+                        : "bigbtn-dark-inactive"
+                      }`
+                      : ` bigbtn ${activeTab === "heart"
+                        ? `logout-active bg-[#efefef]`
+                        : "bg-[#efefef]"
+                      }`
+                    }`}
                 >
                   TIP
                 </button>

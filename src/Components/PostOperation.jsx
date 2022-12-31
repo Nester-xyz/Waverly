@@ -8,7 +8,7 @@ import { ImEmbed } from "react-icons/im";
 import EmbeddBtn from "./EmbeddBtn";
 import { Puff } from "react-loading-icons";
 import { MdOutlineCancel } from "react-icons/md";
-
+import { MentionsInput, Mention } from 'react-mentions'
 const PostOperation = ({ submit, setSubmit }) => {
   const [imgURLs, setImgURLs] = useState([]);
   const [bodyText, setBodyText] = useState("");
@@ -99,13 +99,45 @@ const PostOperation = ({ submit, setSubmit }) => {
       console.error(error);
     }
   };
+  let users = [
+    {
+      id: "1",
+      display: "@Adam",
+      image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
+    },
+    {
+      id: "2",
+      display: "@Eve",
+      image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
+    },
+    {
+      id: "3",
+      display: "@Lamb",
+      image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
+    },
+    {
+      id: "4",
+      display: "@aryog",
+      image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
+    },
+    // {
+    //   id: "5",
+    //   display: "@anku",
+    //   image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
+    // },
+    // {
+    //   id: "6",
+    //   display: "@nona",
+    //   image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
+    // },
+  ]
 
   return (
     <div>
       <div>
         {/* text area */}
         <div className="flex">
-          <textarea
+          <MentionsInput
             id="textbox"
             className="rounded-xl textbox border-2 resize-none text-black text-lg pt-2 bg-[#efefef] w-[25rem] color-black mt-4 px-5 mx-5 focus:outline-none placeholder"
             rows={`${textBoxActive2 ? "5" : "6"}`}
@@ -113,7 +145,24 @@ const PostOperation = ({ submit, setSubmit }) => {
             placeholder="Enter your post"
             value={bodyText}
             onChange={(e) => setBodyText(e.target.value)}
-          ></textarea>
+            a11ySuggestionsListLabel={"Suggested Github users for mention"}
+          >
+            <Mention
+              data={users}
+              renderSuggestion={(
+                suggestion,
+                search,
+                highlightedDisplay,
+                index,
+                focused
+              ) => (
+                <div className={`user ${focused ? 'focused' : ''} flex flex-row items-start justify-center`}>
+                  <img className="select-none w-10 h-10 mt-1 rounded-full" src={users[index].image} alt="broken"></img><div className="p-2">{highlightedDisplay}</div>
+                </div>
+              )}
+              appendSpaceOnAdd
+            />
+          </MentionsInput>
           <div
             className={`mt-7 mb-3 w-[11rem] rounded-lg ${divImg === "" ? "border-2" : "border-none"
               }`}
