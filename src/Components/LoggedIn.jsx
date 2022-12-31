@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { WaverlyContext } from "../Contexts/WaverlyContext";
 import PostOperation from "./PostOperation";
 import MintOperation from "./MintOperation";
-import HeartOperation from "./HeartOperation";
+import TipOperation from "./TipOperation";
 import Settings from "./Settings";
 
 // login button
@@ -20,8 +20,8 @@ const LoggedIn = ({
     tab = <PostOperation submit={submit} setSubmit={setSubmit} />;
   if (activeTab === "mint")
     tab = <MintOperation submit={submit} setSubmit={setSubmit} />;
-  if (activeTab === "heart")
-    tab = <HeartOperation submit={submit} setSubmit={setSubmit} />;
+  if (activeTab === "tip")
+    tab = <TipOperation submit={submit} setSubmit={setSubmit} />;
   return (
     <div
       className={`content-start w-[40rem] h-[25rem] border scale  ${
@@ -78,22 +78,22 @@ const LoggedIn = ({
                 MINT
               </button>
               <button
-                onClick={() => setActiveTab("heart")}
+                onClick={() => setActiveTab("tip")}
                 className={` select-none ${
                   Dark
                     ? `bigbtn-dark ${
-                        activeTab === "heart"
+                        activeTab === "tip"
                           ? `bigbtn-dark-active`
                           : "bigbtn-dark-inactive"
                       }`
                     : ` bigbtn ${
-                        activeTab === "heart"
+                        activeTab === "tip"
                           ? `logout-active bg-[#efefef]`
                           : "bg-[#efefef]"
                       }`
                 }`}
               >
-                Heart
+                TIP
               </button>
             </div>
           )}

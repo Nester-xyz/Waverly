@@ -7,6 +7,9 @@
     "32": "./favicon_io/favicon-32x32.png",
     "128": "./favicon_io/favicon-128x128.png"
   },
+"background":{ 
+  "service_worker": ["background.js"]
+},
   "manifest_version": 3,
   "action": {
     "default_popup": "index.html",
