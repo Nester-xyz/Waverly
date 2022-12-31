@@ -1,9 +1,13 @@
-import React, { useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { WaverlyContext } from "../Contexts/WaverlyContext";
 import { HiMoon, HiSun } from "react-icons/hi2";
 import { BsGithub } from "react-icons/bs";
-const Settings = ({ setSettingActive }) => {
+import { BsFillHeartFill } from "react-icons/bs";
+import { IoDiamondSharp } from "react-icons/io5";
+import { AiOutlineDown } from "react-icons/ai";
+const Settings = ({ setSettingActive, shower, setShower }) => {
+  const [menuActive, setMenuActive] = useState(false);
   const { Dark, setDark } = useContext(WaverlyContext);
   const themeToggler = () => {
     // setSwitch(!Switch);
@@ -14,8 +18,18 @@ const Settings = ({ setSettingActive }) => {
     setDark(!Dark);
     localStorage.setItem("dark", !Dark);
   };
+
+  useEffect(() => {
+    console.log(menuActive);
+  }, [menuActive]);
+
   return (
-    <div className="mt-20 w-[40rem] ">
+    <div
+      className="mt-20 w-[40rem] "
+      onClick={() => {
+        setMenuActive(!menuActive);
+      }}
+    >
       <button
         onClick={(e) => {
           console.count("1");
@@ -27,58 +41,117 @@ const Settings = ({ setSettingActive }) => {
       >
         <IoArrowBackCircleOutline />
       </button>
-      <div>
-        <div>
-          <div className=" mt-40 ml-3 mr-3 flex gap-96 border-2 items-center rounded-lg">
-            <div className="lato ml-3 text-2xl select-none">Theme Switch:</div>
-            {!Dark ? (
+      {/* back btn ends here */}
+
+      <div
+        onClick={() => {
+          if (menuActive) {
+            setMenuActive(false);
+          }
+        }}
+      >
+        <div className="mt-40 text-2xl lato">
+          {/* shower toggeler */}
+          <div className="flex relative justify-between items-center mx-3 border-2 py-1 px-2 rounded-lg">
+            <div>Change Shower</div>
+            <div className="group">
               <div
-                className="scale-90 rounded-full cursor-pointer "
+                className="border flex gap-2 items-center px-2 hover:border-[#ff7521]"
+                // onClick={() => {
+                //   if (shower === "diamond") {
+                //     setShower("heart");
+                //   } else {
+                //     setShower("diamond");
+                //   }
+                // }}
                 onClick={() => {
-                  themeToggler();
-                  DarkToggle();
+                  setMenuActive(!menuActive);
                 }}
               >
-                <HiMoon
-                  style={{
-                    color: "#151633",
-                    fontSize: "40px",
-                    padding: "2.5px",
-                  }}
-                />
+                {shower} <AiOutlineDown />
               </div>
-            ) : (
               <div
-                className="scale-90 text-xs rounded-full cursor-pointer"
-                onClick={() => {
-                  themeToggler();
-                  DarkToggle();
-                }}
+                className={`absolute right-2 top-9 border-2 bg-[#444] px-2 hidden group-hover:block`}
               >
-                <HiSun
-                  style={{
-                    color: "#FDB813",
-                    fontSize: "40px",
-                    padding: "1px",
+                <div
+                  className="cursor-pointer hover:text-[#ff7521] flex items-center gap-1"
+                  onClick={() => {
+                    setShower("heart");
                   }}
-                />
+                >
+                  <div className="text-sm">
+                    <BsFillHeartFill />
+                  </div>
+                  <div>Heart</div>
+                </div>
+                <hr />
+                <div
+                  className="cursor-pointer hover:text-[#ff7521] flex items-center gap-1"
+                  onClick={() => {
+                    setShower("diamond");
+                  }}
+                >
+                  <div className="text-sm">
+                    <IoDiamondSharp />
+                  </div>
+                  <div>Diamond</div>
+                </div>
               </div>
-            )}
+            </div>
           </div>
-        </div>
-        <div className="select-none mt-2 ml-3 mr-3 border-2 rounded-lg flex">
-          <div className="flex gap-[21rem] mt-2 lato text-2xl ml-3 ">
-            Want to contribute?
+
+          {/* theme toggle */}
+          <div
+            className="flex justify-between items-center border-2 rounded-lg px-2 mx-3 py-0.5 my-2 cursor-pointer"
+            onClick={() => {
+              themeToggler();
+              DarkToggle();
+            }}
+          >
+            <div className="select-none">Theme Switch</div>
+            {/* icons */}
+            <div className="px-3">
+              {!Dark ? (
+                <div>
+                  {" "}
+                  <HiMoon
+                    style={{
+                      color: "#151633",
+                      fontSize: "40px",
+                      padding: "2.5px",
+                    }}
+                  />
+                </div>
+              ) : (
+                <div>
+                  {" "}
+                  <HiSun
+                    style={{
+                      color: "#FDB813",
+                      fontSize: "40px",
+                      padding: "1px",
+                    }}
+                  />{" "}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* github handle */}
+          <div className="border-2 rounded-lg lato mx-3 px-3 py-1 select-none">
             <a
-              className={`${
+              className={`flex justify-between items-center ${
                 Dark ? "text-white" : "text-[#151633]"
-              } scale-125 mr-3 cursor-pointer`}
+              }`}
               href="https://github.com/DeWhales-xyz/Waverly"
               onClick="https://github.com/DeWhales-xyz/Waverly"
               target="_blank"
               rel="noreferrer"
             >
-              <BsGithub />
+              <div>Want to contribute</div>
+              <div className="text-3xl mr-3">
+                <BsGithub />
+              </div>
             </a>
           </div>
         </div>

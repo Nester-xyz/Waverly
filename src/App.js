@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Landing from "./Components/Landing";
 import LoggedIn from "./Components/LoggedIn";
 import Nav from "./Components/Nav";
-import { WaverlyContext } from './Contexts/WaverlyContext';
+import { WaverlyContext } from "./Contexts/WaverlyContext";
 import { MemoryRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
   const [settingActive, setSettingActive] = useState(false);
   const [menuActive, setMenuActive] = useState(false);
   const [Dark, setDark] = useState(false);
+  const [shower, setShower] = useState("heart");
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
@@ -49,6 +50,8 @@ function App() {
                       setMenuActive={setMenuActive}
                       Dark={Dark}
                       setDark={setDark}
+                      shower={shower}
+                      setShower={setShower}
                     />
                   }
                 />
