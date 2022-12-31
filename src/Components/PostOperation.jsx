@@ -99,39 +99,57 @@ const PostOperation = ({ submit, setSubmit }) => {
       console.error(error);
     }
   };
-  let users = [
-    {
-      id: "1",
-      display: "@Adam",
-      image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
-    },
-    {
-      id: "2",
-      display: "@Eve",
-      image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
-    },
-    {
-      id: "3",
-      display: "@Lamb",
-      image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
-    },
-    {
-      id: "4",
-      display: "@aryog",
-      image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
-    },
-    // {
-    //   id: "5",
-    //   display: "@anku",
-    //   image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
-    // },
-    // {
-    //   id: "6",
-    //   display: "@nona",
-    //   image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
-    // },
-  ]
-
+  // let users = [
+  //   {
+  //     id: "1",
+  //     display: "@adam",
+  //     displayD: "adam",
+  //     image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
+  //   },
+  //   {
+  //     id: "2",
+  //     display: "@eve",
+  //     displayD: "eve",
+  //     image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
+  //   },
+  //   {
+  //     id: "@3",
+  //     display: "@lamb",
+  //     displayD: "lamb",
+  //     image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
+  //   },
+  //   {
+  //     id: "4",
+  //     display: "@aryog",
+  //     displayD: "aryog",
+  //     image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
+  //   },
+  //   {
+  //     id: "5",
+  //     display: "@anku",
+  //     displayD: "anku",
+  //     image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
+  //   },
+  //   {
+  //     id: "6",
+  //     display: "@nona",
+  //     displayD: "nona",
+  //     image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
+  //   },
+  // ]
+  async function fetchUsers(query, callback) {
+    console.log(query);
+    if (!query) return;
+    const deso = new Deso();
+    const request = {
+      UsernamePrefix: query,
+      OrderBy: "influencer_coin_price",
+      NumToFetch: 6,
+    };
+    await deso.user.getProfiles(request).then((response) =>
+      response.ProfilesFound.map(user => ({ display: user.Username, id: `@${user.Username}`, image: function () { const request = user.PublicKeyBase58Check; const response = deso.user.getSingleProfilePicture(request); return response; } }))
+    ).then(callback)
+  }
   return (
     <div>
       <div>
@@ -147,8 +165,10 @@ const PostOperation = ({ submit, setSubmit }) => {
             onChange={(e) => setBodyText(e.target.value)}
             a11ySuggestionsListLabel={"Suggested Github users for mention"}
           >
-            <Mention
+            {/* <Mention
+              trigger="#"
               data={users}
+              markup="@(__id__)s"
               renderSuggestion={(
                 suggestion,
                 search,
@@ -157,7 +177,24 @@ const PostOperation = ({ submit, setSubmit }) => {
                 focused
               ) => (
                 <div className={`user ${focused ? 'focused' : ''} flex flex-row items-start justify-center`}>
-                  <img className="select-none w-10 h-10 mt-1 rounded-full" src={users[index].image} alt="broken"></img><div className="p-2">{highlightedDisplay}</div>
+                  <img className="select-none w-10 h-10 mt-1 rounded-full" src={users[index].image} alt="broken"></img><div className="p-2 normal-capitalize">{highlightedDisplay}</div>
+                </div>
+              )}
+              appendSpaceOnAdd
+            /> */}
+            <Mention
+              trigger="@"
+              markup="@(__id__)"
+              data={fetchUsers}
+              renderSuggestion={(
+                suggestion,
+                search,
+                highlightedDisplay,
+                index,
+                focused
+              ) => (
+                <div className={`user ${focused ? 'focused' : ''} flex flex-row items-start justify-center`}>
+                  <img className="select-none w-10 h-10 mt-1 rounded-full" src={suggestion.image()} alt="."></img><div className="p-2">{highlightedDisplay}</div>
                 </div>
               )}
               appendSpaceOnAdd
