@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { WaverlyContext } from "../Contexts/WaverlyContext";
 import PostOperation from "./PostOperation";
 import MintOperation from "./MintOperation";
@@ -20,6 +20,7 @@ const LoggedIn = ({
   const { Dark } = useContext(WaverlyContext);
 
   let tab;
+
   if (activeTab === "post")
     tab = <PostOperation submit={submit} setSubmit={setSubmit} />;
   if (activeTab === "mint")
@@ -44,6 +45,8 @@ const LoggedIn = ({
           setSettingActive={setSettingActive}
           shower={shower}
           setShower={setShower}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
         />
       ) : (
         <div>
@@ -87,7 +90,7 @@ const LoggedIn = ({
               >
                 MINT
               </button>
-              {shower === "diamond" && (
+              {shower === "diamond" ? (
                 <button
                   onClick={() => setActiveTab("tip")}
                   className={` select-none ${
@@ -106,8 +109,8 @@ const LoggedIn = ({
                 >
                   TIP
                 </button>
-              )}
-              {shower === "heart" && (
+              ) : null}
+              {shower === "heart" ? (
                 <button
                   onClick={() => setActiveTab("heart")}
                   className={` select-none ${
@@ -126,7 +129,7 @@ const LoggedIn = ({
                 >
                   TIP
                 </button>
-              )}
+              ) : null}
             </div>
           )}
           <div className="overflow-x-hidden overflow-y-auto h-[16.3rem]">

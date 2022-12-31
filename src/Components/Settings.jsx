@@ -6,7 +6,13 @@ import { BsGithub } from "react-icons/bs";
 import { BsFillHeartFill } from "react-icons/bs";
 import { IoDiamondSharp } from "react-icons/io5";
 import { AiOutlineDown } from "react-icons/ai";
-const Settings = ({ setSettingActive, shower, setShower }) => {
+const Settings = ({
+  setSettingActive,
+  shower,
+  setShower,
+  activeTab,
+  setActiveTab,
+}) => {
   const [menuActive, setMenuActive] = useState(false);
   const { Dark, setDark } = useContext(WaverlyContext);
   const themeToggler = () => {
@@ -74,6 +80,9 @@ const Settings = ({ setSettingActive, shower, setShower }) => {
                   }`}
                   onClick={() => {
                     setShower("heart");
+                    if (activeTab === "tip") {
+                      setActiveTab("heart");
+                    }
                   }}
                 >
                   <div className="text-sm">
@@ -88,6 +97,9 @@ const Settings = ({ setSettingActive, shower, setShower }) => {
                   }`}
                   onClick={() => {
                     setShower("diamond");
+                    if (activeTab === "heart") {
+                      setActiveTab("tip");
+                    }
                   }}
                 >
                   <div className="text-sm">
