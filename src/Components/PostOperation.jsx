@@ -69,10 +69,13 @@ const PostOperation = ({ submit, setSubmit }) => {
       if (Object.keys(imgURLs).length !== 0) {
         imgURLar = [imgURLs[imgURLs.length - 1].name];
       }
+      // for mention manip
+      let res1 = bodyText.replace(/@\(/g, "");
+      let res2 = res1.replaceAll(")", "");
       const request = {
         UpdaterPublicKeyBase58Check: pub_key,
         BodyObj: {
-          Body: `${bodyText} \n\n Posted via @waverlyapp`,
+          Body: `${res2} \n\n Posted via @waverlyapp`,
           VideoURLs: [],
           ImageURLs: imgURLar,
         },
@@ -154,7 +157,7 @@ const PostOperation = ({ submit, setSubmit }) => {
     <div>
       <div>
         {/* text area */}
-        <div className="flex">
+        <div className="flex w-full h-48">
           <MentionsInput
             id="textbox"
             className="rounded-xl textbox border-2 resize-none text-black text-lg pt-2 bg-[#efefef] w-[25rem] color-black mt-4 px-5 mx-5 focus:outline-none placeholder"
@@ -193,8 +196,10 @@ const PostOperation = ({ submit, setSubmit }) => {
                 index,
                 focused
               ) => (
-                <div className={`user ${focused ? 'focused' : ''} flex flex-row items-start justify-center`}>
-                  <img className="select-none w-10 h-10 mt-1 rounded-full" src={suggestion.image()} alt="."></img><div className="p-2">{highlightedDisplay}</div>
+                <div className={`user ${focused ? 'focused' : ''} flex flex-row rounded-xl bg-slate-50`}>
+                  <div className="p-1 flex flex-row rounded-xl">
+                    <img className="select-none w-10 h-10 mt-1 rounded-full" src={suggestion.image()} alt="."></img><div className="p-2">{highlightedDisplay}</div>
+                  </div>
                 </div>
               )}
               appendSpaceOnAdd
