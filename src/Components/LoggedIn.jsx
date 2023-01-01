@@ -71,14 +71,14 @@ const LoggedIn = ({
               <button
                 onClick={() => setActiveTab("mint")}
                 className={` select-none ${Dark
-                    ? `bigbtn-dark ${activeTab === "mint"
-                      ? `bigbtn-dark-active`
-                      : "bigbtn-dark-inactive"
-                    }`
-                    : ` bigbtn ${activeTab === "mint"
-                      ? `logout-active bg-[#efefef]`
-                      : "bg-[#efefef]"
-                    }`
+                  ? `bigbtn-dark ${activeTab === "mint"
+                    ? `bigbtn-dark-active`
+                    : "bigbtn-dark-inactive"
+                  }`
+                  : ` bigbtn ${activeTab === "mint"
+                    ? `logout-active bg-[#efefef]`
+                    : "bg-[#efefef]"
+                  }`
                   }`}
               >
                 MINT
@@ -87,14 +87,14 @@ const LoggedIn = ({
                 <button
                   onClick={() => setActiveTab("tip")}
                   className={` select-none ${Dark
-                      ? `bigbtn-dark ${activeTab === "tip"
-                        ? `bigbtn-dark-active`
-                        : "bigbtn-dark-inactive"
-                      }`
-                      : ` bigbtn ${activeTab === "tip"
-                        ? `logout-active bg-[#efefef]`
-                        : "bg-[#efefef]"
-                      }`
+                    ? `bigbtn-dark ${activeTab === "tip"
+                      ? `bigbtn-dark-active`
+                      : "bigbtn-dark-inactive"
+                    }`
+                    : ` bigbtn ${activeTab === "tip"
+                      ? `logout-active bg-[#efefef]`
+                      : "bg-[#efefef]"
+                    }`
                     }`}
                 >
                   TIP
@@ -104,17 +104,17 @@ const LoggedIn = ({
                 <button
                   onClick={() => setActiveTab("heart")}
                   className={` select-none ${Dark
-                      ? `bigbtn-dark ${activeTab === "heart"
-                        ? `bigbtn-dark-active`
-                        : "bigbtn-dark-inactive"
-                      }`
-                      : ` bigbtn ${activeTab === "heart"
-                        ? `logout-active bg-[#efefef]`
-                        : "bg-[#efefef]"
-                      }`
+                    ? `bigbtn-dark ${activeTab === "heart"
+                      ? `bigbtn-dark-active`
+                      : "bigbtn-dark-inactive"
+                    }`
+                    : ` bigbtn ${activeTab === "heart"
+                      ? `logout-active bg-[#efefef]`
+                      : "bg-[#efefef]"
+                    }`
                     }`}
                 >
-                  TIP
+                  HEART
                 </button>
               ) : null}
             </div>

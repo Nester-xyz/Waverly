@@ -147,7 +147,7 @@ const PostOperation = ({ submit, setSubmit }) => {
     const request = {
       UsernamePrefix: query,
       OrderBy: "influencer_coin_price",
-      NumToFetch: 6,
+      NumToFetch: 4,
     };
     await deso.user.getProfiles(request).then((response) =>
       response.ProfilesFound.map(user => ({ display: user.Username, id: `@${user.Username}`, image: function () { const request = user.PublicKeyBase58Check; const response = deso.user.getSingleProfilePicture(request); return response; } }))
@@ -157,7 +157,7 @@ const PostOperation = ({ submit, setSubmit }) => {
     <div>
       <div>
         {/* text area */}
-        <div className="flex w-full h-48">
+        <div className="flex w-full h-48 lato">
           <MentionsInput
             id="textbox"
             className="rounded-xl textbox border-2 resize-none text-black text-lg pt-2 bg-[#efefef] w-[25rem] color-black mt-4 px-5 mx-5 focus:outline-none placeholder"
@@ -196,7 +196,7 @@ const PostOperation = ({ submit, setSubmit }) => {
                 index,
                 focused
               ) => (
-                <div className={`user ${focused ? 'focused' : ''} flex flex-row rounded-xl bg-slate-50`}>
+                <div className={`user ${focused ? 'focused' : ''} flex flex-row rounded-xl bg-slate-50 lato`}>
                   <div className="p-1 flex flex-row rounded-xl">
                     <img className="select-none w-10 h-10 mt-1 rounded-full" src={suggestion.image()} alt="."></img><div className="p-2">{highlightedDisplay}</div>
                   </div>

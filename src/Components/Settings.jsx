@@ -41,9 +41,8 @@ const Settings = ({
           console.count("1");
           setSettingActive(false);
         }}
-        className={`absolute top-20 left-5 text-3xl  focus:outline-none rounded-full bg-[#efefef] ${
-          Dark ? "darktheme hover:border-[#ff7521]" : "logout"
-        }`}
+        className={`absolute top-20 left-5 text-3xl  focus:outline-none rounded-full bg-[#efefef] ${Dark ? "darktheme hover:border-[#ff7521]" : "logout"
+          }`}
       >
         <IoArrowBackCircleOutline />
       </button>
@@ -60,7 +59,7 @@ const Settings = ({
           {/* shower toggeler */}
           <div className="flex relative justify-between items-center mx-3 border-2 py-1 px-2 rounded-lg">
             <div>Change Shower</div>
-            <div className="group">
+            <div className="group" onMouseEnter={() => setMenuActive(true)} onMouseLeave={() => setMenuActive(false)}>
               <div
                 className="border flex gap-2 items-center px-2 hover:border-[#ff7521]"
                 onClick={() => {
@@ -70,14 +69,12 @@ const Settings = ({
                 {shower} <AiOutlineDown />
               </div>
               <div
-                className={`absolute right-2 top-9 border-2 ${
-                  Dark ? "bg-[#444]" : "bg-white"
-                } px-2 hidden group-hover:block`}
+                className={`absolute right-2 top-9 border-2 ${Dark ? "bg-[#444]" : "bg-white"
+                  } px-2 ${menuActive ? "block" : "hidden"}`}
               >
                 <div
-                  className={`cursor-pointer flex items-center gap-1 ${
-                    Dark ? "hover:text-[#ff7521]" : "hover:text-sky-500"
-                  }`}
+                  className={`cursor-pointer flex items-center gap-1 ${Dark ? "hover:text-[#ff7521]" : "hover:text-sky-500"
+                    }`}
                   onClick={() => {
                     setShower("heart");
                     if (activeTab === "tip") {
@@ -92,9 +89,8 @@ const Settings = ({
                 </div>
                 <hr />
                 <div
-                  className={`cursor-pointer flex items-center gap-1 ${
-                    Dark ? "hover:text-[#ff7521]" : "hover:text-sky-500"
-                  }`}
+                  className={`cursor-pointer flex items-center gap-1 ${Dark ? "hover:text-[#ff7521]" : "hover:text-sky-500"
+                    }`}
                   onClick={() => {
                     setShower("diamond");
                     if (activeTab === "heart") {
@@ -151,9 +147,8 @@ const Settings = ({
           {/* github handle */}
           <div className="border-2 rounded-lg lato mx-3 px-3 py-1 select-none">
             <a
-              className={`flex justify-between items-center ${
-                Dark ? "text-white" : "text-[#151633]"
-              }`}
+              className={`flex justify-between items-center ${Dark ? "text-white" : "text-[#151633]"
+                }`}
               href="https://github.com/DeWhales-xyz/Waverly"
               onClick="https://github.com/DeWhales-xyz/Waverly"
               target="_blank"
