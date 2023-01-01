@@ -160,7 +160,7 @@ const PostOperation = ({ submit, setSubmit }) => {
         <div className="flex w-full h-48 lato">
           <MentionsInput
             id="textbox"
-            className="rounded-xl textbox border-2 resize-none text-black text-lg pt-2 bg-[#efefef] w-[25rem] color-black mt-4 px-5 mx-5 focus:outline-none placeholder"
+            className="lato rounded-xl textbox resize-none text-black text-lg pt-2 bg-[#efefef] w-[25rem] mt-4 px-5 mx-5 focus:outline-none"
             rows={`${textBoxActive2 ? "5" : "6"}`}
             cols="1"
             placeholder="Enter your post"
@@ -168,24 +168,8 @@ const PostOperation = ({ submit, setSubmit }) => {
             onChange={(e) => setBodyText(e.target.value)}
             a11ySuggestionsListLabel={"Suggested Github users for mention"}
           >
-            {/* <Mention
-              trigger="#"
-              data={users}
-              markup="@(__id__)s"
-              renderSuggestion={(
-                suggestion,
-                search,
-                highlightedDisplay,
-                index,
-                focused
-              ) => (
-                <div className={`user ${focused ? 'focused' : ''} flex flex-row items-start justify-center`}>
-                  <img className="select-none w-10 h-10 mt-1 rounded-full" src={users[index].image} alt="broken"></img><div className="p-2 normal-capitalize">{highlightedDisplay}</div>
-                </div>
-              )}
-              appendSpaceOnAdd
-            /> */}
             <Mention
+              className="focus:outline-none"
               trigger="@"
               markup="@(__id__)"
               data={fetchUsers}

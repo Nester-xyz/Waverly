@@ -16,7 +16,7 @@ const MintOperation = ({ submit, setSubmit }) => {
     coinHolder: "5",
   });
   const [img, setImg] = useState("");
-  const [NOC, setNOC] = useState("1");
+  const [NOC, setNOC] = useState(1);
   const [loading, setLoading] = useState(false);
   const { Dark } = useContext(WaverlyContext);
   // eslint-disable-next-line
@@ -142,9 +142,8 @@ const MintOperation = ({ submit, setSubmit }) => {
                 {/* Image upload starts here */}
                 <div className={`img-upload`}>
                   <button
-                    className={`${
-                      Dark ? "darktheme hover:border-orange-300" : "logout"
-                    } mr-5 scale-75 rounded-full`}
+                    className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
+                      } mr-5 scale-75 rounded-full`}
                     onClick={handleUploadImage}
                   >
                     <IconContext.Provider value={{ size: "27px" }}>
@@ -173,9 +172,8 @@ const MintOperation = ({ submit, setSubmit }) => {
                     {/* btn */}{" "}
                     <div className={`img-upload select-none`}>
                       <button
-                        className={`${
-                          Dark ? "darktheme hover:border-orange-300" : "logout"
-                        }  scale-75 rounded-full lato text-xl`}
+                        className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
+                          }  scale-75 rounded-full lato text-xl`}
                         onClick={() => {
                           setNOC(parseInt(NOC + 0) + 1);
                         }}
@@ -185,9 +183,8 @@ const MintOperation = ({ submit, setSubmit }) => {
                     </div>
                     <div className={`img-upload select-none`}>
                       <button
-                        className={`${
-                          Dark ? "darktheme hover:border-orange-300" : "logout"
-                        }  scale-75 rounded-full lato text-xl`}
+                        className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
+                          }  scale-75 rounded-full lato text-xl`}
                         onClick={() => {
                           setNOC(parseInt(NOC + 0) + 5);
                         }}
@@ -203,9 +200,8 @@ const MintOperation = ({ submit, setSubmit }) => {
             <div>
               <div>
                 <div
-                  className={` ${
-                    img === "" ? "border-2" : "border-none"
-                  } w-[10rem] ml-2 rounded-lg h-[9rem] mt-1`}
+                  className={` ${img === "" ? "border-2" : "border-none"
+                    } w-[10rem] ml-2 rounded-lg h-[9rem] mt-1`}
                 >
                   <div
                     className={`mt-11 select-none ml-1 text-xl text-center text-[#a9a9b0]
@@ -218,9 +214,8 @@ const MintOperation = ({ submit, setSubmit }) => {
                   <img
                     src={img}
                     alt=""
-                    className={`object-cover w-[11rem] h-[7rem] rounded-lg   ${
-                      img ? "block" : "hidden"
-                    }`}
+                    className={`object-cover w-[11rem] h-[7rem] rounded-lg   ${img ? "block" : "hidden"
+                      }`}
                   />
                   {/* <img src={""} alt=""/> */}
                 </div>
@@ -354,11 +349,10 @@ const MintOperation = ({ submit, setSubmit }) => {
         </div>
         <div className="right-button flex justify-end mt-3 mb-3">
           <button
-            className={`select-none btn focus:outline-none ${
-              Dark
+            className={`select-none btn focus:outline-none ${Dark
                 ? "bigbtn-dark hover:border-[#ff7521] "
                 : "bigbtn bg-[#efefef]"
-            }`}
+              }`}
             onClick={handleMintBtn}
             disabled={loading}
           >

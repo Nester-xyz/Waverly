@@ -31,7 +31,7 @@ const Settings = ({
 
   return (
     <div
-      className="mt-20 w-[40rem] "
+      className="mt-20 w-[40rem] select-none "
       onClick={() => {
         setMenuActive(!menuActive);
       }}
@@ -58,7 +58,7 @@ const Settings = ({
         <div className="mt-40 text-2xl lato">
           {/* shower toggeler */}
           <div className="flex relative justify-between items-center mx-3 border-2 py-1 px-2 rounded-lg">
-            <div>Change Shower</div>
+            <div className="lato">Change Shower</div>
             <div className="group" onMouseEnter={() => setMenuActive(true)} onMouseLeave={() => setMenuActive(false)}>
               <div
                 className="border flex gap-2 items-center px-2 hover:border-[#ff7521]"
@@ -66,14 +66,14 @@ const Settings = ({
                   setMenuActive(!menuActive);
                 }}
               >
-                {shower} <AiOutlineDown />
+                <div className="capitalize lato">{shower}</div> <AiOutlineDown />
               </div>
               <div
                 className={`absolute right-2 top-9 border-2 ${Dark ? "bg-[#444]" : "bg-white"
                   } px-2 ${menuActive ? "block" : "hidden"}`}
               >
                 <div
-                  className={`cursor-pointer flex items-center gap-1 ${Dark ? "hover:text-[#ff7521]" : "hover:text-sky-500"
+                  className={`cursor-pointer flex items-center gap-2 ${Dark ? "hover:text-[#ff7521]" : "hover:text-sky-500"
                     }`}
                   onClick={() => {
                     setShower("heart");
@@ -85,11 +85,11 @@ const Settings = ({
                   <div className="text-sm">
                     <BsFillHeartFill />
                   </div>
-                  <div>Heart</div>
+                  <div className="lato">Heart</div>
                 </div>
                 <hr />
                 <div
-                  className={`cursor-pointer flex items-center gap-1 ${Dark ? "hover:text-[#ff7521]" : "hover:text-sky-500"
+                  className={`cursor-pointer flex items-center gap-2 ${Dark ? "hover:text-[#ff7521]" : "hover:text-sky-500"
                     }`}
                   onClick={() => {
                     setShower("diamond");
@@ -101,7 +101,7 @@ const Settings = ({
                   <div className="text-sm">
                     <IoDiamondSharp />
                   </div>
-                  <div>Diamond</div>
+                  <div className="lato">Diamond</div>
                 </div>
               </div>
             </div>
@@ -115,7 +115,7 @@ const Settings = ({
               DarkToggle();
             }}
           >
-            <div className="select-none">Theme Switch</div>
+            <div className="select-none lato">Theme Switch</div>
             {/* icons */}
             <div className="px-3">
               {!Dark ? (
@@ -154,7 +154,7 @@ const Settings = ({
               target="_blank"
               rel="noreferrer"
             >
-              <div>Want to contribute</div>
+              <div className="lato">Want to contribute</div>
               <div className="text-3xl mr-3">
                 <BsGithub />
               </div>
