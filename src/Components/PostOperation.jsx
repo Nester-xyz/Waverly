@@ -102,44 +102,6 @@ const PostOperation = ({ submit, setSubmit }) => {
       console.error(error);
     }
   };
-  // let users = [
-  //   {
-  //     id: "1",
-  //     display: "@adam",
-  //     displayD: "adam",
-  //     image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
-  //   },
-  //   {
-  //     id: "2",
-  //     display: "@eve",
-  //     displayD: "eve",
-  //     image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
-  //   },
-  //   {
-  //     id: "@3",
-  //     display: "@lamb",
-  //     displayD: "lamb",
-  //     image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
-  //   },
-  //   {
-  //     id: "4",
-  //     display: "@aryog",
-  //     displayD: "aryog",
-  //     image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
-  //   },
-  //   {
-  //     id: "5",
-  //     display: "@anku",
-  //     displayD: "anku",
-  //     image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
-  //   },
-  //   {
-  //     id: "6",
-  //     display: "@nona",
-  //     displayD: "nona",
-  //     image: "https://node.deso.org/api/v0/get-single-profile-picture/BC1YLfuFqiNB2wMPoMN8qiaYnW4PcXEgMd2orvXr1cUkXjCSgmiJpJU"
-  //   },
-  // ]
   async function fetchUsers(query, callback) {
     console.log(query);
     if (!query) return;
@@ -157,10 +119,10 @@ const PostOperation = ({ submit, setSubmit }) => {
     <div>
       <div>
         {/* text area */}
-        <div className="flex w-full h-48 lato">
+        <div className="flex w-full h-48">
           <MentionsInput
             id="textbox"
-            className="lato rounded-xl textbox resize-none text-black text-lg pt-2 bg-[#efefef] w-[25rem] mt-4 px-5 mx-5 focus:outline-none"
+            className="rounded-xl textbox resize-none text-black text-lg pt-2 bg-[#efefef] w-[25rem] mt-4 px-5 mx-5 focus:outline-none"
             rows={`${textBoxActive2 ? "5" : "6"}`}
             cols="1"
             placeholder="Enter your post"

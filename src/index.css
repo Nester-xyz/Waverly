@@ -213,7 +213,9 @@ input[type="number"] {
 .placeholder {
   font-family: "DM Sans", sans-serif;
 }
-
+.ankit{
+  font-family: "Lato", sans-serif;
+}
 .dark-mode {
   background: #333;
   box-shadow: 20px 20px 60px #373535, -20px -20px 60px #4b4747;
