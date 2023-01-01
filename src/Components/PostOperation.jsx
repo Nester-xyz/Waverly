@@ -9,6 +9,7 @@ import EmbeddBtn from "./EmbeddBtn";
 import { Puff } from "react-loading-icons";
 import { MdOutlineCancel } from "react-icons/md";
 import { MentionsInput, Mention } from 'react-mentions'
+import defaultStyle from './default.js'
 const PostOperation = ({ submit, setSubmit }) => {
   const [imgURLs, setImgURLs] = useState([]);
   const [bodyText, setBodyText] = useState("");
@@ -119,10 +120,11 @@ const PostOperation = ({ submit, setSubmit }) => {
     <div>
       <div>
         {/* text area */}
-        <div className="flex w-full h-48">
+        <div className="flex w-full h-45">
           <MentionsInput
             id="textbox"
             className="rounded-xl textbox resize-none text-black text-lg pt-2 bg-[#efefef] w-[25rem] mt-4 px-5 mx-5 focus:outline-none"
+            style={defaultStyle}
             rows={`${textBoxActive2 ? "5" : "6"}`}
             cols="1"
             placeholder="Enter your post"
@@ -142,9 +144,9 @@ const PostOperation = ({ submit, setSubmit }) => {
                 index,
                 focused
               ) => (
-                <div className={`user ${focused ? 'focused' : ''} flex flex-row rounded-xl bg-slate-50 lato`}>
-                  <div className="p-1 flex flex-row rounded-xl">
-                    <img className="select-none w-10 h-10 mt-1 rounded-full" src={suggestion.image()} alt="."></img><div className="p-2">{highlightedDisplay}</div>
+                <div className={`user ${focused ? 'focused' : ''} flex flex-row rounded-xl lato`}>
+                  <div className=" flex flex-row rounded-xl lato">
+                    <img className="select-none w-10 h-10 mt-1 rounded-full" src={suggestion.image()} alt="."></img><div className="p-2 lato">{highlightedDisplay}</div>
                   </div>
                 </div>
               )}
