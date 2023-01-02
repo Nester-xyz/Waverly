@@ -25,7 +25,7 @@ function App() {
 
   return (
     <>
-      <WaverlyContext.Provider value={{ Dark, setDark }}>
+      <WaverlyContext.Provider value={{ Dark, setDark, setSettingActive }}>
         <Router>
           <div>
             <Nav

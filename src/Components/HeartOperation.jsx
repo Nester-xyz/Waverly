@@ -3,6 +3,7 @@ import { WaverlyContext } from "../Contexts/WaverlyContext";
 import Deso from "deso-protocol";
 import { MagnifyingGlass } from "react-loader-spinner";
 import { FaUserAltSlash } from "react-icons/fa";
+import { HiOutlineSwitchVertical } from "react-icons/hi";
 import { useState } from "react";
 
 const HeartOperation = () => {
@@ -15,7 +16,7 @@ const HeartOperation = () => {
   const [heartPosts, setHeartPosts] = useState("0");
   const [isUsername, setIsUsername] = useState(false);
   const [isValid, setIsValid] = useState(true);
-  const { Dark } = useContext(WaverlyContext);
+  const { Dark, setSettingActive } = useContext(WaverlyContext);
 
   let public_key;
 
@@ -110,7 +111,7 @@ const HeartOperation = () => {
 
   return (
     <div className="relative  w-[40rem] px-5 text-xl">
-      <div className="mt-10 ml-10  space-y-2">
+      <div className="mt-16 ml-10  space-y-2">
         {/*  userName */}
         <div className="flex space-x-3">
           <label htmlFor="UserName" className="lato select-none">
@@ -160,14 +161,26 @@ const HeartOperation = () => {
         </div>
       </div>
       {/* Submit Button */}
-      <div className="flex justify-between items-center mt-4">
+      <div className="flex justify-between items-center mt-[2.9rem] mr-2">
+        <div
+          className={`scale-[0.9] ${
+            Dark ? "darktheme hover:border-[#ff7521]" : "logout"
+          } rounded-full ml-10`}
+          onClick={(e) => {
+            e.preventDefault();
+            setSettingActive(true);
+          }}
+        >
+          <HiOutlineSwitchVertical style={{ fontSize: "25px" }} />
+        </div>
         <div className="lato"></div>
         <div className="flex items-center space-x-5">
           <button
-            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${Dark
+            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${
+              Dark
                 ? "bigbtn-dark hover:border-[#ff7521] "
                 : "bigbtn bg-[#efefef]"
-              }`}
+            }`}
             onClick={handleHeartButton}
             disabled={loading}
           >

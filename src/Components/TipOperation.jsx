@@ -3,6 +3,7 @@ import { WaverlyContext } from "../Contexts/WaverlyContext";
 import Deso from "deso-protocol";
 import { MagnifyingGlass } from "react-loader-spinner";
 import { FaUserAltSlash } from "react-icons/fa";
+import { HiOutlineSwitchVertical } from "react-icons/hi";
 import { useState } from "react";
 
 const TipOperations = () => {
@@ -17,7 +18,7 @@ const TipOperations = () => {
   const [tipLevel, setTipLevel] = useState("0");
   const [isUsername, setIsUsername] = useState(false);
   const [isValid, setIsValid] = useState(true);
-  const { Dark } = useContext(WaverlyContext);
+  const { Dark, setSettingActive } = useContext(WaverlyContext);
 
   useEffect(() => {
     let response;
@@ -187,34 +188,43 @@ const TipOperations = () => {
           </label>
           <div className="flex select-none text-black">
             <button
-              className={`${Dark ? "darktheme" : "logout"
-                } rounded-full lato scale-75 ${diamonds === "1"
-                  ? `${Dark ? "darktheme-active" : "logout-active "
-                  } border-blue-400 border-2`
+              className={`${
+                Dark ? "darktheme" : "logout"
+              } rounded-full lato scale-75 ${
+                diamonds === "1"
+                  ? `${
+                      Dark ? "darktheme-active" : "logout-active "
+                    } border-blue-400 border-2`
                   : `hover:border-orange-300`
-                }`}
+              }`}
               onClick={() => setDiamonds("1")}
             >
               1💎
             </button>
             <button
-              className={`${Dark ? "darktheme" : "logout"
-                } rounded-full lato scale-75 ${diamonds === "2"
-                  ? `${Dark ? "darktheme-active" : "logout-active "
-                  } border-blue-400 border-2`
+              className={`${
+                Dark ? "darktheme" : "logout"
+              } rounded-full lato scale-75 ${
+                diamonds === "2"
+                  ? `${
+                      Dark ? "darktheme-active" : "logout-active "
+                    } border-blue-400 border-2`
                   : `hover:border-orange-300`
-                }`}
+              }`}
               onClick={() => setDiamonds("2")}
             >
               2💎
             </button>
             <button
-              className={`${Dark ? "darktheme" : "logout"
-                } rounded-full lato scale-75 ${diamonds === "3"
-                  ? `${Dark ? "darktheme-active" : "logout-active "
-                  } border-blue-400 border-2`
+              className={`${
+                Dark ? "darktheme" : "logout"
+              } rounded-full lato scale-75 ${
+                diamonds === "3"
+                  ? `${
+                      Dark ? "darktheme-active" : "logout-active "
+                    } border-blue-400 border-2`
                   : `hover:border-orange-300`
-                }`}
+              }`}
               onClick={() => setDiamonds("3")}
             >
               3💎
@@ -223,23 +233,35 @@ const TipOperations = () => {
         </div>
       </div>
       {/* Submit Button & Calculations */}
-      <div className="flex justify-between items-center mt-4">
+      <div className="flex justify-between items-center mt-3">
         <div className="lato"></div>
         <div className="flex items-center space-x-5">
+          <div
+            className={`${
+              Dark ? "darktheme hover:border-[#ff7521]" : "logout"
+            } rounded-full mr-36 scale-[0.9]`}
+            onClick={(e) => {
+              e.preventDefault();
+              setSettingActive(true);
+            }}
+          >
+            <HiOutlineSwitchVertical style={{ fontSize: "25px" }} />
+          </div>
           <div className="lato select-none">
             Calculation &nbsp;~$
             {parseFloat(
               ((Number(diamondData[Number(diamonds)]) / 1e9) *
                 Number(numberOfPost) *
                 Number(rate)) /
-              100
+                100
             ).toFixed(4)}
           </div>
           <button
-            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${Dark
-              ? "bigbtn-dark hover:border-[#ff7521] "
-              : "bigbtn bg-[#efefef]"
-              }`}
+            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${
+              Dark
+                ? "bigbtn-dark hover:border-[#ff7521] "
+                : "bigbtn bg-[#efefef]"
+            }`}
             onClick={handleTipButton}
             disabled={loading}
           >
