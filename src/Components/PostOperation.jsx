@@ -131,10 +131,13 @@ const PostOperation = ({ submit, setSubmit }) => {
     <div>
       <div>
         {/* text area */}
-        <div className="flex w-full h-45">
+        <div
+          className={`flex w-full ${
+            textBoxActive2 ? "h-[9.6rem]" : "h-[12rem]"
+          }`}
+        >
           <MentionsInput
-            id="textbox"
-            className="rounded-xl textbox resize-none text-black text-lg pt-2 bg-[#efefef] w-[25rem] mt-4 px-5 mx-5 focus:outline-none"
+            className="rounded-xl resize-none text-black text-lg pt-2 bg-[#efefef] w-[25rem] mt-4 px-5 mx-5 focus:outline-none"
             style={defaultStyle}
             rows={`${textBoxActive2 ? "5" : "6"}`}
             cols="1"
@@ -194,12 +197,14 @@ const PostOperation = ({ submit, setSubmit }) => {
             />
           </div>
         </div>
-        <EmbeddBtn
-          visibility={textBoxActive2}
-          changeData={setEmbedText}
-          tab="post"
-          embedText={embedText}
-        />
+        <div className="mt-3">
+          <EmbeddBtn
+            visibility={textBoxActive2}
+            changeData={setEmbedText}
+            tab="post"
+            embedText={embedText}
+          />
+        </div>
         {/* btn start here */}
         <div className="buttons mt-2 px-5 flex justify-between">
           {/* left buttons start here */}

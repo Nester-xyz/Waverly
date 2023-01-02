@@ -2,8 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import { WaverlyContext } from "../Contexts/WaverlyContext";
 import img from "../img/waverlydefault.png";
 import darkimg from "../img/waverlydark.png";
-// import { CgLogOff } from "react-icons/cg";
-
 import { FiSettings } from "react-icons/fi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
@@ -83,11 +81,16 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
 
         {logIn ? (
           <div className="flex gap-4 items-center">
-            <div className="relative" onMouseEnter={() => setModalOpen(true)} onMouseLeave={() => setModalOpen(false)}>
+            <div
+              className="relative"
+              onMouseEnter={() => setModalOpen(true)}
+              onMouseLeave={() => setModalOpen(false)}
+            >
               <img
                 src={profile}
-                className={`${Dark ? "profile-dark" : "logout"
-                  } select-none w-11 h-11 rounded-full  mr-5 scale-90`}
+                className={`${
+                  Dark ? "profile-dark" : "logout"
+                } select-none w-11 h-11 rounded-full  mr-5 scale-90`}
                 alt="prof img"
                 onClick={(e) => {
                   e.preventDefault();
@@ -95,8 +98,11 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
                 }}
               />
               <div
-                className={`${Dark ? "dark-mode" : ""
-                  } absolute right-5 w-36 bg-white border-3 shadow-lg rounded-lg ${modalOpen ? "block" : "hidden"} z-50`}
+                className={`${
+                  Dark ? "dark-mode" : ""
+                } absolute right-5 w-36 bg-white border-3 shadow-lg rounded-lg ${
+                  modalOpen ? "block" : "hidden"
+                } z-50`}
               >
                 <a
                   href={`https://www.diamondapp.com/u/${username}`}
@@ -104,8 +110,9 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
                   rel="noreferrer"
                 >
                   <div
-                    className={`select-none cursor-pointer border-b-[0.1rem] text-base px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${Dark ? "hover:bg-[#f69552]" : "hover:bg-blue-300"
-                      } hover:rounded-t-[0.31rem]`}
+                    className={`select-none cursor-pointer border-b-[0.1rem] text-base px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${
+                      Dark ? "hover:bg-[#f69552]" : "hover:bg-blue-300"
+                    } hover:rounded-t-[0.31rem]`}
                     onClick={() => {
                       setSettingActive(false);
                     }}
@@ -115,8 +122,9 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
                   </div>
                 </a>
                 <div
-                  className={`select-none cursor-pointer border-b-[0.1rem] text-base px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${Dark ? "hover:bg-[#f69552]" : "hover:bg-blue-300"
-                    }`}
+                  className={`select-none cursor-pointer border-b-[0.1rem] text-base px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${
+                    Dark ? "hover:bg-[#f69552]" : "hover:bg-blue-300"
+                  }`}
                   onClick={(e) => {
                     e.preventDefault();
                     setModalOpen(false);
@@ -127,8 +135,9 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
                   Settings
                 </div>
                 <div
-                  className={`select-none cursor-pointer rounded-b-lg text-base px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${Dark ? "hover:bg-[#f69552]" : "hover:bg-blue-300"
-                    }`}
+                  className={`select-none cursor-pointer rounded-b-lg text-base px-3 py-1 lato flex items-center gap-2 transition-all ease-in duration-75 ${
+                    Dark ? "hover:bg-[#f69552]" : "hover:bg-blue-300"
+                  }`}
                   onClick={handleLogOut}
                 >
                   <RiLogoutCircleRLine />

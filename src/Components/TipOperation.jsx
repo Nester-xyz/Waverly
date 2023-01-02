@@ -236,17 +236,6 @@ const TipOperations = () => {
       <div className="flex justify-between items-center mt-3">
         <div className="lato"></div>
         <div className="flex items-center space-x-5">
-          <div
-            className={`${
-              Dark ? "darktheme hover:border-[#ff7521]" : "logout"
-            } rounded-full mr-36 scale-[0.9]`}
-            onClick={(e) => {
-              e.preventDefault();
-              setSettingActive(true);
-            }}
-          >
-            <HiOutlineSwitchVertical style={{ fontSize: "25px" }} />
-          </div>
           <div className="lato select-none">
             Calculation &nbsp;~$
             {parseFloat(

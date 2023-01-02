@@ -162,16 +162,17 @@ const HeartOperation = () => {
       </div>
       {/* Submit Button */}
       <div className="flex justify-between items-center mt-[2.9rem] mr-2">
+        <div className="lato ml-10"> Switch:</div>
         <div
           className={`scale-[0.9] ${
             Dark ? "darktheme hover:border-[#ff7521]" : "logout"
-          } rounded-full ml-10`}
+          } rounded-full mr-72`}
           onClick={(e) => {
             e.preventDefault();
             setSettingActive(true);
           }}
         >
-          <HiOutlineSwitchVertical style={{ fontSize: "25px" }} />
+          <HiOutlineSwitchVertical style={{ fontSize: "27px" }} />
         </div>
         <div className="lato"></div>
         <div className="flex items-center space-x-5">

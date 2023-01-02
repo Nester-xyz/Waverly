@@ -1,19 +1,15 @@
 const defaultStyle = {
-  control: {
-    fontFamily: 'lato'
-  },
-
   '&multiLine': {
     control: {
+      fontFamily: 'lato',
       minHeight: 63,
     },
     highlighter: {
       padding: 9,
-      border: '1px solid transparent',
     },
     input: {
       padding: 9,
-      border: '2px solid silver',
+      border: '2px solid #E2E7E9',
       outline: 'none',
       borderRadius: "10px"
     },
@@ -34,7 +30,6 @@ const defaultStyle = {
   },
 
   suggestions: {
-    fontFamily: 'lato',
     list: {
       backgroundColor: 'white',
       borderRadius: '20px',
