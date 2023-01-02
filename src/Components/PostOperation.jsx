@@ -8,8 +8,8 @@ import { ImEmbed } from "react-icons/im";
 import EmbeddBtn from "./EmbeddBtn";
 import { Puff } from "react-loading-icons";
 import { MdOutlineCancel } from "react-icons/md";
-import { MentionsInput, Mention } from 'react-mentions'
-import defaultStyle from './default.js'
+import { MentionsInput, Mention } from "react-mentions";
+import defaultStyle from "./default.js";
 const PostOperation = ({ submit, setSubmit }) => {
   const [imgURLs, setImgURLs] = useState([]);
   const [bodyText, setBodyText] = useState("");
@@ -112,9 +112,20 @@ const PostOperation = ({ submit, setSubmit }) => {
       OrderBy: "influencer_coin_price",
       NumToFetch: 4,
     };
-    await deso.user.getProfiles(request).then((response) =>
-      response.ProfilesFound.map(user => ({ display: user.Username, id: `@${user.Username}`, image: function () { const request = user.PublicKeyBase58Check; const response = deso.user.getSingleProfilePicture(request); return response; } }))
-    ).then(callback)
+    await deso.user
+      .getProfiles(request)
+      .then((response) =>
+        response.ProfilesFound.map((user) => ({
+          display: user.Username,
+          id: `@${user.Username}`,
+          image: function () {
+            const request = user.PublicKeyBase58Check;
+            const response = deso.user.getSingleProfilePicture(request);
+            return response;
+          },
+        }))
+      )
+      .then(callback);
   }
   return (
     <div>
@@ -144,9 +155,18 @@ const PostOperation = ({ submit, setSubmit }) => {
                 index,
                 focused
               ) => (
-                <div className={`user ${focused ? 'focused' : ''} flex flex-row rounded-xl lato`}>
+                <div
+                  className={`user ${
+                    focused ? "focused" : ""
+                  } flex flex-row rounded-xl lato`}
+                >
                   <div className=" flex flex-row rounded-xl lato">
-                    <img className="select-none w-10 h-10 mt-1 rounded-full" src={suggestion.image()} alt="."></img><div className="p-2 lato">{highlightedDisplay}</div>
+                    <img
+                      className="select-none w-10 h-10 mt-1 rounded-full"
+                      src={suggestion.image()}
+                      alt="."
+                    ></img>
+                    <div className="p-2 lato">{highlightedDisplay}</div>
                   </div>
                 </div>
               )}
@@ -154,20 +174,23 @@ const PostOperation = ({ submit, setSubmit }) => {
             />
           </MentionsInput>
           <div
-            className={`mt-7 mb-3 w-[11rem] rounded-lg ${divImg === "" ? "border-2" : "border-none"
-              }`}
+            className={`mt-7 mb-3 w-[11rem] rounded-lg ${
+              divImg === "" ? "border-2" : "border-none"
+            }`}
           >
             <div
-              className={`${divImg ? "hidden" : "block"
-                } mt-16 ml-1 text-center text-[#a9a9b0] text-lg placeholder`}
+              className={`${
+                divImg ? "hidden" : "block"
+              } mt-16 ml-1 text-center text-[#a9a9b0] text-lg placeholder`}
             >
               Preview Image Here
             </div>
             <img
               src={divImg}
               alt=""
-              className={`object-cover ${textBoxActive2 ? "h-[8rem]" : "h-[10rem]"
-                } w-[11rem] rounded-lg  -mt-1 ${divImg === "" && "hidden"}`}
+              className={`object-cover ${
+                textBoxActive2 ? "h-[8rem]" : "h-[10rem]"
+              } w-[11rem] rounded-lg  -mt-1 ${divImg === "" && "hidden"}`}
             />
           </div>
         </div>
@@ -184,8 +207,9 @@ const PostOperation = ({ submit, setSubmit }) => {
             {/* img upload btn start here */}
             <div className="img-upload">
               <button
-                className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
-                  } mr-5 scale-75 rounded-full`}
+                className={`${
+                  Dark ? "darktheme hover:border-orange-300" : "logout"
+                } mr-5 scale-75 rounded-full`}
                 onClick={handleUploadImage}
               >
                 <IconContext.Provider value={{ size: "27px" }}>
@@ -196,8 +220,9 @@ const PostOperation = ({ submit, setSubmit }) => {
             {/* img upload btn ends here */}
             <div className="embedbtn">
               <button
-                className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
-                  } mr-5 rounded-full scale-75`}
+                className={`${
+                  Dark ? "darktheme hover:border-orange-300" : "logout"
+                } mr-5 rounded-full scale-75`}
                 onClick={() => setTextBoxActive2(!textBoxActive2)}
               >
                 <IconContext.Provider value={{ size: "27px" }}>
@@ -241,10 +266,11 @@ const PostOperation = ({ submit, setSubmit }) => {
           <div className="right-button">
             <button
               onClick={handleSubmitPost}
-              className={`select-none btn focus:outline-none  ${Dark
-                ? "bigbtn-dark hover:border-[#ff7521] "
-                : "bigbtn bg-[#efefef]"
-                }`}
+              className={`select-none btn focus:outline-none  ${
+                Dark
+                  ? "bigbtn-dark hover:border-[#ff7521] "
+                  : "bigbtn bg-[#efefef]"
+              }`}
               disabled={setLoading}
             >
               {setLoading ? (

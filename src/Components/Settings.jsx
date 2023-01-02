@@ -41,8 +41,9 @@ const Settings = ({
           console.count("1");
           setSettingActive(false);
         }}
-        className={`absolute top-20 left-5 text-3xl  focus:outline-none rounded-full bg-[#efefef] ${Dark ? "darktheme hover:border-[#ff7521]" : "logout"
-          }`}
+        className={`absolute top-20 left-5 text-3xl  focus:outline-none rounded-full bg-[#efefef] ${
+          Dark ? "darktheme hover:border-[#ff7521]" : "logout"
+        }`}
       >
         <IoArrowBackCircleOutline />
       </button>
@@ -58,23 +59,32 @@ const Settings = ({
         <div className="mt-40 text-2xl lato">
           {/* shower toggeler */}
           <div className="flex relative justify-between items-center mx-3 border-2 py-1 px-2 rounded-lg">
-            <div className="lato">Change Shower</div>
-            <div className="group" onMouseEnter={() => setMenuActive(true)} onMouseLeave={() => setMenuActive(false)}>
+            <div className="lato">Change Shower:</div>
+            <div
+              className="group"
+              onMouseEnter={() => setMenuActive(true)}
+              onMouseLeave={() => setMenuActive(false)}
+            >
               <div
-                className="border flex gap-2 items-center px-2 hover:border-[#ff7521]"
+                className={`border pl-3 flex gap-2 items-center px-2 ${
+                  Dark ? "hover:border-[#f69552]" : "hover:border-blue-400"
+                }`}
                 onClick={() => {
                   setMenuActive(!menuActive);
                 }}
               >
-                <div className="capitalize lato">{shower}</div> <AiOutlineDown />
+                <div className="capitalize lato">{shower}</div>{" "}
+                <AiOutlineDown />
               </div>
               <div
-                className={`absolute right-2 top-9 border-2 ${Dark ? "bg-[#444]" : "bg-white"
-                  } px-2 ${menuActive ? "block" : "hidden"}`}
+                className={`divide-y absolute right-2 top-9 border ${
+                  Dark ? "bg-[#444]" : "bg-white"
+                } ${menuActive ? "block" : "hidden"} text-lg`}
               >
                 <div
-                  className={`cursor-pointer flex items-center gap-2 ${Dark ? "hover:text-[#ff7521]" : "hover:text-sky-500"
-                    }`}
+                  className={`cursor-pointer px-2 flex items-center gap-2 ${
+                    Dark ? "hover:bg-[#f69552]" : "hover:bg-blue-300"
+                  }`}
                   onClick={() => {
                     setShower("heart");
                     if (activeTab === "tip") {
@@ -87,10 +97,10 @@ const Settings = ({
                   </div>
                   <div className="lato">Heart</div>
                 </div>
-                <hr />
                 <div
-                  className={`cursor-pointer flex items-center gap-2 ${Dark ? "hover:text-[#ff7521]" : "hover:text-sky-500"
-                    }`}
+                  className={`cursor-pointer px-2 flex items-center gap-2 ${
+                    Dark ? "hover:bg-[#f69552]" : "hover:bg-blue-300"
+                  }`}
                   onClick={() => {
                     setShower("diamond");
                     if (activeTab === "heart") {
@@ -115,7 +125,7 @@ const Settings = ({
               DarkToggle();
             }}
           >
-            <div className="select-none lato">Theme Switch</div>
+            <div className="select-none lato">Theme Switch:</div>
             {/* icons */}
             <div className="px-3">
               {!Dark ? (
@@ -147,14 +157,15 @@ const Settings = ({
           {/* github handle */}
           <div className="border-2 rounded-lg lato mx-3 px-3 py-1 select-none">
             <a
-              className={`flex justify-between items-center ${Dark ? "text-white" : "text-[#151633]"
-                }`}
+              className={`flex justify-between items-center ${
+                Dark ? "text-white" : "text-[#151633]"
+              }`}
               href="https://github.com/DeWhales-xyz/Waverly"
               onClick="https://github.com/DeWhales-xyz/Waverly"
               target="_blank"
               rel="noreferrer"
             >
-              <div className="lato">Want to contribute</div>
+              <div className="lato">Want to contribute?</div>
               <div className="text-3xl mr-3">
                 <BsGithub />
               </div>
