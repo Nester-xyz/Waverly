@@ -379,31 +379,31 @@ const MintOperation = ({ submit, setSubmit }) => {
                     type="text"
                     name="coinHolder"
                     id="desoPerson"
-                    className="lato border bg-transparent h-8 w-36  mr-4 text-black "
+                    className="lato border  h-8 w-36  mr-4 text-black "
                     onChange={onChange}
                     placeholder=" Username Here"
                   />
                 </div>
-                <div className="flex items-center justify-between  w-[34rem]">
+                <div className="flex items-center justify-between w-[34rem]">
                   <label
                     htmlFor="desoRoyaltyPercentage"
                     className="leading-[1rem]  text-center lato select-none"
                   >
                     DeSo Royalty:
                   </label>
-                  <div className="flex pr-40 items-center">
-                    <div className="lato pl-[4.4rem] absolute">%</div>
-                    <div className="flex border -mr-[11.5rem] ">
-                      <input
-                        type="number"
-                        name="coinHolder"
-                        id="desoRoyaltyPercentage"
-                        className="lato bg-transparent h-8 w-14 text-black "
-                        onChange={onChange}
-                        placeholder=" 10"
-                      />
-                    </div>
+                  <div className="flex items-center mr-[5.6rem]">
+                    {/* <div className="flex bg-blue-300 -mr-[11.5rem] "> */}
+                    <input
+                      type="number"
+                      name="coinHolder"
+                      id="desoRoyaltyPercentage"
+                      className="lato h-8 w-14 text-black "
+                      onChange={onChange}
+                      placeholder=" 10"
+                    />
+                    <div className="lato ">%</div>
                   </div>
+                  {/* </div> */}
                 </div>
               </div>
             </div>
