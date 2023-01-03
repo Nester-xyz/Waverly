@@ -35,6 +35,7 @@ const MintOperation = ({ submit, setSubmit }) => {
 
   const handleChange = (nextChecked) => {
     setChecked(nextChecked);
+    setIsUnlockable(nextChecked);
   };
 
   const handleUploadImage = async () => {
@@ -151,9 +152,8 @@ const MintOperation = ({ submit, setSubmit }) => {
                 {/* Image upload starts here */}
                 <div className={`img-upload`}>
                   <button
-                    className={`${
-                      Dark ? "darktheme hover:border-orange-300" : "logout"
-                    } mr-5 scale-75 rounded-full`}
+                    className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
+                      } mr-5 scale-75 rounded-full`}
                     onClick={handleUploadImage}
                   >
                     <IconContext.Provider value={{ size: "27px" }}>
@@ -182,9 +182,8 @@ const MintOperation = ({ submit, setSubmit }) => {
                     {/* btn */}{" "}
                     <div className={`img-upload select-none`}>
                       <button
-                        className={`${
-                          Dark ? "darktheme hover:border-orange-300" : "logout"
-                        }  scale-75 rounded-full lato text-xl`}
+                        className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
+                          }  scale-75 rounded-full lato text-xl`}
                         onClick={() => {
                           setNOC(parseInt(NOC + 0) + 1);
                         }}
@@ -194,9 +193,8 @@ const MintOperation = ({ submit, setSubmit }) => {
                     </div>
                     <div className={`img-upload select-none`}>
                       <button
-                        className={`${
-                          Dark ? "darktheme hover:border-orange-300" : "logout"
-                        }  scale-75 rounded-full lato text-xl`}
+                        className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
+                          }  scale-75 rounded-full lato text-xl`}
                         onClick={() => {
                           setNOC(parseInt(NOC + 0) + 5);
                         }}
@@ -212,9 +210,8 @@ const MintOperation = ({ submit, setSubmit }) => {
             <div>
               <div>
                 <div
-                  className={` ${
-                    img === "" ? "border-2" : "border-none"
-                  } w-[10rem] ml-2 rounded-lg h-[9rem] mt-1`}
+                  className={` ${img === "" ? "border-2" : "border-none"
+                    } w-[10rem] ml-2 rounded-lg h-[9rem] mt-1`}
                 >
                   <div
                     className={`mt-11 select-none ml-1 text-xl text-center text-[#a9a9b0]
@@ -227,9 +224,8 @@ const MintOperation = ({ submit, setSubmit }) => {
                   <img
                     src={img}
                     alt=""
-                    className={`object-cover w-[11rem] h-[7rem] rounded-lg   ${
-                      img ? "block" : "hidden"
-                    }`}
+                    className={`object-cover w-[11rem] h-[7rem] rounded-lg   ${img ? "block" : "hidden"
+                      }`}
                   />
                   {/* <img src={""} alt=""/> */}
                 </div>
@@ -347,9 +343,8 @@ const MintOperation = ({ submit, setSubmit }) => {
             <div className="flex gap-2 items-center">
               <div className="lato">Additional DeSo Royalty</div>
               <div
-                className={`${
-                  plusSign ? "block" : "hidden"
-                } cursor-pointer text-xl mt-0.5`}
+                className={`${plusSign ? "block" : "hidden"
+                  } cursor-pointer text-xl mt-0.5`}
                 onClick={() => {
                   setDesoRoyalty(true);
                   setPlusSign(!plusSign);
@@ -360,9 +355,8 @@ const MintOperation = ({ submit, setSubmit }) => {
             </div>
 
             <div
-              className={`flex items-center gap-[0.40rem] border-2 py-1 ${
-                desoRoyalty ? "block" : "hidden"
-              }`}
+              className={`flex items-center gap-[0.40rem] border-2 py-1 ${desoRoyalty ? "block" : "hidden"
+                }`}
             >
               <div
                 className={`cursor-pointer mb-20 scale-[1.3] pl-1`}
@@ -438,11 +432,10 @@ const MintOperation = ({ submit, setSubmit }) => {
         </div>
         <div className="right-button flex justify-end mt-3 mb-3">
           <button
-            className={`select-none btn focus:outline-none ${
-              Dark
-                ? "bigbtn-dark hover:border-[#ff7521] "
-                : "bigbtn bg-[#efefef]"
-            }`}
+            className={`select-none btn focus:outline-none ${Dark
+              ? "bigbtn-dark hover:border-[#ff7521] "
+              : "bigbtn bg-[#efefef]"
+              }`}
             onClick={handleMintBtn}
             disabled={loading}
           >

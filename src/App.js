@@ -15,12 +15,20 @@ function App() {
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     const isDark = localStorage.getItem("dark");
+    const diamondORheart = localStorage.getItem("showerOption");
+    if(diamondORheart === "heart"){
+      setShower("heart");
+    }
+    if(diamondORheart === "diamond"){
+      setShower("diamond");
+    }
     if (isLoggedIn === "true") {
       setLogIn(true);
     }
     if (isDark === true) {
       setDark(true);
     }
+
   }, []);
 
   return (
