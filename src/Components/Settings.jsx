@@ -58,15 +58,15 @@ const Settings = ({
       >
         <div className="mt-40 text-2xl lato">
           {/* shower toggeler */}
-          <div className="flex relative justify-between items-center mx-3 border-2 py-1 px-2 rounded-lg">
+          <div className="flex  justify-between items-center mx-3 border-2 py-1 px-2 rounded-lg">
             <div className="lato">Change Shower:</div>
             <div
-              className="group"
+              className="group relative"
               onMouseEnter={() => setMenuActive(true)}
               onMouseLeave={() => setMenuActive(false)}
             >
               <div
-                className={`border pl-3 flex gap-2 items-center px-2 ${
+                className={`border pl-3 flex gap-2 relative items-center px-2 ${
                   Dark ? "hover:border-[#f69552]" : "hover:border-blue-400"
                 }`}
                 onClick={() => {
@@ -77,7 +77,7 @@ const Settings = ({
                 <AiOutlineDown />
               </div>
               <div
-                className={`divide-y absolute right-2 top-9 border ${
+                className={`divide-y absolute w-full  top-8 border ${
                   Dark ? "bg-[#444]" : "bg-white"
                 } ${menuActive ? "block" : "hidden"} text-lg`}
               >
