@@ -18,6 +18,7 @@
     "react-mentions": "^4.4.7",
     "react-router-dom": "^6.4.3",
     "react-scripts": "^5.0.1",
+    "react-switch": "^7.0.0",
     "stream": "^0.0.2",
     "tailwindcss": "^3.2.2",
     "web-vitals": "^2.1.4",

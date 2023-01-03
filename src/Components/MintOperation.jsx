@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { WaverlyContext } from "../Contexts/WaverlyContext";
-import "./Unlockable.css";
+import Switch from "react-switch";
 import { RiImageAddFill } from "react-icons/ri";
 import { IconContext } from "react-icons";
 import SubmitPost from "./SubmitPost";
@@ -22,6 +22,7 @@ const MintOperation = ({ submit, setSubmit }) => {
   const [loading, setLoading] = useState(false);
   const [desoRoyalty, setDesoRoyalty] = useState(false);
   const [plusSign, setPlusSign] = useState(true);
+  const [checked, setChecked] = useState(false);
   const { Dark } = useContext(WaverlyContext);
   // eslint-disable-next-line
   const [isUnlockable, setIsUnlockable] = useState(false);
@@ -31,6 +32,11 @@ const MintOperation = ({ submit, setSubmit }) => {
       <SubmitPost response={submitMintResponse} toggleSubmit={setSubmit} />
     );
   }
+
+  const handleChange = (nextChecked) => {
+    setChecked(nextChecked);
+  };
+
   const handleUploadImage = async () => {
     try {
       const pub_key = localStorage.getItem("user_key");
@@ -409,22 +415,26 @@ const MintOperation = ({ submit, setSubmit }) => {
             </div>
           </div>
           {/* Unlockable Content */}
-          {/* <div>
-            <div className={`border-2 p-1 border-[#efefef] rounded-lg`}>
-              <div className=" flex justify-center items-center space-x-2">
-                <div className="select-none flex text-lg space-x-2 lato mw -mt-0.5">
-                  Enable Unlockable Content
-                </div>
-                <label className="switch">
-                  <input
-                    type="checkbox"
-                    onClick={() => setIsUnlockable(!isUnlockable)}
-                  />
-                  <span className="slider"></span>
-                </label>
-              </div>
-            </div>
-          </div> */}
+          <div>
+            <label>
+              <span>Switch with default style</span>
+              <Switch
+                onChange={handleChange}
+                checked={checked}
+                onColor="#86d3ff"
+                onHandleColor="#2693e6"
+                handleDiameter={20}
+                uncheckedIcon={false}
+                checkedIcon={false}
+                boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                height={15}
+                width={35}
+                className="react-switch"
+                id="material-switch"
+              />
+            </label>
+          </div>
         </div>
         <div className="right-button flex justify-end mt-3 mb-3">
           <button
