@@ -10,7 +10,7 @@ function App() {
   const [settingActive, setSettingActive] = useState(false);
   const [menuActive, setMenuActive] = useState(false);
   const [Dark, setDark] = useState(false);
-  const [shower, setShower] = useState("heart");
+  const [shower, setShower] = useState("diamond");
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");

@@ -3,7 +3,6 @@ import { WaverlyContext } from "../Contexts/WaverlyContext";
 import Deso from "deso-protocol";
 import { MagnifyingGlass } from "react-loader-spinner";
 import { FaUserAltSlash } from "react-icons/fa";
-import { HiOutlineSwitchVertical } from "react-icons/hi";
 import { useState } from "react";
 
 const TipOperations = () => {
@@ -18,7 +17,7 @@ const TipOperations = () => {
   const [tipLevel, setTipLevel] = useState("0");
   const [isUsername, setIsUsername] = useState(false);
   const [isValid, setIsValid] = useState(true);
-  const { Dark, setSettingActive } = useContext(WaverlyContext);
+  const { Dark } = useContext(WaverlyContext);
 
   useEffect(() => {
     let response;

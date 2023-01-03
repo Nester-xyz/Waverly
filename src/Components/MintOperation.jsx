@@ -397,13 +397,13 @@ const MintOperation = ({ submit, setSubmit }) => {
                   >
                     DeSo Royalty:
                   </label>
-                  <div className="flex items-center mr-[5.6rem]">
+                  <div className="flex items-center gap-3 mr-[4.8rem]">
                     {/* <div className="flex bg-blue-300 -mr-[11.5rem] "> */}
                     <input
                       type="number"
                       name="coinHolder"
                       id="desoRoyaltyPercentage"
-                      className="lato h-8 w-14 text-black "
+                      className="lato h-8 w-14 border text-black "
                       onChange={onChange}
                       placeholder=" 10"
                     />
@@ -415,14 +415,14 @@ const MintOperation = ({ submit, setSubmit }) => {
             </div>
           </div>
           {/* Unlockable Content */}
-          <div>
-            <label>
-              <span>Switch with default style</span>
+          <div className="text-lg flex-col gap-2 border-2 py-1 border-[#efefef] rounded-lg pr-1 pl-2">
+            <label className="flex justify-between items-center pr-28 ">
+              <span className="lato">Unlockable Content:</span>
               <Switch
                 onChange={handleChange}
                 checked={checked}
-                onColor="#86d3ff"
-                onHandleColor="#2693e6"
+                onColor={`${Dark ? "#f69552" : "#86d3ff"}`}
+                onHandleColor={`${Dark ? "#ff7521" : "#2693e6"}`}
                 handleDiameter={20}
                 uncheckedIcon={false}
                 checkedIcon={false}

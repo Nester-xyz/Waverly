@@ -3,7 +3,6 @@ import { WaverlyContext } from "../Contexts/WaverlyContext";
 import Deso from "deso-protocol";
 import { MagnifyingGlass } from "react-loader-spinner";
 import { FaUserAltSlash } from "react-icons/fa";
-import { HiOutlineSwitchVertical } from "react-icons/hi";
 import { useState } from "react";
 
 const HeartOperation = () => {
@@ -16,7 +15,7 @@ const HeartOperation = () => {
   const [heartPosts, setHeartPosts] = useState("0");
   const [isUsername, setIsUsername] = useState(false);
   const [isValid, setIsValid] = useState(true);
-  const { Dark, setSettingActive } = useContext(WaverlyContext);
+  const { Dark } = useContext(WaverlyContext);
 
   let public_key;
 
@@ -162,18 +161,6 @@ const HeartOperation = () => {
       </div>
       {/* Submit Button */}
       <div className="flex justify-between items-center mt-[2.9rem] mr-2">
-        <div className="lato ml-10"> Switch:</div>
-        <div
-          className={`scale-[0.9] ${
-            Dark ? "darktheme hover:border-[#ff7521]" : "logout"
-          } rounded-full mr-72`}
-          onClick={(e) => {
-            e.preventDefault();
-            setSettingActive(true);
-          }}
-        >
-          <HiOutlineSwitchVertical style={{ fontSize: "27px" }} />
-        </div>
         <div className="lato"></div>
         <div className="flex items-center space-x-5">
           <button

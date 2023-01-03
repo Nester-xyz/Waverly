@@ -33,7 +33,7 @@ const Settings = ({
     <div
       className="mt-20 w-[40rem] select-none "
       onClick={() => {
-        setMenuActive(!menuActive);
+        setMenuActive(false);
       }}
     >
       <button
@@ -121,6 +121,7 @@ const Settings = ({
           <div
             className="flex justify-between items-center border-2 rounded-lg px-2 mx-3 py-0.5 my-2 cursor-pointer"
             onClick={() => {
+              setMenuActive(false);
               themeToggler();
               DarkToggle();
             }}
