@@ -143,7 +143,7 @@ const TipOperations = () => {
             name="username"
             id="userName"
             value={username}
-            className="w-40 border-2 lato text-black"
+            className="w-40 border-2 lato rounded-lg text-black"
             onChange={(e) => {
               setUsername(e.target.value);
               setLoading(false);
@@ -171,7 +171,7 @@ const TipOperations = () => {
             id="posts"
             value={numberOfPost}
             placeholder="10"
-            className="w-20 border-2 lato text-black"
+            className="w-20 border-2 rounded-lg pl-2 lato text-black"
             onChange={(e) => {
               setNumberOfPost(e.target.value);
               setLoading(false);
@@ -189,7 +189,7 @@ const TipOperations = () => {
             <button
               className={`${
                 Dark ? "darktheme" : "logout"
-              } rounded-full lato scale-75 ${
+              } rounded-2xl lato scale-75 ${
                 diamonds === "1"
                   ? `${
                       Dark ? "darktheme-active" : "logout-active "
@@ -203,7 +203,7 @@ const TipOperations = () => {
             <button
               className={`${
                 Dark ? "darktheme" : "logout"
-              } rounded-full lato scale-75 ${
+              } rounded-2xl lato scale-75 ${
                 diamonds === "2"
                   ? `${
                       Dark ? "darktheme-active" : "logout-active "
@@ -217,7 +217,7 @@ const TipOperations = () => {
             <button
               className={`${
                 Dark ? "darktheme" : "logout"
-              } rounded-full lato scale-75 ${
+              } rounded-2xl lato scale-75 ${
                 diamonds === "3"
                   ? `${
                       Dark ? "darktheme-active" : "logout-active "

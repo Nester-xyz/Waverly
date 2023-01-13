@@ -11,7 +11,6 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
   // change this accordingly. Make it props or whatever you wish
   const [modalOpen, setModalOpen] = useState(false);
   const { Dark, setDark } = useContext(WaverlyContext);
-  // const [Switch, setSwitch] = useState(true);
   const [username, setUsername] = useState("Waverly");
   const [profile, setProfile] = useState(
     "https://images.deso.org/a5306f0faf3e77360a11f4ea79a9a2fd449eca16f4e708e70bd88d8da1e08430.gif"
@@ -69,11 +68,13 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
   logIn && getProfileImage();
 
   return (
-    <div className={`absolute w-[40rem] ${!Dark ? "navbar" : "darknav"}`}>
+    <div
+      className={`absolute w-[40rem] ${!Dark || !logIn ? "navbar" : "darknav"}`}
+    >
       <div className="flex justify-between ">
         <nav>
           <img
-            src={!Dark ? img : darkimg}
+            src={!Dark || !logIn ? img : darkimg}
             alt=""
             className="select-none w-36 h-30 mt-1 cursor-pointer"
           />
@@ -144,16 +145,6 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
                   Logout
                 </div>
               </div>
-
-              {/* </div>
-                  <div>
-                    <button onClick={handleLogOut} className="logout mr-5  scale-90">
-                      <IconContext.Provider
-                        value={{ color: "#ff7521", size: "27px" }}
-                      >
-                        <CgLogOff style={{ size: "200px" }} />
-                      </IconContext.Provider>
-                    </button> */}
             </div>
           </div>
         ) : (
@@ -165,5 +156,3 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
 }
 
 export default Nav;
-
-// test

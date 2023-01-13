@@ -10,16 +10,17 @@ function App() {
   const [settingActive, setSettingActive] = useState(false);
   const [menuActive, setMenuActive] = useState(false);
   const [Dark, setDark] = useState(false);
+  const [textBoxActive2, setTextBoxActive2] = useState(false);
   const [shower, setShower] = useState("diamond");
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     const isDark = localStorage.getItem("dark");
     const diamondORheart = localStorage.getItem("showerOption");
-    if(diamondORheart === "heart"){
+    if (diamondORheart === "heart") {
       setShower("heart");
     }
-    if(diamondORheart === "diamond"){
+    if (diamondORheart === "diamond") {
       setShower("diamond");
     }
     if (isLoggedIn === "true") {
@@ -28,12 +29,21 @@ function App() {
     if (isDark === true) {
       setDark(true);
     }
-
   }, []);
 
   return (
     <>
-      <WaverlyContext.Provider value={{ Dark, setDark, setSettingActive }}>
+      <WaverlyContext.Provider
+        value={{
+          Dark,
+          setDark,
+          setSettingActive,
+          textBoxActive2,
+          setTextBoxActive2,
+          logIn,
+          setLogIn,
+        }}
+      >
         <Router>
           <div>
             <Nav
@@ -44,7 +54,6 @@ function App() {
               Dark={Dark}
               setDark={setDark}
             />
-
             <Routes>
               {logIn ? (
                 <Route

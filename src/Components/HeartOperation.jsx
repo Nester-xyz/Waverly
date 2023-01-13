@@ -4,6 +4,8 @@ import Deso from "deso-protocol";
 import { MagnifyingGlass } from "react-loader-spinner";
 import { FaUserAltSlash } from "react-icons/fa";
 import { useState } from "react";
+import { MentionsInput, Mention } from "react-mentions";
+import defaultStyle from "./default";
 
 const HeartOperation = () => {
   const [numberOfPost, setNumberOfPost] = useState(10);
@@ -15,7 +17,7 @@ const HeartOperation = () => {
   const [heartPosts, setHeartPosts] = useState("0");
   const [isUsername, setIsUsername] = useState(false);
   const [isValid, setIsValid] = useState(true);
-  const { Dark } = useContext(WaverlyContext);
+  const { Dark, textBoxActive2 } = useContext(WaverlyContext);
 
   let public_key;
 
@@ -108,31 +110,89 @@ const HeartOperation = () => {
     }
   };
 
+  async function fetchUsers(query, callback) {
+    console.log(query);
+    if (!query) return;
+    const deso = new Deso();
+    const request = {
+      UsernamePrefix: query,
+      OrderBy: "influencer_coin_price",
+      NumToFetch: 3,
+    };
+    await deso.user
+      .getProfiles(request)
+      .then((response) =>
+        response.ProfilesFound.map((user) => ({
+          display: user.Username,
+          id: `@${user.Username}`,
+          image: function () {
+            const request = user.PublicKeyBase58Check;
+            const response = deso.user.getSingleProfilePicture(request);
+            return response;
+          },
+        }))
+      )
+      .then(callback);
+  }
+
   return (
-    <div className="relative  w-[40rem] px-5 text-xl">
+    <div className="relative w-[40rem] px-5 text-xl">
       <div className="mt-16 ml-10  space-y-2">
-        {/*  userName */}
         <div className="flex space-x-3">
           <label htmlFor="UserName" className="lato select-none">
             Enter username:
           </label>
-          <input
-            type="text"
-            name="username"
-            id="userName"
+          {/*  userName */}
+          <MentionsInput
+            className="w-[17rem] -mt-1 h-10 border rounded-xl lato bg-white text-black"
+            style={defaultStyle}
             value={username}
-            className="w-40 border-2 lato text-black"
             onChange={(e) => {
               setUsername(e.target.value);
               setLoading(false);
               setIsUsername(false);
               setIsValid(true);
             }}
-          />
+            rows={`${textBoxActive2 ? "5" : "6"}`}
+            cols="1"
+          >
+            <Mention
+              className=""
+              trigger=""
+              data={fetchUsers}
+              appendSpaceOnAdd={false}
+              renderSuggestion={(
+                suggestion,
+                search,
+                highlightedDisplay,
+                index,
+                focused
+              ) => (
+                <div
+                  className={`user ${
+                    focused ? "focused" : ""
+                  } flex flex-row rounded-xl lato`}
+                >
+                  <div className=" flex  flex-row rounded-xl lato">
+                    <img
+                      className="select-none w-10 h-10 mt-1 rounded-full"
+                      src={suggestion.image()}
+                      alt="."
+                    ></img>
+                    <div className="p-2 lato">
+                      {highlightedDisplay.length > 15
+                        ? highlightedDisplay.slice(15, 20)
+                        : highlightedDisplay}
+                    </div>
+                  </div>
+                </div>
+              )}
+            />
+          </MentionsInput>
           {isValid ? (
             ""
           ) : (
-            <div className="mt-[0.3rem] ml-4 text-lg flex items-center gap-2 lato text-red-600 select-none">
+            <div className="-mt-1 text-lg flex items-center gap-2 lato text-red-600 select-none">
               <FaUserAltSlash style={{ color: "red", fontSize: "23px" }} /> User
               not found.
             </div>
@@ -144,12 +204,12 @@ const HeartOperation = () => {
             Number of posts:
           </label>
           <input
-            type="text"
+            type="number"
             name="numberOfPost"
             id="posts"
             value={numberOfPost}
             placeholder="10"
-            className="w-20 border-2 lato text-black"
+            className="w-20 h-9 -mt-0.5 border-2 rounded-lg pr-3 pl-3 lato text-black"
             onChange={(e) => {
               setNumberOfPost(e.target.value);
               setLoading(false);
@@ -160,7 +220,7 @@ const HeartOperation = () => {
         </div>
       </div>
       {/* Submit Button */}
-      <div className="flex justify-between items-center mt-[2.9rem] mr-2">
+      <div className="flex justify-between items-center mt-[2.7rem] mr-1">
         <div className="lato"></div>
         <div className="flex items-center space-x-5">
           <button

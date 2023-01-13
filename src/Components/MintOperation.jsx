@@ -8,6 +8,8 @@ import Deso from "deso-protocol";
 import { Puff } from "react-loading-icons";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { CrossCircledIcon } from "@radix-ui/react-icons";
+import { MentionsInput, Mention } from "react-mentions";
+import defaultStyle from "./default";
 const MintOperation = ({ submit, setSubmit }) => {
   const [data, setData] = useState({
     title: "",
@@ -23,7 +25,8 @@ const MintOperation = ({ submit, setSubmit }) => {
   const [desoRoyalty, setDesoRoyalty] = useState(false);
   const [plusSign, setPlusSign] = useState(true);
   const [checked, setChecked] = useState(false);
-  const { Dark } = useContext(WaverlyContext);
+  const [bodyText, setBodyText] = useState("");
+  const { Dark, textBoxActive2 } = useContext(WaverlyContext);
   // eslint-disable-next-line
   const [isUnlockable, setIsUnlockable] = useState(false);
   const [submitMintResponse, setSubmitMintResponse] = useState();
@@ -129,31 +132,92 @@ const MintOperation = ({ submit, setSubmit }) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
+  async function fetchUsers(query, callback) {
+    console.log(query);
+    if (!query) return;
+    const deso = new Deso();
+    const request = {
+      UsernamePrefix: query,
+      OrderBy: "influencer_coin_price",
+      NumToFetch: 4,
+    };
+    await deso.user
+      .getProfiles(request)
+      .then((response) =>
+        response.ProfilesFound.map((user) => ({
+          display: user.Username,
+          id: `@${user.Username}`,
+          image: function () {
+            const request = user.PublicKeyBase58Check;
+            const response = deso.user.getSingleProfilePicture(request);
+            return response;
+          },
+        }))
+      )
+      .then(callback);
+  }
+
   return (
-    <div className="flex relative mt-2 space-x-3 px-2 py-1 ml-[0.8rem]">
+    <div className="flex relative mt-2 px-5">
       <div>
-        <div className="flex-col">
+        <div
+          className={`flex-col divide-y ${Dark ? "divide-[#a9a9a9]" : ""}  `}
+        >
           {/* TextArea, Image Icon, No. Of Copies, Price */}
-          <div className="border-2 w-[37rem] rounded-lg px-3 border-[#efefef] flex justify-between">
+          <div className="w-[37rem] rounded px-3 border-[#efefef] flex justify-between">
             {/* Text area, Number of copies, image starts here */}
             {/* Top Left  */}
             <div className="">
-              <textarea
-                className="placeholder text-black rounded-xl  border-2 resize-none text-lg pt-2 bg-[#efefef] w-[24rem] h-[5rem] mt-4 px-5  focus:outline-none"
-                rows="5"
+              <MentionsInput
+                className="placeholder text-black rounded-xl  border resize-none text-lg pt-2 mb-2 bg-[#efefef] w-[24rem] h-[5rem] mt-4 px-5  focus:outline-none"
+                style={defaultStyle}
+                rows={`${textBoxActive2 ? "5" : "6"}`}
                 cols="1"
                 placeholder="Your title here"
-                name="title"
-                onChange={onChange}
-              ></textarea>
+                value={bodyText}
+                onChange={(e) => setBodyText(e.target.value)}
+              >
+                <Mention
+                  className="focus:outline-none lato"
+                  trigger="@"
+                  markup="{{__id__}}"
+                  displayTransform={(id) => `${id + ""}`}
+                  data={fetchUsers}
+                  renderSuggestion={(
+                    suggestion,
+                    search,
+                    highlightedDisplay,
+                    index,
+                    focused
+                  ) => (
+                    <div
+                      className={`user ${
+                        focused ? "focused" : ""
+                      } flex flex-row rounded-xl lato`}
+                    >
+                      <div className=" flex flex-row rounded-xl lato">
+                        <img
+                          className="select-none w-10 h-10 mt-1 rounded-full"
+                          src={suggestion.image()}
+                          alt="."
+                        ></img>
+                        <div className="p-2 lato">{highlightedDisplay}</div>
+                      </div>
+                    </div>
+                  )}
+                  appendSpaceOnAdd
+                />
+              </MentionsInput>
+
               {/* textarea ends here */}
               {/* Image upload and number of copies starts here */}
               <div className="flex items-center">
                 {/* Image upload starts here */}
                 <div className={`img-upload`}>
                   <button
-                    className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
-                      } mr-5 scale-75 rounded-full`}
+                    className={`${
+                      Dark ? "darktheme hover:border-orange-300" : "logout"
+                    } mr-5 scale-75 rounded-full`}
                     onClick={handleUploadImage}
                   >
                     <IconContext.Provider value={{ size: "27px" }}>
@@ -163,7 +227,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                 </div>
                 {/* Image upload over */}
                 {/* Number of copies starts here */}
-                <div className="flex text-lg items-center -mt-1">
+                <div className="flex text-lg items-center -mt-1 p-1.5">
                   <label className="lato text-[1.1rem] select-none" htmlFor="">
                     Number of copies:
                   </label>
@@ -172,7 +236,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                     min="1"
                     name="copies"
                     id="copy"
-                    className="lato p-1 border w-14 h-8 ml-3 text-black"
+                    className="lato p-1 border w-14 h-8 ml-3 rounded-lg pl-2 pr-3 text-black"
                     onChange={(e) => {
                       setNOC(e.target.value);
                     }}
@@ -182,8 +246,9 @@ const MintOperation = ({ submit, setSubmit }) => {
                     {/* btn */}{" "}
                     <div className={`img-upload select-none`}>
                       <button
-                        className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
-                          }  scale-75 rounded-full lato text-xl`}
+                        className={`${
+                          Dark ? "darktheme hover:border-orange-300" : "logout"
+                        }  scale-75 rounded-full lato text-xl`}
                         onClick={() => {
                           setNOC(parseInt(NOC + 0) + 1);
                         }}
@@ -193,8 +258,9 @@ const MintOperation = ({ submit, setSubmit }) => {
                     </div>
                     <div className={`img-upload select-none`}>
                       <button
-                        className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
-                          }  scale-75 rounded-full lato text-xl`}
+                        className={`${
+                          Dark ? "darktheme hover:border-orange-300" : "logout"
+                        }  scale-75 rounded-full lato text-xl`}
                         onClick={() => {
                           setNOC(parseInt(NOC + 0) + 5);
                         }}
@@ -210,8 +276,9 @@ const MintOperation = ({ submit, setSubmit }) => {
             <div>
               <div>
                 <div
-                  className={` ${img === "" ? "border-2" : "border-none"
-                    } w-[10rem] ml-2 rounded-lg h-[9rem] mt-1`}
+                  className={` ${
+                    img === "" ? "border-2" : "border-none"
+                  } w-[10rem] ml-2 rounded-lg h-[9rem] mt-1`}
                 >
                   <div
                     className={`mt-11 select-none ml-1 text-xl text-center text-[#a9a9b0]
@@ -224,8 +291,9 @@ const MintOperation = ({ submit, setSubmit }) => {
                   <img
                     src={img}
                     alt=""
-                    className={`object-cover w-[11rem] h-[7rem] rounded-lg   ${img ? "block" : "hidden"
-                      }`}
+                    className={`object-cover w-[11rem] h-[7rem] rounded-lg   ${
+                      img ? "block" : "hidden"
+                    }`}
                   />
                   {/* <img src={""} alt=""/> */}
                 </div>
@@ -236,7 +304,11 @@ const MintOperation = ({ submit, setSubmit }) => {
           </div>
           <div>
             {/* Pricing */}
-            <div className="flex-col pl-3 mt-2 space-y-2 border-2 rounded-lg px-3 py-2 border-[#efefef]">
+            <div
+              className={`flex-col border-b pl-3 mt-2 space-y-2 px-3 py-2 ${
+                Dark ? "border-[#a9a9a9]" : ""
+              }`}
+            >
               <div>
                 <div className="flex justify-between text-lg items-center gap-2">
                   <label
@@ -251,7 +323,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                       min="0"
                       name="minimumBid"
                       id="minimumBid"
-                      className="lato border p-1 w-14 h-8 text-black"
+                      className="lato border rounded-lg pl-3 pr-3 p-1 w-14 h-8 text-black"
                       onChange={onChange}
                       placeholder="0"
                     />
@@ -272,7 +344,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                       min="0"
                       name="buyNowPrice"
                       id="buyNow"
-                      className="border w-14 h-8 p-1 text-black"
+                      className="border w-14 rounded-lg pl-3 pr-3 h-8 p-1 text-black"
                       onChange={onChange}
                       placeholder="0"
                     />
@@ -288,7 +360,11 @@ const MintOperation = ({ submit, setSubmit }) => {
 
         <div className="flex-col space-y-2 mt-2">
           {/* Preview Image and Royalty */}
-          <div className="border-2 py-1 border-[#efefef] rounded-lg pr-1 pl-3">
+          <div
+            className={`border-b py-1 ${
+              Dark ? "border-[#a9a9a9]" : ""
+            } pb-2 pr-1 pl-3`}
+          >
             {/* <div className="text-xl">Royalty:</div> */}
             <div className="flex-col space-y-3 text-lg">
               <div className="flex items-center justify-between">
@@ -304,7 +380,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                     min="0"
                     name="creatorRoyalty"
                     id="creator"
-                    className="lato border p-1 w-14 h-8 text-black"
+                    className="lato border rounded-lg pl-3 pr-3 p-1 w-14 h-8 text-black"
                     onChange={onChange}
                     placeholder="10"
                   />
@@ -326,7 +402,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                     min="0"
                     name="coinHolder"
                     id="creator"
-                    className="lato border p-1 w-14 h-8 text-black "
+                    className="lato border rounded-lg pl-3 pr-3 p-1 w-14 h-8 text-black "
                     onChange={onChange}
                     placeholder="5"
                   />
@@ -338,13 +414,16 @@ const MintOperation = ({ submit, setSubmit }) => {
             </div>
           </div>
           <div
-            className={`flex text-lg flex-col gap-2 justify-center border-2 py-1 border-[#efefef] rounded-lg pr-1 pl-2`}
+            className={`flex text-lg flex-col gap-2 justify-center border-b p-1 ${
+              Dark ? "border-[#a9a9a9]" : ""
+            } pb-2 pr-1 pl-2`}
           >
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-2 items-center select-none">
               <div className="lato">Additional DeSo Royalty</div>
               <div
-                className={`${plusSign ? "block" : "hidden"
-                  } cursor-pointer text-xl mt-0.5`}
+                className={`${
+                  plusSign ? "block" : "hidden"
+                } cursor-pointer text-2xl mt-0.5 ml-60`}
                 onClick={() => {
                   setDesoRoyalty(true);
                   setPlusSign(!plusSign);
@@ -352,21 +431,24 @@ const MintOperation = ({ submit, setSubmit }) => {
               >
                 <AiOutlinePlusCircle />
               </div>
-            </div>
-
-            <div
-              className={`flex items-center gap-[0.40rem] border-2 py-1 ${desoRoyalty ? "block" : "hidden"
-                }`}
-            >
               <div
-                className={`cursor-pointer mb-20 scale-[1.3] pl-1`}
+                className={`cursor-pointer scale-150 mt-0.5 ml-[15.3rem] ${
+                  plusSign ? "hidden" : "block"
+                }`}
                 onClick={() => {
                   setDesoRoyalty(false);
                   setPlusSign(true);
                 }}
               >
-                <CrossCircledIcon />
+                <CrossCircledIcon style={{ size: "100px" }} />
               </div>
+            </div>
+
+            <div
+              className={`flex items-center p-2 gap-[0.40rem] border border-[#a9a9a9] rounded-lg py-1 ${
+                desoRoyalty ? "block" : "hidden"
+              }`}
+            >
               <div className={`flex flex-col gap-1`}>
                 <div className="flex items-center justify-between w-[34rem]">
                   <label
@@ -379,9 +461,9 @@ const MintOperation = ({ submit, setSubmit }) => {
                     type="text"
                     name="coinHolder"
                     id="desoPerson"
-                    className="lato border  h-8 w-36  mr-4 text-black "
+                    className="lato p-1 rounded-lg border h-8 w-36  mr-4 text-black "
                     onChange={onChange}
-                    placeholder=" Username Here"
+                    placeholder="Username Here"
                   />
                 </div>
                 <div className="flex items-center justify-between w-[34rem]">
@@ -397,11 +479,11 @@ const MintOperation = ({ submit, setSubmit }) => {
                       type="number"
                       name="coinHolder"
                       id="desoRoyaltyPercentage"
-                      className="lato h-8 w-14 border text-black "
+                      className="lato h-8 w-14 rounded-lg pl-2 border text-black "
                       onChange={onChange}
                       placeholder=" 10"
                     />
-                    <div className="lato ">%</div>
+                    <div className="lato select-none">%</div>
                   </div>
                   {/* </div> */}
                 </div>
@@ -409,8 +491,8 @@ const MintOperation = ({ submit, setSubmit }) => {
             </div>
           </div>
           {/* Unlockable Content */}
-          <div className="text-lg flex-col gap-2 border-2 py-1 border-[#efefef] rounded-lg pr-1 pl-2">
-            <label className="flex justify-between items-center pr-28 ">
+          <div className={`text-lg flex-col gap-2 py-1 pr-1 pl-2`}>
+            <label className="flex select-none justify-between items-center pr-[6.6rem] ">
               <span className="lato">Unlockable Content:</span>
               <Switch
                 onChange={handleChange}
@@ -432,10 +514,11 @@ const MintOperation = ({ submit, setSubmit }) => {
         </div>
         <div className="right-button flex justify-end mt-3 mb-3">
           <button
-            className={`select-none btn focus:outline-none ${Dark
-              ? "bigbtn-dark hover:border-[#ff7521] "
-              : "bigbtn bg-[#efefef]"
-              }`}
+            className={`select-none btn focus:outline-none ${
+              Dark
+                ? "bigbtn-dark hover:border-[#ff7521] "
+                : "bigbtn bg-[#efefef]"
+            }`}
             onClick={handleMintBtn}
             disabled={loading}
           >

@@ -126,7 +126,7 @@ input[type="number"] {
   justify-content: center;
   align-items: center;
   background: #efefef;
-  border-radius: 50%;
+
   outline: none;
   cursor: pointer;
   transition: 0.2s ease-in-out;
@@ -212,5 +212,13 @@ input[type="number"] {
   font-family: "Lato", sans-serif !important;
 }
 .rounded-xl__suggestions__item__highlight {
+  font-family: "Lato", sans-serif !important;
+}
+
+.placeholder__suggestions__item__display {
+  font-family: "Lato", sans-serif !important;
+}
+
+.placeholder__suggestions__item__highlight {
   font-family: "Lato", sans-serif !important;
 }

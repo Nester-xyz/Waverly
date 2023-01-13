@@ -8,8 +8,8 @@ const defaultStyle = {
       padding: 9,
     },
     input: {
-      padding: 9,
-      border: '2px solid #E2E7E9',
+      padding: 4,
+      border: '1px solid #E2E7E9',
       outline: 'none',
       borderRadius: "10px"
     },
@@ -17,7 +17,7 @@ const defaultStyle = {
 
   '&singleLine': {
     display: 'inline-block',
-    width: 180,
+    width: 200,
 
     highlighter: {
       padding: 1,
@@ -34,7 +34,7 @@ const defaultStyle = {
       backgroundColor: 'white',
       borderRadius: '20px',
       // border: '1px solid rgba(0,0,0,0.15)',
-      fontSize: 18,
+      fontSize: 20,
     },
     item: {
       padding: '0px 5px',
