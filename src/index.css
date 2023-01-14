@@ -222,3 +222,14 @@ input[type="number"] {
 .placeholder__suggestions__item__highlight {
   font-family: "Lato", sans-serif !important;
 }
+
+.heart__suggestions{
+  font-family: "Lato", sans-serif !important;
+}
+
+.heart__suggestions__item__display {
+  font-family: "Lato", sans-serif !important;
+}
+.heart__suggestions__item__highlight {
+  font-family: "Lato", sans-serif !important;
+}

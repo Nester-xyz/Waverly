@@ -25,8 +25,11 @@ const HeartOperation = () => {
     const deso = new Deso();
     if (username.length !== 0) {
       const userName = username;
+
+      let res = userName.replace(/{/g, "");
+      let res1 = res.replaceAll("}", "");
       const request = {
-        Username: userName,
+        Username: res1,
       };
       try {
         const response = await deso.user.getSingleProfile(request);
@@ -112,6 +115,7 @@ const HeartOperation = () => {
 
   async function fetchUsers(query, callback) {
     console.log(query);
+    if (username.includes("{{")) { document.getElementById("heart_input_box").readOnly = true; console.log("readyOnly"); return; }
     if (!query) return;
     const deso = new Deso();
     const request = {
@@ -144,9 +148,10 @@ const HeartOperation = () => {
           </label>
           {/*  userName */}
           <MentionsInput
-            className="w-[17rem] -mt-1 h-10 border rounded-xl lato bg-white text-black"
+            className="heart w-[17rem] -mt-1 h-10 border rounded-xl lato bg-white text-black"
             style={defaultStyle}
             value={username}
+            id="heart_input_box"
             onChange={(e) => {
               setUsername(e.target.value);
               setLoading(false);
@@ -160,6 +165,7 @@ const HeartOperation = () => {
               className=""
               trigger=""
               data={fetchUsers}
+              markup="{{__display__}}"
               appendSpaceOnAdd={false}
               renderSuggestion={(
                 suggestion,
@@ -169,9 +175,8 @@ const HeartOperation = () => {
                 focused
               ) => (
                 <div
-                  className={`user ${
-                    focused ? "focused" : ""
-                  } flex flex-row rounded-xl lato`}
+                  className={`user ${focused ? "focused" : ""
+                    } flex flex-row rounded-xl lato`}
                 >
                   <div className=" flex  flex-row rounded-xl lato">
                     <img
@@ -180,9 +185,8 @@ const HeartOperation = () => {
                       alt="."
                     ></img>
                     <div className="p-2 lato">
-                      {highlightedDisplay.length > 15
-                        ? highlightedDisplay.slice(15, 20)
-                        : highlightedDisplay}
+
+                      {highlightedDisplay}
                     </div>
                   </div>
                 </div>
@@ -224,11 +228,10 @@ const HeartOperation = () => {
         <div className="lato"></div>
         <div className="flex items-center space-x-5">
           <button
-            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${
-              Dark
-                ? "bigbtn-dark hover:border-[#ff7521] "
-                : "bigbtn bg-[#efefef]"
-            }`}
+            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${Dark
+              ? "bigbtn-dark hover:border-[#ff7521] "
+              : "bigbtn bg-[#efefef]"
+              }`}
             onClick={handleHeartButton}
             disabled={loading}
           >
