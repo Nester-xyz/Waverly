@@ -59,10 +59,12 @@ const MintOperation = ({ submit, setSubmit }) => {
       const pub_key = localStorage.getItem("user_key");
       const deso = new Deso();
       let imgURLar = [img];
+      let res = bodyText.replace(/{/g, "");
+      let res1 = res.replaceAll("}", "");
       const request = {
         UpdaterPublicKeyBase58Check: pub_key,
         BodyObj: {
-          Body: bodyText,
+          Body: res1,
           VideoURLs: [],
           ImageURLs: imgURLar,
         },
@@ -369,7 +371,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                 <div className="flex gap-3 items-center mr-20">
                   <input
                     type="number"
-                    min="0"
+                    min="1"
                     name="creatorRoyalty"
                     id="creator"
                     className="lato border rounded-lg pl-3 pr-3 p-1 w-14 h-8 text-black"
@@ -468,7 +470,6 @@ const MintOperation = ({ submit, setSubmit }) => {
                       name="coinHolder"
                       id="desoRoyaltyPercentage"
                       className="lato h-8 w-14 rounded-lg pl-2 border text-black "
-                      onChange={onChange}
                       placeholder=" 10"
                     />
                     <div className="lato select-none">%</div>
