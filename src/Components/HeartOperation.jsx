@@ -25,7 +25,6 @@ const HeartOperation = () => {
     const deso = new Deso();
     if (username.length !== 0) {
       const userName = username;
-
       let res = userName.replace(/{/g, "");
       let res1 = res.replaceAll("}", "");
       const request = {
@@ -33,7 +32,7 @@ const HeartOperation = () => {
       };
       try {
         const response = await deso.user.getSingleProfile(request);
-        public_key = await response.Profile.PublicKeyBase58Check;
+        public_key = response.Profile.PublicKeyBase58Check;
         setPub_key(public_key);
         console.log(public_key);
         const delay = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -113,9 +112,14 @@ const HeartOperation = () => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.keyCode === 32) {
+      event.preventDefault();
+    }
+  };
+
   async function fetchUsers(query, callback) {
     console.log(query);
-    if (username.includes("{{")) { document.getElementById("heart_input_box").readOnly = true; console.log("readyOnly"); return; }
     if (!query) return;
     const deso = new Deso();
     const request = {
@@ -158,6 +162,7 @@ const HeartOperation = () => {
               setIsUsername(false);
               setIsValid(true);
             }}
+            onKeyDown={handleKeyDown}
             rows={`${textBoxActive2 ? "5" : "6"}`}
             cols="1"
           >
@@ -175,8 +180,9 @@ const HeartOperation = () => {
                 focused
               ) => (
                 <div
-                  className={`user ${focused ? "focused" : ""
-                    } flex flex-row rounded-xl lato`}
+                  className={`user ${
+                    focused ? "focused" : ""
+                  } flex flex-row rounded-xl lato`}
                 >
                   <div className=" flex  flex-row rounded-xl lato">
                     <img
@@ -184,10 +190,7 @@ const HeartOperation = () => {
                       src={suggestion.image()}
                       alt="."
                     ></img>
-                    <div className="p-2 lato">
-
-                      {highlightedDisplay}
-                    </div>
+                    <div className="p-2 lato">{highlightedDisplay}</div>
                   </div>
                 </div>
               )}
@@ -197,8 +200,8 @@ const HeartOperation = () => {
             ""
           ) : (
             <div className="-mt-1 text-lg flex items-center gap-2 lato text-red-600 select-none">
-              <FaUserAltSlash style={{ color: "red", fontSize: "23px" }} /> User
-              not found.
+              <FaUserAltSlash style={{ color: "red", fontSize: "23px" }} /> not
+              found.
             </div>
           )}
         </div>
@@ -228,10 +231,11 @@ const HeartOperation = () => {
         <div className="lato"></div>
         <div className="flex items-center space-x-5">
           <button
-            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${Dark
-              ? "bigbtn-dark hover:border-[#ff7521] "
-              : "bigbtn bg-[#efefef]"
-              }`}
+            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${
+              Dark
+                ? "bigbtn-dark hover:border-[#ff7521] "
+                : "bigbtn bg-[#efefef]"
+            }`}
             onClick={handleHeartButton}
             disabled={loading}
           >

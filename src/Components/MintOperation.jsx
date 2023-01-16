@@ -316,7 +316,11 @@ const MintOperation = ({ submit, setSubmit }) => {
           </div>
           <div>
             {/* Pricing */}
-            <div className={`border-b flex-col py-1 px-3`}>
+            <div
+              className={`${
+                Dark ? "border-[#a9a9a9]" : ""
+              } border-b flex-col py-1 px-3`}
+            >
               <label className="flex select-none justify-between mt-1 items-center pr-[6rem] ">
                 <span className="text-lg lato -pl-5">Put it on sale:</span>
                 <Switch
