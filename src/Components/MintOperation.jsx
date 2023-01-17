@@ -29,8 +29,9 @@ const MintOperation = ({ submit, setSubmit }) => {
   const [unlockableBtn, setUnlockableBtn] = useState(false);
   const [bodyText, setBodyText] = useState("");
   const { Dark, textBoxActive2 } = useContext(WaverlyContext);
-  // eslint-disable-next-line
   const [isUnlockable, setIsUnlockable] = useState(false);
+  const [isForSale, setIsForSale] = useState(false);
+  const [isBuyNow, setIsBuyNow] = useState(false);
   const [submitMintResponse, setSubmitMintResponse] = useState();
   if (submit === true) {
     return (
@@ -40,15 +41,19 @@ const MintOperation = ({ submit, setSubmit }) => {
 
   const handlePutSale = (nextChecked) => {
     setPutSale(nextChecked);
+    setIsForSale(nextChecked);
   };
 
   const handleBuyNow = (nextChecked) => {
     setBuyNow(nextChecked);
+    setIsBuyNow(nextChecked);
+    setIsUnlockable(false);
+    setUnlockableBtn(false);
   };
 
   const handleUnlockableBtn = (nextChecked) => {
     setUnlockableBtn(nextChecked);
-    // setIsUnlockable(nextChecked);
+    setIsUnlockable(nextChecked);
   };
 
   const handleUploadImage = async () => {
@@ -108,9 +113,9 @@ const MintOperation = ({ submit, setSubmit }) => {
           parseInt(data.creatorRoyalty.toString()) * 100,
         NFTRoyaltyToCoinBasisPoints: parseInt(data.coinHolder.toString()) * 100,
         HasUnlockable: isUnlockable,
-        IsForSale: data.minimumBid !== "0" ? true : false,
+        IsForSale: isForSale,
         MinBidAmountNanos: parseInt(data.minimumBid.toString()) * 1000000000,
-        IsBuyNow: data.buyNowPrice !== "0" ? true : false,
+        IsBuyNow: isBuyNow,
         BuyNowPriceNanos: parseInt(data.buyNowPrice.toString()) * 1000000000,
         MinFeeRateNanosPerKB: 1000,
       };
@@ -307,7 +312,6 @@ const MintOperation = ({ submit, setSubmit }) => {
                       img ? "block" : "hidden"
                     }`}
                   />
-                  {/* <img src={""} alt=""/> */}
                 </div>
               </div>
 
@@ -339,80 +343,95 @@ const MintOperation = ({ submit, setSubmit }) => {
                   id="material-switch"
                 />
               </label>
-              <div>
-                <div className="flex mt-4 mb-1 justify-between text-lg items-center gap-2">
-                  <label
-                    className="lato text-[18px] select-none"
-                    htmlFor="minimumBid"
-                  >
-                    Minimum Bid:
-                  </label>
-                  <div className="mr-7 flex gap-3">
-                    <input
-                      type="number"
-                      min="0"
-                      name="minimumBid"
-                      id="minimumBid"
-                      className="lato border rounded-lg pl-3 pr-3 p-1 w-14 h-8 text-black"
-                      onChange={onChange}
-                      placeholder="0"
-                    />
-                    <label className="lato select-none" htmlFor="minimumBid">
-                      $DESO
+              {isForSale ? (
+                <div>
+                  <div className="flex mt-4 mb-1 justify-between text-lg items-center gap-2">
+                    <label
+                      className="lato text-[18px] select-none"
+                      htmlFor="minimumBid"
+                    >
+                      Minimum Bid:
                     </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className={`flex-col border-b pl-3 space-y-2 px-3 py-2 ${
-                Dark ? "border-[#a9a9a9]" : ""
-              }`}
-            >
-              <div>
-                <label className="flex select-none justify-between text-lg items-center pr-[6rem] ">
-                  <span className="lato -pl-5">Set Buy Now:</span>
-                  <Switch
-                    onChange={handleBuyNow}
-                    checked={buyNow}
-                    onColor={`${Dark ? "#f69552" : "#86d3ff"}`}
-                    onHandleColor={`${Dark ? "#ff7521" : "#2693e6"}`}
-                    handleDiameter={20}
-                    uncheckedIcon={false}
-                    checkedIcon={false}
-                    boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                    activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                    height={15}
-                    width={35}
-                    className="react-switch -mr-6"
-                    id="material-switch"
-                  />
-                </label>
-                {buyNow ? (
-                  <div className="flex justify-between text-lg items-center gap-2 mt-4">
-                    <label className="lato select-none" htmlFor="buyNow">
-                      Buy Now Price:
-                    </label>
-                    <div className="lato mr-7 flex gap-3">
+                    <div className="mr-7 flex gap-3">
                       <input
                         type="number"
                         min="0"
-                        name="buyNowPrice"
-                        id="buyNow"
-                        className="border w-14 rounded-lg pl-3 pr-3 h-8 p-1 text-black"
+                        name="minimumBid"
+                        id="minimumBid"
+                        className="lato border rounded-lg pl-3 pr-3 p-1 w-14 h-8 text-black"
                         onChange={onChange}
                         placeholder="0"
                       />
-                      <label className="lato select-none" htmlFor="buyNow">
+                      <label className="lato select-none" htmlFor="minimumBid">
                         $DESO
                       </label>
                     </div>
                   </div>
-                ) : (
-                  ""
-                )}
-              </div>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
+            {isForSale ? (
+              <div
+                className={`flex-col border-b pl-3 space-y-2 px-3 py-2 ${
+                  Dark ? "border-[#a9a9a9]" : ""
+                }`}
+              >
+                <div>
+                  <label className="flex select-none justify-between text-lg items-center pr-[6rem] ">
+                    <span className="lato -pl-5">Set Buy Now:</span>
+                    <Switch
+                      onChange={handleBuyNow}
+                      checked={buyNow}
+                      onColor={`${Dark ? "#f69552" : "#86d3ff"}`}
+                      onHandleColor={`${Dark ? "#ff7521" : "#2693e6"}`}
+                      handleDiameter={20}
+                      uncheckedIcon={false}
+                      checkedIcon={false}
+                      boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                      activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                      height={15}
+                      width={35}
+                      className="react-switch -mr-6"
+                      id="material-switch"
+                    />
+                  </label>
+                  {buyNow ? (
+                    <div className="flex justify-between text-lg items-center gap-2 mt-4">
+                      <label className="lato select-none" htmlFor="buyNow">
+                        Buy Now Price:
+                      </label>
+                      {data.minimumBid === "0" ? (
+                        <label className="lato mr-28 mt-0.5 text-sm text-red-600">
+                          (Must be greater than 0)
+                        </label>
+                      ) : (
+                        ""
+                      )}
+                      <div className="lato mr-7 flex gap-3">
+                        <input
+                          type="number"
+                          min="1"
+                          name="buyNowPrice"
+                          id="buyNow"
+                          className="border w-14 rounded-lg pl-3 pr-3 h-8 p-1 text-black"
+                          onChange={onChange}
+                          placeholder="1"
+                        />
+                        <label className="lato select-none" htmlFor="buyNow">
+                          $DESO
+                        </label>
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
 
@@ -520,8 +539,8 @@ const MintOperation = ({ submit, setSubmit }) => {
                     name="coinHolder"
                     id="desoPerson"
                     className="lato p-1 rounded-lg border h-8 w-36  mr-4 text-black "
-                    onChange={onChange}
                     placeholder="Username Here"
+                    data={fetchUsers}
                   />
                 </div>
                 <div className="flex items-center justify-between w-[34rem]">
