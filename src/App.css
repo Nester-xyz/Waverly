@@ -1,7 +1,13 @@
 .App {
   text-align: center;
 }
+.rounded-xl__suggestions__item__display {
+  font-family: "Lato", sans-serif !important;
+}
 
+.placeholder__suggestions {
+  font-family: "Lato", sans-serif !important;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

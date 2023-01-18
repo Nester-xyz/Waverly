@@ -4,6 +4,8 @@ import Deso from "deso-protocol";
 import { MagnifyingGlass } from "react-loader-spinner";
 import { FaUserAltSlash } from "react-icons/fa";
 import { useState } from "react";
+import defaultStyle from "./default";
+import { MentionsInput, Mention } from "react-mentions";
 
 const TipOperations = () => {
   const [diamonds, setDiamonds] = useState("1");
@@ -17,7 +19,7 @@ const TipOperations = () => {
   const [tipLevel, setTipLevel] = useState("0");
   const [isUsername, setIsUsername] = useState(false);
   const [isValid, setIsValid] = useState(true);
-  const { Dark } = useContext(WaverlyContext);
+  const { Dark, textBoxActive2 } = useContext(WaverlyContext);
 
   useEffect(() => {
     let response;
@@ -42,12 +44,14 @@ const TipOperations = () => {
     const deso = new Deso();
     if (username.length !== 0) {
       const userName = username;
+      let res = userName.replace(/{/g, "");
+      let res1 = res.replaceAll("}", "");
       const request = {
-        Username: userName,
+        Username: res1,
       };
       try {
         const response = await deso.user.getSingleProfile(request);
-        public_key = await response.Profile.PublicKeyBase58Check;
+        public_key = response.Profile.PublicKeyBase58Check;
         setPub_key(public_key);
         console.log(public_key);
         const delay = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -110,6 +114,37 @@ const TipOperations = () => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.keyCode === 32) {
+      event.preventDefault();
+    }
+  };
+
+  async function fetchUsers(query, callback) {
+    console.log(query);
+    if (!query) return;
+    const deso = new Deso();
+    const request = {
+      UsernamePrefix: query,
+      OrderBy: "influencer_coin_price",
+      NumToFetch: 3,
+    };
+    await deso.user
+      .getProfiles(request)
+      .then((response) =>
+        response.ProfilesFound.map((user) => ({
+          display: user.Username,
+          id: `@${user.Username}`,
+          image: function () {
+            const request = user.PublicKeyBase58Check;
+            const response = deso.user.getSingleProfilePicture(request);
+            return response;
+          },
+        }))
+      )
+      .then(callback);
+  }
+
   const handleTipButton = async () => {
     // get the profile publicKeyBase58Check using username
     if (username.length !== 0) {
@@ -134,51 +169,84 @@ const TipOperations = () => {
     <div className="relative  w-[40rem] px-5 text-xl">
       <div className="mt-10 ml-10  space-y-2">
         {/*  userName */}
-        <div className="flex space-x-3">
-          <label htmlFor="UserName" className="lato select-none">
-            Enter username:
-          </label>
-          <input
-            type="text"
-            name="username"
-            id="userName"
+        <div className="flex items-center">
+          <label className="lato mb-1">Enter the username:</label>
+          <MentionsInput
+            className="heart w-[18rem] -mt-1 ml-2 h-10 border rounded-xl lato bg-white text-black"
+            style={defaultStyle}
             value={username}
-            className="w-40 border-2 lato text-black"
+            appendSpaceOnAdd={false}
+            id="heart_input_box"
             onChange={(e) => {
               setUsername(e.target.value);
               setLoading(false);
               setIsUsername(false);
               setIsValid(true);
             }}
-          />
-          {isValid ? (
-            ""
-          ) : (
-            <div className="mt-[0.3rem] ml-4 text-lg flex items-center gap-2 lato text-red-600 select-none">
-              <FaUserAltSlash style={{ color: "red", fontSize: "23px" }} /> User
-              not found.
-            </div>
-          )}
+            onKeyDown={handleKeyDown}
+            rows={`${textBoxActive2 ? "5" : "6"}`}
+            cols="1"
+          >
+            <Mention
+              className=""
+              trigger=""
+              markup="{{__display__}}"
+              data={fetchUsers}
+              appendSpaceOnAdd={false}
+              renderSuggestion={(
+                suggestion,
+                search,
+                highlightedDisplay,
+                index,
+                focused
+              ) => (
+                <div
+                  className={`user ${
+                    focused ? "focused" : ""
+                  } flex flex-row rounded-xl lato`}
+                >
+                  <div className=" flex  flex-row rounded-xl lato">
+                    <img
+                      className="select-none w-10 h-10 mt-1 rounded-full"
+                      src={suggestion.image()}
+                      alt="."
+                    ></img>
+                    <div className="p-2 lato">{highlightedDisplay}</div>
+                  </div>
+                </div>
+              )}
+            />
+          </MentionsInput>
         </div>
         {/* no of post */}
         <div className="flex pt-2 space-x-2">
           <label className="lato select-none" htmlFor="posts">
             Number of posts:
           </label>
-          <input
-            type="text"
-            name="numberOfPost"
-            id="posts"
-            value={numberOfPost}
-            placeholder="10"
-            className="w-20 border-2 lato text-black"
-            onChange={(e) => {
-              setNumberOfPost(e.target.value);
-              setLoading(false);
-              setIsUsername(false);
-              setIsValid(true);
-            }}
-          />
+          <div className="flex gap-28">
+            <input
+              type="text"
+              name="numberOfPost"
+              id="posts"
+              value={numberOfPost}
+              placeholder="10"
+              className="w-20 border-2 rounded-lg pl-2 lato text-black"
+              onChange={(e) => {
+                setNumberOfPost(e.target.value);
+                setLoading(false);
+                setIsUsername(false);
+                setIsValid(true);
+              }}
+            />
+            {isValid ? (
+              ""
+            ) : (
+              <div className="mb-1 text-lg flex items-center gap-2 lato text-red-600 select-none">
+                <FaUserAltSlash style={{ color: "red", fontSize: "23px" }} />
+                not found.
+              </div>
+            )}
+          </div>
         </div>
         {/* diamonds */}
         <div className="lato flex space-x-1 items-center">
@@ -187,34 +255,43 @@ const TipOperations = () => {
           </label>
           <div className="flex select-none text-black">
             <button
-              className={`${Dark ? "darktheme" : "logout"
-                } rounded-full lato scale-75 ${diamonds === "1"
-                  ? `${Dark ? "darktheme-active" : "logout-active "
-                  } border-blue-400 border-2`
+              className={`${
+                Dark ? "darktheme" : "logout"
+              } rounded-2xl lato scale-75 ${
+                diamonds === "1"
+                  ? `${
+                      Dark ? "darktheme-active" : "logout-active "
+                    } border-blue-400 border-2`
                   : `hover:border-orange-300`
-                }`}
+              }`}
               onClick={() => setDiamonds("1")}
             >
               1💎
             </button>
             <button
-              className={`${Dark ? "darktheme" : "logout"
-                } rounded-full lato scale-75 ${diamonds === "2"
-                  ? `${Dark ? "darktheme-active" : "logout-active "
-                  } border-blue-400 border-2`
+              className={`${
+                Dark ? "darktheme" : "logout"
+              } rounded-2xl lato scale-75 ${
+                diamonds === "2"
+                  ? `${
+                      Dark ? "darktheme-active" : "logout-active "
+                    } border-blue-400 border-2`
                   : `hover:border-orange-300`
-                }`}
+              }`}
               onClick={() => setDiamonds("2")}
             >
               2💎
             </button>
             <button
-              className={`${Dark ? "darktheme" : "logout"
-                } rounded-full lato scale-75 ${diamonds === "3"
-                  ? `${Dark ? "darktheme-active" : "logout-active "
-                  } border-blue-400 border-2`
+              className={`${
+                Dark ? "darktheme" : "logout"
+              } rounded-2xl lato scale-75 ${
+                diamonds === "3"
+                  ? `${
+                      Dark ? "darktheme-active" : "logout-active "
+                    } border-blue-400 border-2`
                   : `hover:border-orange-300`
-                }`}
+              }`}
               onClick={() => setDiamonds("3")}
             >
               3💎
@@ -223,7 +300,7 @@ const TipOperations = () => {
         </div>
       </div>
       {/* Submit Button & Calculations */}
-      <div className="flex justify-between items-center mt-4">
+      <div className="flex justify-between items-center mt-3">
         <div className="lato"></div>
         <div className="flex items-center space-x-5">
           <div className="lato select-none">
@@ -232,14 +309,15 @@ const TipOperations = () => {
               ((Number(diamondData[Number(diamonds)]) / 1e9) *
                 Number(numberOfPost) *
                 Number(rate)) /
-              100
+                100
             ).toFixed(4)}
           </div>
           <button
-            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${Dark
-              ? "bigbtn-dark hover:border-[#ff7521] "
-              : "bigbtn bg-[#efefef]"
-              }`}
+            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${
+              Dark
+                ? "bigbtn-dark hover:border-[#ff7521] "
+                : "bigbtn bg-[#efefef]"
+            }`}
             onClick={handleTipButton}
             disabled={loading}
           >
