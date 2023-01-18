@@ -34,7 +34,7 @@ const MintOperation = ({ submit, setSubmit }) => {
   const [isBuyNow, setIsBuyNow] = useState(false);
   const [additionalDESORoyalties, setAdditionalDesoRoyalty] = useState({
     PublicKeyBase58Check: "",
-    RoyaltyPercent: 1,
+    RoyaltyPercent: 10,
     Username: "",
   });
   const [submitMintResponse, setSubmitMintResponse] = useState();
@@ -210,8 +210,8 @@ const MintOperation = ({ submit, setSubmit }) => {
                 <Mention
                   className="focus:outline-none lato"
                   trigger="@"
-                  markup="{{__id__}}"
-                  displayTransform={(id) => `${id + ""}`}
+                  markup={`@{{__display__}} `}
+                  displayTransform={(display) => `@${display + ""}`}
                   data={fetchUsers}
                   renderSuggestion={(
                     suggestion,
@@ -528,6 +528,9 @@ const MintOperation = ({ submit, setSubmit }) => {
                 onClick={() => {
                   setDesoRoyalty(false);
                   setPlusSign(true);
+                  setAdditionalDesoRoyalty(
+                    additionalDESORoyalties.Username === ""
+                  );
                 }}
               >
                 <CrossCircledIcon style={{ size: "100px" }} />
@@ -548,13 +551,14 @@ const MintOperation = ({ submit, setSubmit }) => {
                     Select the creator:
                   </label>
                   <MentionsInput
-                    className="placeholder text-black rounded-xl  border-0 resize-none text-lg mb-2 bg-white w-[14rem] py-0 !h-10 mt-4 px-5  focus:outline-none"
+                    className="placeholder text-black rounded-xl  border-0 resize-none text-lg mb-2 bg-white w-[18rem] h-10 mt-1 px-5  focus:outline-none"
                     style={defaultStyle}
                     rows={`${textBoxActive2 ? "2" : "2"}`}
                     cols="1"
-                    placeholder="Username"
+                    placeholder="Enter username"
                     value={additionalDESORoyalties.Username}
-                    onChange={(e) => setAdditionalDesoRoyalty({
+                    onChange={(e) =>
+                      setAdditionalDesoRoyalty({
                         ...additionalDESORoyalties,
                         Username: e.target.value,
                       })
@@ -562,13 +566,16 @@ const MintOperation = ({ submit, setSubmit }) => {
                   >
                     <Mention
                       className="focus:outline-none lato"
-                      trigger="@"
-                      displayTransform={(handle) => `@${handle} `}
-                      markup="@__display__ "
+                      trigger=""
+                      markup="__display__ "
                       data={fetchUsers}
                       onAdd={(id, display) => {
-                        setAdditionalDesoRoyalty({ ...additionalDESORoyalties, PublicKeyBase58Check: id, Username: `@${display} ` })
-                        console.log(additionalDESORoyalties)
+                        setAdditionalDesoRoyalty({
+                          ...additionalDESORoyalties,
+                          PublicKeyBase58Check: id,
+                          Username: `${display} `,
+                        });
+                        console.log(additionalDESORoyalties);
                       }}
                       renderSuggestion={(
                         suggestion,
@@ -592,24 +599,8 @@ const MintOperation = ({ submit, setSubmit }) => {
                           </div>
                         </div>
                       )}
-                      appendSpaceOnAdd
                     />
                   </MentionsInput>
-                  {/* <input
-                    type="text"
-                    name="coinHolder"
-                    id="desoPerson"
-                    value={additionalDESORoyalties.PublicKeyBase58Check}
-                    onChange={(e) =>
-                      setAdditionalDesoRoyalty({
-                        ...additionalDESORoyalties,
-                        PublicKeyBase58Check: e.target.value,
-                      })
-                    }
-                    className="lato p-1 rounded-lg border h-8 w-36  mr-4 text-black "
-                    placeholder="Username Here"
-                    data={fetchUsers}
-                  /> */}
                 </div>
                 <div className="flex items-center justify-between w-[34rem]">
                   <label
