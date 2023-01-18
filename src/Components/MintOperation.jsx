@@ -35,6 +35,7 @@ const MintOperation = ({ submit, setSubmit }) => {
   const [additionalDESORoyalties, setAdditionalDesoRoyalty] = useState({
     PublicKeyBase58Check: "",
     RoyaltyPercent: 1,
+    Username: "",
   });
   const [submitMintResponse, setSubmitMintResponse] = useState();
   if (submit === true) {
@@ -110,7 +111,7 @@ const MintOperation = ({ submit, setSubmit }) => {
       }
       const pub_key = localStorage.getItem("user_key");
       const deso = new Deso();
-      let royaltyMap = [];
+      let royaltyMap = {};
       royaltyMap[`${additionalDESORoyalties.PublicKeyBase58Check}`] =
         additionalDESORoyalties.RoyaltyPercent * 100;
       console.log(royaltyMap);
@@ -174,7 +175,8 @@ const MintOperation = ({ submit, setSubmit }) => {
       .then((response) =>
         response.ProfilesFound.map((user) => ({
           display: user.Username,
-          id: `@${user.Username}`,
+          id: user.PublicKeyBase58Check,
+          handle: `@${user.Username}`,
           image: function () {
             const request = user.PublicKeyBase58Check;
             const response = deso.user.getSingleProfilePicture(request);
@@ -545,7 +547,55 @@ const MintOperation = ({ submit, setSubmit }) => {
                   >
                     Select the creator:
                   </label>
-                  <input
+                  <MentionsInput
+                    className="placeholder text-black rounded-xl  border-0 resize-none text-lg mb-2 bg-white w-[14rem] py-0 !h-10 mt-4 px-5  focus:outline-none"
+                    style={defaultStyle}
+                    rows={`${textBoxActive2 ? "2" : "2"}`}
+                    cols="1"
+                    placeholder="Username"
+                    value={additionalDESORoyalties.Username}
+                    onChange={(e) => setAdditionalDesoRoyalty({
+                        ...additionalDESORoyalties,
+                        Username: e.target.value,
+                      })
+                    }
+                  >
+                    <Mention
+                      className="focus:outline-none lato"
+                      trigger="@"
+                      displayTransform={(handle) => `@${handle} `}
+                      markup="@__display__ "
+                      data={fetchUsers}
+                      onAdd={(id, display) => {
+                        setAdditionalDesoRoyalty({ ...additionalDESORoyalties, PublicKeyBase58Check: id, Username: `@${display} ` })
+                        console.log(additionalDESORoyalties)
+                      }}
+                      renderSuggestion={(
+                        suggestion,
+                        search,
+                        highlightedDisplay,
+                        index,
+                        focused
+                      ) => (
+                        <div
+                          className={`user ${
+                            focused ? "focused" : ""
+                          } flex flex-row rounded-xl lato`}
+                        >
+                          <div className=" flex flex-row rounded-xl lato">
+                            <img
+                              className="select-none w-10 h-10 mt-1 rounded-full"
+                              src={suggestion.image()}
+                              alt="."
+                            ></img>
+                            <div className="p-2 lato">{highlightedDisplay}</div>
+                          </div>
+                        </div>
+                      )}
+                      appendSpaceOnAdd
+                    />
+                  </MentionsInput>
+                  {/* <input
                     type="text"
                     name="coinHolder"
                     id="desoPerson"
@@ -559,7 +609,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                     className="lato p-1 rounded-lg border h-8 w-36  mr-4 text-black "
                     placeholder="Username Here"
                     data={fetchUsers}
-                  />
+                  /> */}
                 </div>
                 <div className="flex items-center justify-between w-[34rem]">
                   <label
