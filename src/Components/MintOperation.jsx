@@ -110,15 +110,10 @@ const MintOperation = ({ submit, setSubmit }) => {
       }
       const pub_key = localStorage.getItem("user_key");
       const deso = new Deso();
-      let royaltyMap = [];
-<<<<<<< HEAD
-      royaltyMap[`${additionalDESORoyalties.PublicKeyBase58Check}`] = additionalDESORoyalties.RoyaltyPercent * 100;
-      console.log(royaltyMap)
-=======
+      let royaltyMap = {};
       royaltyMap[`${additionalDESORoyalties.PublicKeyBase58Check}`] =
         additionalDESORoyalties.RoyaltyPercent * 100;
       console.log(royaltyMap);
->>>>>>> 73bf9575c803afedcb6ed4c1c27eaca87dc3fcdb
       const request = {
         UpdaterPublicKeyBase58Check: pub_key,
         NFTPostHashHex: postHash,
