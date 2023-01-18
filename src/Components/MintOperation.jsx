@@ -108,7 +108,7 @@ const MintOperation = ({ submit, setSubmit }) => {
       const pub_key = localStorage.getItem("user_key");
       const deso = new Deso();
       let royaltyMap = [];
-      royaltyMap[additionalDESORoyalties.PublicKeyBase58Check] = additionalDESORoyalties.RoyaltyPercent * 100;
+      royaltyMap[`${additionalDESORoyalties.PublicKeyBase58Check}`] = additionalDESORoyalties.RoyaltyPercent * 100;
       console.log(royaltyMap)
       const request = {
         UpdaterPublicKeyBase58Check: pub_key,
