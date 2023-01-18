@@ -32,7 +32,10 @@ const MintOperation = ({ submit, setSubmit }) => {
   const [isUnlockable, setIsUnlockable] = useState(false);
   const [isForSale, setIsForSale] = useState(false);
   const [isBuyNow, setIsBuyNow] = useState(false);
-  const [additionalDESORoyalties, setAdditionalDesoRoyalty] = useState({ PublicKeyBase58Check: "", RoyaltyPercent: 0 })
+  const [additionalDESORoyalties, setAdditionalDesoRoyalty] = useState({
+    PublicKeyBase58Check: "",
+    RoyaltyPercent: 1,
+  });
   const [submitMintResponse, setSubmitMintResponse] = useState();
   if (submit === true) {
     return (
@@ -108,13 +111,20 @@ const MintOperation = ({ submit, setSubmit }) => {
       const pub_key = localStorage.getItem("user_key");
       const deso = new Deso();
       let royaltyMap = [];
+<<<<<<< HEAD
       royaltyMap[`${additionalDESORoyalties.PublicKeyBase58Check}`] = additionalDESORoyalties.RoyaltyPercent * 100;
       console.log(royaltyMap)
+=======
+      royaltyMap[`${additionalDESORoyalties.PublicKeyBase58Check}`] =
+        additionalDESORoyalties.RoyaltyPercent * 100;
+      console.log(royaltyMap);
+>>>>>>> 73bf9575c803afedcb6ed4c1c27eaca87dc3fcdb
       const request = {
         UpdaterPublicKeyBase58Check: pub_key,
         NFTPostHashHex: postHash,
         NumCopies: NOC.length !== 0 ? parseInt(NOC) : 1,
-        NFTRoyaltyToCreatorBasisPoints: parseInt(data.creatorRoyalty.toString()) * 100,
+        NFTRoyaltyToCreatorBasisPoints:
+          parseInt(data.creatorRoyalty.toString()) * 100,
         NFTRoyaltyToCoinBasisPoints: parseInt(data.coinHolder.toString()) * 100,
         HasUnlockable: isUnlockable,
         IsForSale: isForSale,
@@ -122,22 +132,22 @@ const MintOperation = ({ submit, setSubmit }) => {
         IsBuyNow: isBuyNow,
         BuyNowPriceNanos: parseInt(data.buyNowPrice.toString()) * 1000000000,
         MinFeeRateNanosPerKB: 1000,
-        additionalDESORoyaltiesMap: royaltyMap,
+        AdditionalDESORoyaltiesMap: royaltyMap,
       };
       console.log(request);
-      // const response = await deso.nft.createNft(request);
-      // console.log(response);
-      // setData({
-      //   title: "",
-      //   copies: "1",
-      //   minimumBid: "0",
-      //   buyNowPrice: "0",
-      //   creatorRoyalty: "10",
-      //   coinHolder: "5",
-      // });
-      // setNOC("1");
-      // setLoading(false);
-      // setSubmit(true);
+      const response = await deso.nft.createNft(request);
+      console.log(response);
+      setData({
+        title: "",
+        copies: "1",
+        minimumBid: "0",
+        buyNowPrice: "0",
+        creatorRoyalty: "10",
+        coinHolder: "5",
+      });
+      setNOC("1");
+      setLoading(false);
+      setSubmit(true);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -540,59 +550,21 @@ const MintOperation = ({ submit, setSubmit }) => {
                   >
                     Select the creator:
                   </label>
-                <MentionsInput
-                  className="lato p-1 rounded-lg border !h-8 w-36  mr-4 text-black"
-                  style={defaultStyle}
-                  rows={`${textBoxActive2 ? "5" : "6"}`}
-                  cols="1"
-                  placeholder="Username Here"
-                  value={additionalDESORoyalties.PublicKeyBase58Check}
-                  onChange={(e) => setAdditionalDesoRoyalty({...additionalDESORoyalties, PublicKeyBase58Check: e.target.value})}
-                >
-                  <Mention
-                    className="focus:outline-none lato"
-                    trigger="@"
-                    markup="{{__id__}}"
-                    displayTransform={(id) => `${id + ""}`}
-                    data={fetchUsers}
-                    renderSuggestion={(
-                      suggestion,
-                      search,
-                      highlightedDisplay,
-                      index,
-                      focused
-                    ) => (
-                      <div
-                        className={`user ${
-                          focused ? "focused" : ""
-                        } flex flex-row w-full relative z-10 rounded-xl lato`}
-                      >
-                        <div className=" flex flex-row rounded-xl lato">
-                          <img
-                            className="select-none w-10 h-10 mt-1 rounded-full"
-                            src={suggestion.image()}
-                            alt="."
-                          ></img>
-                          <div className="p-2 lato">{highlightedDisplay}</div>
-                        </div>
-                      </div>
-                    )}
-                    appendSpaceOnAdd
-                  />
-                </MentionsInput>
-                  {/* <input
+                  <input
                     type="text"
                     name="coinHolder"
                     id="desoPerson"
-                    onChange={(e) => {
-                      fetchUsers(e.target.value);
-                      setAdditionalDesoRoyalty({user: e.target.value})
-                    }}
+                    value={additionalDESORoyalties.PublicKeyBase58Check}
+                    onChange={(e) =>
+                      setAdditionalDesoRoyalty({
+                        ...additionalDESORoyalties,
+                        PublicKeyBase58Check: e.target.value,
+                      })
+                    }
                     className="lato p-1 rounded-lg border h-8 w-36  mr-4 text-black "
                     placeholder="Username Here"
                     data={fetchUsers}
-                    value={additionalDESORoyalties.user}
-                  /> */}
+                  />
                 </div>
                 <div className="flex items-center justify-between w-[34rem]">
                   <label
@@ -608,7 +580,10 @@ const MintOperation = ({ submit, setSubmit }) => {
                       name="coinHolder"
                       id="desoRoyaltyPercentage"
                       onChange={(e) => {
-                        setAdditionalDesoRoyalty({...additionalDESORoyalties, RoyaltyPercent: e.target.value})
+                        setAdditionalDesoRoyalty({
+                          ...additionalDESORoyalties,
+                          RoyaltyPercent: e.target.value,
+                        });
                       }}
                       className="lato h-8 w-14 rounded-lg pl-2 border text-black "
                       placeholder=" 10"
