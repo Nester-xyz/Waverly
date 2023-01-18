@@ -29,6 +29,7 @@ const LoggedIn = ({
     tab = <TipOperation submit={submit} setSubmit={setSubmit} />;
   if (activeTab === "heart")
     tab = <HeartOperation submit={submit} setSubmit={setSubmit} />;
+
   return (
     <div
       className={`content-start w-[40rem] h-[25rem] border scale  ${Dark ? "dark-mode" : "light-mode"
