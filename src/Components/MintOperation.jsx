@@ -34,7 +34,7 @@ const MintOperation = ({ submit, setSubmit }) => {
   const [isBuyNow, setIsBuyNow] = useState(false);
   const [additionalDESORoyalties, setAdditionalDesoRoyalty] = useState({
     PublicKeyBase58Check: "",
-    RoyaltyPercent: 10,
+    RoyaltyPercent: "10",
     Username: "",
   });
   const [submitMintResponse, setSubmitMintResponse] = useState();
@@ -113,7 +113,7 @@ const MintOperation = ({ submit, setSubmit }) => {
       const deso = new Deso();
       let royaltyMap = {};
       royaltyMap[`${additionalDESORoyalties.PublicKeyBase58Check}`] =
-        additionalDESORoyalties.RoyaltyPercent * 100;
+        parseInt(additionalDESORoyalties.RoyaltyPercent) * 100;
       console.log(royaltyMap);
       const request = {
         UpdaterPublicKeyBase58Check: pub_key,
@@ -128,8 +128,13 @@ const MintOperation = ({ submit, setSubmit }) => {
         IsBuyNow: isBuyNow,
         BuyNowPriceNanos: parseInt(data.buyNowPrice.toString()) * 1000000000,
         MinFeeRateNanosPerKB: 1000,
-        AdditionalDESORoyaltiesMap: royaltyMap,
       };
+      if (
+        additionalDESORoyalties.Username !== "" ||
+        additionalDESORoyalties.RoyaltyPercent === 0
+      ) {
+        request.AdditionalDESORoyaltiesMap = royaltyMap;
+      }
       console.log(request);
       const response = await deso.nft.createNft(request);
       console.log(response);
@@ -144,6 +149,7 @@ const MintOperation = ({ submit, setSubmit }) => {
       setNOC("1");
       setLoading(false);
       setSubmit(true);
+      setAdditionalDesoRoyalty(!additionalDESORoyalties);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -528,9 +534,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                 onClick={() => {
                   setDesoRoyalty(false);
                   setPlusSign(true);
-                  setAdditionalDesoRoyalty(
-                    additionalDESORoyalties.Username === ""
-                  );
+                  setAdditionalDesoRoyalty(!additionalDESORoyalties);
                 }}
               >
                 <CrossCircledIcon style={{ size: "100px" }} />
@@ -551,7 +555,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                     Select the creator:
                   </label>
                   <MentionsInput
-                    className="placeholder text-black rounded-xl  border-0 resize-none text-lg mb-2 bg-white w-[18rem] h-10 mt-1 px-5  focus:outline-none"
+                    className="placeholder text-black rounded-xl  border-0 resize-none text-lg mb-2 bg-white w-[14rem] h-10 mt-1 px-5  focus:outline-none"
                     style={defaultStyle}
                     rows={`${textBoxActive2 ? "2" : "2"}`}
                     cols="1"
@@ -590,11 +594,6 @@ const MintOperation = ({ submit, setSubmit }) => {
                           } flex flex-row rounded-xl lato`}
                         >
                           <div className=" flex flex-row rounded-xl lato">
-                            <img
-                              className="select-none w-10 h-10 mt-1 rounded-full"
-                              src={suggestion.image()}
-                              alt="."
-                            ></img>
                             <div className="p-2 lato">{highlightedDisplay}</div>
                           </div>
                         </div>
@@ -602,14 +601,14 @@ const MintOperation = ({ submit, setSubmit }) => {
                     />
                   </MentionsInput>
                 </div>
-                <div className="flex items-center justify-between w-[34rem]">
+                <div className="flex items-center justify-between mb-[0.23rem] w-[34rem]">
                   <label
                     htmlFor="desoRoyaltyPercentage"
                     className="leading-[1rem]  text-center lato select-none"
                   >
                     DeSo Royalty:
                   </label>
-                  <div className="flex items-center gap-3 mr-[4.8rem]">
+                  <div className="flex items-center gap-3 mr-[3.25rem]">
                     {/* <div className="flex bg-blue-300 -mr-[11.5rem] "> */}
                     <input
                       type="number"
