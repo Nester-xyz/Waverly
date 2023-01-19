@@ -174,7 +174,7 @@ const MintOperation = ({ submit, setSubmit }) => {
     const request = {
       UsernamePrefix: query,
       OrderBy: "influencer_coin_price",
-      NumToFetch: 4,
+      NumToFetch: 3,
     };
     await deso.user
       .getProfiles(request)
