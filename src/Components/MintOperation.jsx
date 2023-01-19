@@ -193,6 +193,12 @@ const MintOperation = ({ submit, setSubmit }) => {
       .then(callback);
   }
 
+  const handleKeyDown = (event) => {
+    if (event.keyCode === 32) {
+      event.preventDefault();
+    }
+  };
+
   return (
     <div className="flex relative mt-2 px-5">
       <div>
@@ -558,6 +564,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                     className="placeholder text-black rounded-xl  border-0 resize-none text-lg mb-2 bg-white w-[14rem] h-10 mt-1 px-5  focus:outline-none"
                     style={defaultStyle}
                     rows={`${textBoxActive2 ? "2" : "2"}`}
+                    onKeyDown={handleKeyDown}
                     cols="1"
                     placeholder="Enter username"
                     value={additionalDESORoyalties.Username}
