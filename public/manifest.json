@@ -11,6 +11,7 @@
     "service_worker": "background.js"
   },
   "manifest_version": 3,
+  "permissions": ["runtime", "tabs", "activeTab"],
   "action": {
     "default_popup": "index.html",
     "default_title": "open the popup"

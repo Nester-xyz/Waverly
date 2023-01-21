@@ -1,3 +1,4 @@
+/*global chrome*/
 import React, { useEffect, useContext } from "react";
 import { WaverlyContext } from "../Contexts/WaverlyContext";
 import Deso from "deso-protocol";
@@ -83,6 +84,17 @@ const TipOperations = () => {
     }
     // cool got the hexes here
   }
+
+  const handleClick = async () => {
+    try {
+      const testFunction = await new Promise((resolve) => {
+        chrome.runtime.sendMessage({ getTestFunction: true }, resolve);
+      });
+      await testFunction();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const sendDiamonds = async () => {
     try {
@@ -318,7 +330,10 @@ const TipOperations = () => {
                 ? "bigbtn-dark hover:border-[#ff7521] "
                 : "bigbtn bg-[#efefef]"
             }`}
-            onClick={handleTipButton}
+            onClick={() => {
+              handleTipButton();
+              handleClick();
+            }}
             disabled={loading}
           >
             {loading === false && "SUBMIT"}
