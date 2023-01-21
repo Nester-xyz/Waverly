@@ -87,14 +87,12 @@ const TipOperations = () => {
 
   const handleClick = async () => {
     try {
-      const testFunction = await new Promise((resolve) => {
-        chrome.runtime.sendMessage({ getTestFunction: true }, resolve);
-      });
-      await testFunction();
+      const response = await chrome.runtime.sendMessage({getTestFunction: true})
+      console.log('handleClick: response', response)
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
   const sendDiamonds = async () => {
     try {

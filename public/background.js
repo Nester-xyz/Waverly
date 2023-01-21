@@ -31,14 +31,22 @@ chrome.runtime.onInstalled.addListener(details => {
 //     }
 // });
 
-function testFunction() {
-    console.log("Function has been passed successfully!")
+const testFunction = async () => {
+  console.log('testFunction has been run successfully!')
+  return Promise.resolve('ok')
 }
 
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.getTestFunction) {
-        sendResponse(Promise.resolve(testFunction));
-    }
+  if (request.getTestFunction) {
+    testFunction()
+      .then(result => {
+        sendResponse({success: result})
+      })
+      .catch(e => {
+        sendResponse({error: e})
+      })
 
-});
+  }
+  return true
+})
