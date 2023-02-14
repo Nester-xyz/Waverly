@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
+
+#label {
+  margin-left: 43%;
+  margin-top: 25%;
+  position: relative;
+  height: 75px;
+  width: 75px;
+  display: inline-block;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  border-width: 4px;
+  border-left-color: #ff7521;
+  animation: rotate 1.2s linear infinite;
+}
+@keyframes rotate {
+  50% {
+    border-left-color: #ff7521;
+  }
+  75% {
+    border-left-color: #ff7521;
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+#label .check-icon {
+  display: none;
+}
+#label .check-icon:after {
+  position: absolute;
+  content: "";
+  top: 55%;
+  left: 9px;
+  transform: scaleX(-1) rotate(135deg);
+  height: 47px;
+  width: 20px;
+  border-top: 4px solid #ff7521;
+  border-right: 4px solid #ff7521;
+  transform-origin: left top;
+  animation: check-icon 0.8s ease;
+}
+@keyframes check-icon {
+  0% {
+    height: 0;
+    width: 0;
+    opacity: 1;
+  }
+  10% {
+    height: 0;
+    width: 10px;
+    opacity: 1;
+  }
+  20% {
+    height: 0;
+    width: 20px;
+    opacity: 1;
+  }
+  60% {
+    height: 47px;
+    width: 20px;
+    opacity: 1;
+  }
+  100% {
+    height: 47px;
+    width: 20px;
+    opacity: 1;
+  }
+}
+#check {
+  display: none;
+  border-width: 4px;
+}
+#check:checked ~ #label .check-icon {
+  display: block;
+}
+#check:checked ~ #label {
+  animation: none;
+  border-color: #ff7521;
+  transition: border 0.5s ease-out;
+  border-width: 4px;
+}

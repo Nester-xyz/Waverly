@@ -1,13 +1,11 @@
 import React from "react";
-import Landing from "../Components/Landing";
-import Nav from "../Components/Nav";
 import { createRoot } from "react-dom/client";
 import "../assets/tailwind.css";
+import Index from "../Components/Index";
 
 const App = (
   <>
-    <Nav />
-    <Landing />
+    <Index />
   </>
 );
 
