@@ -1,8 +1,9 @@
 import React from "react";
+import { FaBeer } from "react-icons/fa";
+import Deso from "deso-protocol";
 
 //trying to import one icon from react-icons
 //throws error like module not found
-import { FaBeer } from "react-icons/fa";
 import img from "../img/waverlydefault.png";
 
 const Nav = () => {

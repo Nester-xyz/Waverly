@@ -3,8 +3,26 @@ const CopyPlugin = require('copy-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const tailwindcss = require('tailwindcss');
+const webpack = require('webpack');
 
-module.exports = {
+const override = (config) => {
+    const fallback = config.resolve.fallback || {};
+    Object.assign(fallback, {
+        "crypto": require.resolve("crypto-browserify"),
+        "stream": require.resolve("stream-browserify")
+    });
+    config.resolve.fallback = fallback;
+    config.plugins = (config.plugins || []).concat([
+        new webpack.ProvidePlugin({
+            process: 'process/browser',
+            Buffer: ['buffer', 'Buffer']
+        })
+    ]);
+    config.ignoreWarnings = [/Failed to parse source map/];
+    return config;
+};
+
+module.exports = override({
     mode: "development",
     devtool: 'cheap-module-source-map',
     entry: {
@@ -62,9 +80,10 @@ module.exports = {
         )
     ],
     resolve: {
-        extensions: ['.jsx', 'js']
+        modules: ['node_modules'],
+        extensions: ['.js', '.jsx'],
     },
     output: {
         filename: '[name].js'
     }
-}
+});
