@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Landing from "./Landing";
 import LoggedIn from "./LoggedIn";
+import "./Index.css";
 import Nav from "./Nav";
 import { WaverlyContext } from "../Contexts/WaverlyContext";
 import { MemoryRouter as Router, Route, Routes } from "react-router-dom";
 
-const Index = () => {
+function Index() {
     const [logIn, setLogIn] = useState(false);
     const [settingActive, setSettingActive] = useState(false);
     const [menuActive, setMenuActive] = useState(false);

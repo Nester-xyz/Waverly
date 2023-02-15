@@ -1,4 +1,3 @@
-/*global chrome*/
 import React, { useEffect, useContext } from "react";
 import { WaverlyContext } from "../Contexts/WaverlyContext";
 import Deso from "deso-protocol";
@@ -40,6 +39,7 @@ const TipOperations = () => {
   };
 
   let public_key;
+  let admin_public_key;
 
   async function getProfile() {
     const deso = new Deso();
@@ -72,6 +72,7 @@ const TipOperations = () => {
     const deso = new Deso();
     const no_of_posts = Number(numberOfPost);
     const reader_pub_key = localStorage.getItem("user_key");
+    admin_public_key = reader_pub_key;
     const reading_pub_key = public_key;
     const request = {
       PublicKeyBase58Check: reading_pub_key,
@@ -84,6 +85,8 @@ const TipOperations = () => {
     }
     // cool got the hexes here
   }
+
+
 
   const handleKeyDown = (event) => {
     if (event.keyCode === 32) {
@@ -115,16 +118,6 @@ const TipOperations = () => {
       )
       .then(callback);
   }
-  // const handleClick = async () => {
-  //   try {
-  //     const response = await chrome.runtime.sendMessage({
-  //       getSendDiamondsFunction: true,
-  //     });
-  //     console.log("handleClick: response", response);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   const handleTipButton = async () => {
     // get the profile publicKeyBase58Check using username
@@ -134,12 +127,14 @@ const TipOperations = () => {
       // fetch post of user
       await fetchPosts();
       // send diamonds required data posthash hex collection array of no of Posts to fetch
-      // send diamonds required data posthash hex collection array of no of Posts to fetch
+      const seed = localStorage.getItem("seedHex");
       await chrome.runtime.sendMessage({
         getSendDiamondsFunction: true,
         postHexes,
         public_key,
         diamonds,
+        admin_public_key,
+        seed
       });
       setDiamonds("1");
       setNumberOfPost(10);
@@ -149,6 +144,36 @@ const TipOperations = () => {
       setPostHexes([]);
       setTipLevel("0");
       setIsUsername(false);
+    }
+  };
+
+  const sendDiamonds = async () => {
+    try {
+      const deso = new Deso();
+      console.log(postHexes.length);
+      for (let i = 0; i < postHexes.length; i++) {
+        try {
+          const sender_pub_key = localStorage.getItem("user_key");
+          const receiver_pub_key = public_key;
+          const diamond_level = Number(diamonds);
+          const request = {
+            ReceiverPublicKeyBase58Check: receiver_pub_key,
+            SenderPublicKeyBase58Check: sender_pub_key,
+            DiamondPostHashHex: postHexes[i],
+            DiamondLevel: diamond_level,
+            MinFeeRateNanosPerKB: 1001,
+            InTutorial: false,
+          };
+          const response = await deso.social.sendDiamonds(request);
+          console.log(response);
+          setTipLevel(`${i + 1}`);
+        } catch (error) {
+          setTipLevel(`${i + 1}`);
+          continue;
+        }
+      }
+    } catch (error) {
+      setLoading(false);
     }
   };
 
@@ -292,10 +317,7 @@ const TipOperations = () => {
               ? "bigbtn-dark hover:border-[#ff7521] "
               : "bigbtn bg-[#efefef]"
               }`}
-            onClick={() => {
-              handleTipButton();
-              // handleClick();
-            }}
+            onClick={handleTipButton}
             disabled={loading}
           >
             {loading === false && "SUBMIT"}

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext } from "react";
 import { WaverlyContext } from "../Contexts/WaverlyContext";
 import SubmitPost from "./SubmitPost";
 import Deso from "deso-protocol";
@@ -9,15 +9,12 @@ import EmbeddBtn from "./EmbeddBtn";
 import { Puff } from "react-loading-icons";
 import { MdOutlineCancel } from "react-icons/md";
 import { MentionsInput, Mention } from "react-mentions";
-import { signTransaction } from "deso-protocol/src/lib/utils/Utils";
 import defaultStyle from "./default.js";
 const PostOperation = ({ submit, setSubmit }) => {
-  const fileRef = useRef(null)
   const [imgURLs, setImgURLs] = useState([]);
   const [bodyText, setBodyText] = useState("");
   const [textBoxActive2, setTextBoxActive2] = useState(false);
   const [divImg, setDivImg] = useState("");
-  const [image, setImage] = useState(null);
   const [setLoading, setSetLoading] = useState(false);
   const [submitResponse, setSubmitResponse] = useState();
   const [embedText, setEmbedText] = useState("");
@@ -26,138 +23,84 @@ const PostOperation = ({ submit, setSubmit }) => {
     return <SubmitPost response={submitResponse} toggleSubmit={setSubmit} />;
   }
 
-  const handleUploadImage = async (e) => {
-    if (e.target.files && e.target.files[0]) {
-      let img = e.target.files[0];
-      setImage(img);
-    }
+  // function validateYouTubeUrl()
+  // {
+  //     var url = $('#youTubeUrl').val();
+  //         if (url != undefined || url != '') {
+  //             var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
+  //             var match = url.match(regExp);
+  //             if (match && match[2].length == 11) {
+  //                 // Do anything for being valid
+  //                 // if need to change the url to embed url then use below line
+  //                 $('#ytplayerSide').attr('src', 'https://www.youtube.com/embed/' + match[2] + '?autoplay=0');
+  //             }
+  //             else {
+  //                 // Do anything for not being valid
+  //             }
+  //         }
+  // }
+
+  const handleUploadImage = async () => {
     try {
-      const JWT = localStorage.getItem("JWT_KEY");
       const pub_key = localStorage.getItem("user_key");
-      const formData = new FormData();
-      formData.append("file", image);
-      formData.append("UserPublicBase58Check", pub_key);
-      formData.append("JWT", JWT);
-      const uploadImageResponse = await fetch(
-        `https://node.deso.org/api/v0/upload-image`,
-        {
-          method: "POST",
-          body: formData,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      const uploadImageData = await uploadImageResponse.json();
-      console.log(uploadImageData);
+      const deso = new Deso();
+      const request = {
+        UserPublicKeyBase58Check: pub_key,
+      };
+      const response = await deso.media.uploadImage(request);
+      // setDivImg("https://images.deso.org/a5306f0faf3e77360a11f4ea79a9a2fd449eca16f4e708e70bd88d8da1e08430.gif");
+      setImgURLs([...imgURLs, { id: imgURLs.length, name: response.ImageURL }]);
+      setDivImg(response.ImageURL.toString());
+      console.log(response.ImageURL);
     } catch (error) {
       console.error(error);
     }
   };
-
-  // const response = await deso.media.uploadImage(request);
-  // setDivImg("https://images.deso.org/a5306f0faf3e77360a11f4ea79a9a2fd449eca16f4e708e70bd88d8da1e08430.gif");
-  // setImgURLs([
-  //   ...imgURLs,
-  //   { id: imgURLs.length, name: uploadImagePayload.ImageURL },
-  // ]);
-  // setDivImg(uploadImageData.ImageURL.toString());
-  // console.log(uploadImagePayload.ImageURL);
   const handleSubmitPost = async () => {
-    setSetLoading(true);
-    const pub_key = localStorage.getItem("user_key");
-    let imgURLar = [];
-    if (Object.keys(imgURLs).length !== 0) {
-      imgURLar = [imgURLs[imgURLs.length - 1].name];
-    }
-    // for mention manip
-    let res1 = bodyText.replace(/@\(/g, "");
-    let res2 = res1.replaceAll(")", "");
-    const submitPostPayload = {
-      UpdaterPublicKeyBase58Check: pub_key,
-      BodyObj: {
-        Body: `${res2} \n\n Posted via @waverlyapp`,
-        VideoURLs: [],
-        ImageURLs: imgURLar,
-      },
-      PostExtraData: {
-        EmbedVideoURL: embedText,
-      },
-      IsHidden: false,
-      MinFeeRateNanosPerKB: 1700,
-      InTutorial: false,
-    };
-    if (bodyText.length !== 0 || Object.keys(imgURLs).length !== 0) {
-      const submitPostResponse = await fetch(
-        `https://node.deso.org/api/v0/submit-post`,
-        {
-          method: "POST",
-          body: JSON.stringify(submitPostPayload),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const submitPostData = await submitPostResponse.json();
-      // console.log(submitPostData);
-      const TRANSACTION_HEX = submitPostData.TransactionHex;
-      // console.log(TRANSACTION_HEX);
-
-      let derivedKey = localStorage.getItem("derived_pub_key");
-
-      const appendExtraDataPayload = {
-        TransactionHex: TRANSACTION_HEX,
-        ExtraData: {
-          DerivedPublicKey: derivedKey,
+    // const delay = ms => new Promise(res => setTimeout(res, ms));
+    // setSetLoading(true);
+    // await delay(5000);
+    // setSetLoading(false);
+    // setSubmit(true);
+    try {
+      setSetLoading(true);
+      const pub_key = localStorage.getItem("user_key");
+      const deso = new Deso();
+      let imgURLar = [];
+      if (Object.keys(imgURLs).length !== 0) {
+        imgURLar = [imgURLs[imgURLs.length - 1].name];
+      }
+      // for mention manip
+      let res1 = bodyText.replace(/@\(/g, "");
+      let res2 = res1.replaceAll(")", "");
+      const request = {
+        UpdaterPublicKeyBase58Check: pub_key,
+        BodyObj: {
+          Body: `${res2} \n\n Posted via @waverlyapp`,
+          VideoURLs: [],
+          ImageURLs: imgURLar,
+        },
+        PostExtraData: {
+          EmbedVideoURL: embedText,
         },
       };
-
-      const appendPostResponse = await fetch(
-        `https://node.deso.org/api/v0/append-extra-data`,
-        {
-          method: "POST",
-          body: JSON.stringify(appendExtraDataPayload),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const appendPostData = await appendPostResponse.json();
-      // console.log(appendPostData);
-
-      // console.log(appendPostData.TransactionHex);
-      const Transaction_Hex_2 = appendPostData.TransactionHex;
-      let derived_seed_hex = localStorage.getItem("derived_seed_hex");
-      const signed_transaction_hex = signTransaction(
-        derived_seed_hex,
-        Transaction_Hex_2
-      );
-
-      const submit_transaction_payload = {
-        TransactionHex: signed_transaction_hex,
-      };
-
-      const submit_transaction_response = await fetch(
-        `https://node.deso.org/api/v0/submit-transaction
-      `,
-        {
-          method: "POST",
-          body: JSON.stringify(submit_transaction_payload),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const submit_transaction_data = await submit_transaction_response.json();
-      console.log(submit_transaction_data);
-
-      setSubmitResponse(submit_transaction_data);
+      if (bodyText.length !== 0 || Object.keys(imgURLs).length !== 0) {
+        const response = await deso.posts.submitPost(request);
+        console.log(response);
+        setSubmitResponse(response);
+        setBodyText("");
+        setImgURLs([]);
+        setDivImg("");
+        setSubmit(true);
+        setEmbedText("");
+      } else {
+        setSetLoading(false);
+        console.log("One should be present!");
+      }
       setSetLoading(false);
-      setBodyText("");
-      setImgURLs([]);
-      setDivImg("");
-      setSubmit(true);
-      setEmbedText("");
+    } catch (error) {
+      setSetLoading(false);
+      console.error(error);
     }
   };
   async function fetchUsers(query, callback) {
@@ -184,11 +127,6 @@ const PostOperation = ({ submit, setSubmit }) => {
       )
       .then(callback);
   }
-
-  const imageClick = () => {
-    console.log("clicked")
-  }
-
   return (
     <div>
       <div>
@@ -270,7 +208,7 @@ const PostOperation = ({ submit, setSubmit }) => {
               <button
                 className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
                   } mr-5 scale-75 rounded-full`}
-                onClick={() => { fileRef.current.click() }}
+                onClick={handleUploadImage}
               >
                 <IconContext.Provider value={{ size: "27px" }}>
                   <RiImageAddFill style={{ size: "200px" }} />
@@ -282,16 +220,13 @@ const PostOperation = ({ submit, setSubmit }) => {
               <button
                 className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
                   } mr-5 rounded-full scale-75`}
-                onClick={() => {
-                  setTextBoxActive2(!textBoxActive2);
-                }}
+                onClick={() => setTextBoxActive2(!textBoxActive2)}
               >
                 <IconContext.Provider value={{ size: "27px" }}>
                   <ImEmbed style={{ size: "200px" }} />
                 </IconContext.Provider>
               </button>
             </div>
-            {/* <input className="form-control" type="file" id="formFile" ref={fileRef} accept="image/*" onClick={imageClick} onChange={handleUploadImage} /> */}
             <div className="pl-4">
               <div className="relative w-80">
                 {embedText.length >= 20 ? (

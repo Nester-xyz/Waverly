@@ -7,8 +7,8 @@ import { RiLogoutCircleRLine } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
 import Deso from "deso-protocol";
 import { useNavigate } from "react-router-dom";
-
-const Nav = ({ logIn, setSettingActive, menuActive, setMenuActive }) => {
+function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
+  // change this accordingly. Make it props or whatever you wish
   const [modalOpen, setModalOpen] = useState(false);
   const { Dark, setDark } = useContext(WaverlyContext);
   const [username, setUsername] = useState("Waverly");
@@ -29,7 +29,7 @@ const Nav = ({ logIn, setSettingActive, menuActive, setMenuActive }) => {
   const handleLogOut = async () => {
     try {
       const deso = new Deso();
-      const request = localStorage.getItem("user_key");
+      const request = localStorage.getItem("deso_user_key");
       const response = await deso.identity.logout(request);
       localStorage.setItem("isLoggedIn", !response);
       localStorage.setItem("user_key", "");
@@ -147,6 +147,6 @@ const Nav = ({ logIn, setSettingActive, menuActive, setMenuActive }) => {
       </div>
     </div>
   );
-};
+}
 
 export default Nav;

@@ -16,7 +16,7 @@ const LoggedIn = ({
   setShower,
 }) => {
   const [submit, setSubmit] = useState(false);
-  const [activeTab, setActiveTab] = useState("post");
+  const [activeTab, setActiveTab] = useState("tip");
   const { Dark } = useContext(WaverlyContext);
   let tab;
 

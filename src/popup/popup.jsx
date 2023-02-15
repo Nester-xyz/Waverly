@@ -2,6 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import "../assets/tailwind.css";
 import Index from "../Components/Index";
+import '../assets/app.css'
 
 const App = (
   <>

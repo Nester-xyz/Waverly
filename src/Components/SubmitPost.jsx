@@ -19,9 +19,8 @@ export default function SubmitPost({ response, toggleSubmit }) {
     <div className="w-[40rem]  overflow-x-hidden  ">
       <button
         onClick={() => toggleSubmit(false)}
-        className={`absolute top-20 left-5 text-3xl rounded-full focus:outline-none  ${
-          Dark ? "darktheme hover:border-orange-400" : "logout"
-        }`}
+        className={`absolute top-20 left-5 text-3xl rounded-full focus:outline-none  ${Dark ? "darktheme hover:border-orange-400" : "logout"
+          }`}
       >
         <IoArrowBackCircleOutline />
       </button>
@@ -38,13 +37,11 @@ export default function SubmitPost({ response, toggleSubmit }) {
             onClick={`https://diamondapp.com/posts/${response?.submittedTransactionResponse?.PostEntryResponse.PostHashHex}`}
           >
             <button
-              className={`absolute gap-2 flex items-center select-none top-[17rem] ${
-                Dark
-                  ? "bigbtn-dark hover:border-[#ff7521] border-2"
-                  : "bigbtn bg-[#efefef]"
-              } left-[13.5rem] focus:outline-none  ${
-                checkBoxActive ? "block" : "hidden"
-              }`}
+              className={`absolute gap-2 flex items-center select-none top-[17rem] ${Dark
+                ? "bigbtn-dark hover:border-[#ff7521] border-2"
+                : "bigbtn bg-[#efefef]"
+                } left-[13.5rem] focus:outline-none  ${checkBoxActive ? "block" : "hidden"
+                }`}
             >
               <FaExternalLinkAlt /> VIEW POST
             </button>

@@ -180,9 +180,8 @@ const HeartOperation = () => {
                 focused
               ) => (
                 <div
-                  className={`user ${
-                    focused ? "focused" : ""
-                  } flex flex-row rounded-xl lato`}
+                  className={`user ${focused ? "focused" : ""
+                    } flex flex-row rounded-xl lato`}
                 >
                   <div className=" flex  flex-row rounded-xl lato">
                     <img
@@ -231,11 +230,10 @@ const HeartOperation = () => {
         <div className="lato"></div>
         <div className="flex items-center space-x-5">
           <button
-            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${
-              Dark
+            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${Dark
                 ? "bigbtn-dark hover:border-[#ff7521] "
                 : "bigbtn bg-[#efefef]"
-            }`}
+              }`}
             onClick={handleHeartButton}
             disabled={loading}
           >
