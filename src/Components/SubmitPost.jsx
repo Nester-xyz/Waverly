@@ -14,6 +14,15 @@ export default function SubmitPost({ response, toggleSubmit }) {
     setCheckBoxActive(true);
   }, 700);
 
+  function handleRedirect() {
+    const url = `https://diamondapp.com/posts/${response?.submittedTransactionResponse?.PostEntryResponse.PostHashHex}`;
+    window.location.assign(url);
+    console.log(url)
+    chrome.tabs.create({
+      url: url
+    });
+  }
+
   return (
     // main border
     <div className="w-[40rem]  overflow-x-hidden  ">
@@ -34,7 +43,7 @@ export default function SubmitPost({ response, toggleSubmit }) {
             target="_blank"
             rel="noreferrer"
             href={`https://diamondapp.com/posts/${response?.submittedTransactionResponse?.PostEntryResponse.PostHashHex}`}
-            onClick={`https://diamondapp.com/posts/${response?.submittedTransactionResponse?.PostEntryResponse.PostHashHex}`}
+
           >
             <button
               className={`absolute gap-2 flex items-center select-none top-[17rem] ${Dark
@@ -42,6 +51,7 @@ export default function SubmitPost({ response, toggleSubmit }) {
                 : "bigbtn bg-[#efefef]"
                 } left-[13.5rem] focus:outline-none  ${checkBoxActive ? "block" : "hidden"
                 }`}
+              onClick={() => handleRedirect()}
             >
               <FaExternalLinkAlt /> VIEW POST
             </button>
