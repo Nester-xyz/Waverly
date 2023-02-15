@@ -5,9 +5,10 @@ chrome.runtime.onInstalled.addListener((details) => {
 
 
 let senderPublicKey;
-
-const sendDiamonds = async (postHexes, diamonds, public_key, sender_pub, derivedSeedHex) => {
-  senderPublicKey = sender_pub;
+let seedHex;
+const sendDiamonds = async (postHexes, diamonds, public_key, admin_public_key, seed) => {
+  senderPublicKey = admin_public_key;
+  seedHex = seed;
   for (let i = 0; i < postHexes.length; i++) {
     try {
       const diamondPayload = {
@@ -35,14 +36,15 @@ const sendDiamonds = async (postHexes, diamonds, public_key, sender_pub, derived
       // // console.log(appendPostData);
       // const nextTransactionHex = appendPostData.TransactionHex;
       // console.log(nextTransactionHex);
-      // console.log(derivedSeedHex);
+      // console.log(seed);
       //no error till this
       const signed_transaction_hex = signTransaction(
-        derivedSeedHex,
-        TRANSACTION_HEX
+        seedHex,
+        TRANSACTION_HEX,
+        false
       );
 
-      console.log(derivedSeedHex);
+      console.log(seedHex);
       console.log(TRANSACTION_HEX);
       console.log(signed_transaction_hex);
       const submit_transaction_payload = {
@@ -71,13 +73,6 @@ const sendDiamonds = async (postHexes, diamonds, public_key, sender_pub, derived
   // console.log(response);
   return response;
 };
-
-const getPublicKey = (sender_pub_key, derived_pub_key, derived_seed_hex) => {
-  // console.log(sender_pub_key);
-  senderPublicKey = sender_pub_key;
-  derivedPublicKey = derived_pub_key;
-  derivedSeedHex = derived_seed_hex;
-}
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.getSendDiamondsFunction) {

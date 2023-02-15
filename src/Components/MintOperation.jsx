@@ -653,10 +653,10 @@ const MintOperation = ({ submit, setSubmit }) => {
         <div className="right-button flex justify-end mt-3 mb-3">
           <button
             className={`select-none btn focus:outline-none ${Dark
-                ? "bigbtn-dark hover:border-[#ff7521] "
-                : "bigbtn bg-[#efefef]"
+              ? "bigbtn-dark hover:border-[#ff7521] "
+              : "bigbtn bg-[#efefef]"
               }`}
-            onClick={handleMintBtn}
+            onClick={() => handleMintBtn()}
             disabled={loading}
           >
             {loading ? (
