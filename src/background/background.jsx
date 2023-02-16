@@ -5,11 +5,13 @@ chrome.runtime.onInstalled.addListener((details) => {
 
 let senderPublicKey;
 let seedHex;
+let derivedKey;
 const sendDiamonds = async (
   postHexes,
   diamonds,
   public_key,
   admin_public_key,
+  derived_pub_key,
   seed
 ) => {
   senderPublicKey = admin_public_key;
@@ -23,10 +25,9 @@ const sendDiamonds = async (
         SenderPublicKeyBase58Check: senderPublicKey,
         DiamondPostHashHex: postHexes[i],
         DiamondLevel: parseInt(diamonds),
-        MinFeeRateNanosPerKB: 1001,
+        MinFeeRateNanosPerKB: 1700,
         InTutorial: false,
       };
-      // console.log(diamondPayload)
       const diamondResponse = await fetch(
         "https://node.deso.org/api/v0/send-diamonds",
         {
@@ -37,27 +38,32 @@ const sendDiamonds = async (
           },
         }
       );
-      // console.log("here 28")
       const diamondData = await diamondResponse.json();
-      console.log(diamondData);
       const TRANSACTION_HEX = diamondData.TransactionHex;
-      // console.log(diamondData);
-      // console.log("here 33")
-      // const appendPostData = await appendPostResponse.json();
-      // // console.log(appendPostData);
-      // const nextTransactionHex = appendPostData.TransactionHex;
-      // console.log(nextTransactionHex);
-      // console.log(seed);
-      //no error till this
+      derivedKey = derived_pub_key;
+      const appendExtraDataPayload = {
+        TransactionHex: TRANSACTION_HEX,
+        ExtraData: {
+          DerivedPublicKey: derivedKey,
+        },
+      };
+
+      const appendPostResponse = await fetch(
+        `https://node.deso.org/api/v0/append-extra-data`,
+        {
+          method: "POST",
+          body: JSON.stringify(appendExtraDataPayload),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const appendPostData = await appendPostResponse.json();
+      const TRANSACTION_HEX_2 = appendPostData.TransactionHex;
       const signed_transaction_hex = signTransaction(
         seedHex,
-        TRANSACTION_HEX,
-        false
+        TRANSACTION_HEX_2
       );
-
-      // console.log(seedHex);
-      // console.log(TRANSACTION_HEX);
-      // console.log(signed_transaction_hex);
       const submit_transaction_payload = {
         TransactionHex: signed_transaction_hex,
       };
@@ -75,6 +81,10 @@ const sendDiamonds = async (
       console.log(submit_transaction_data);
 
       // setTipLevel(`${i + 1}`);
+      chrome.runtime.sendMessage({ message: `change-state` }, function (response) {
+        console.log(response);
+      });
+
     } catch (error) {
       // setTipLevel(`${i + 1}`);
       continue;
@@ -91,7 +101,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       request.diamonds,
       request.public_key,
       request.admin_public_key,
-      request.seed
+      request.derived_pub_key,
+      request.seed,
     )
       .then((result) => {
         sendResponse({ success: result });

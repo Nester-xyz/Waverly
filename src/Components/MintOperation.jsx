@@ -86,8 +86,8 @@ const MintOperation = ({ submit, setSubmit }) => {
       imgURLar = [imgURLs[imgURLs.length - 1].name];
     }
     // for mention manip
-    let res1 = bodyText.replace(/@\(/g, "");
-    let res2 = res1.replaceAll(")", "");
+    let res1 = bodyText.replace(/{{@/g, "@");
+    let res2 = res1.replace(/}}/g, "");
     const submitPostPayload = {
       UpdaterPublicKeyBase58Check: pub_key,
       BodyObj: {
@@ -214,6 +214,9 @@ const MintOperation = ({ submit, setSubmit }) => {
     );
     const create_nft_data = await create_nft_response.json();
     // console.log(create_nft_data);
+    const res = { PostEntryResponse: { PostHashHex: `${create_nft_data.NFTPostHashHex}` } }
+    console.log(res);
+    setSubmitMintResponse(res);
     const TRANSACTION_HEX = create_nft_data.TransactionHex;
     // console.log(TRANSACTION_HEX);
 
@@ -266,7 +269,7 @@ const MintOperation = ({ submit, setSubmit }) => {
     const submit_transaction_data = await submit_transaction_response_2.json();
     console.log(submit_transaction_data);
 
-    setSubmitMintResponse(submit_transaction_data);
+
     setLoading(false);
     setData({
       title: "",
@@ -778,8 +781,8 @@ placeholder`}
         <div className="right-button flex justify-end mt-3 mb-3">
           <button
             className={`select-none btn focus:outline-none ${Dark
-                ? "bigbtn-dark hover:border-[#ff7521] "
-                : "bigbtn bg-[#efefef]"
+              ? "bigbtn-dark hover:border-[#ff7521] "
+              : "bigbtn bg-[#efefef]"
               }`}
             onClick={handleMintBtn}
             disabled={loading}

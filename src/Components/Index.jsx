@@ -13,6 +13,7 @@ function Index() {
     const [Dark, setDark] = useState(false);
     const [textBoxActive2, setTextBoxActive2] = useState(false);
     const [shower, setShower] = useState("diamond");
+    const [tipLevel, setTipLevel] = useState("1");
 
     useEffect(() => {
         const isLoggedIn = localStorage.getItem("isLoggedIn");
@@ -43,6 +44,8 @@ function Index() {
                     setTextBoxActive2,
                     logIn,
                     setLogIn,
+                    tipLevel,
+                    setTipLevel
                 }}
             >
                 <Router>

@@ -28,12 +28,7 @@ function Nav({ logIn, setSettingActive, menuActive, setMenuActive }) {
 
   const handleLogOut = async () => {
     try {
-      const deso = new Deso();
-      const request = localStorage.getItem("deso_user_key");
-      const response = await deso.identity.logout(request);
-      localStorage.setItem("isLoggedIn", !response);
-      localStorage.setItem("user_key", "");
-      navigate("/");
+      localStorage.clear();
       window.location.reload();
     } catch (error) {
       console.error(error);

@@ -15,7 +15,7 @@ export default function SubmitPost({ response, toggleSubmit }) {
   }, 700);
 
   function handleRedirect() {
-    const url = `https://diamondapp.com/posts/${response?.submittedTransactionResponse?.PostEntryResponse.PostHashHex}`;
+    const url = `https://diamondapp.com/posts/${response?.PostEntryResponse?.PostHashHex}`;
     window.location.assign(url);
     console.log(url)
     chrome.tabs.create({
@@ -42,7 +42,7 @@ export default function SubmitPost({ response, toggleSubmit }) {
           <a
             target="_blank"
             rel="noreferrer"
-            href={`https://diamondapp.com/posts/${response?.submittedTransactionResponse?.PostEntryResponse.PostHashHex}`}
+            href={`https://diamondapp.com/posts/${response?.PostEntryResponse.PostHashHex}`}
 
           >
             <button

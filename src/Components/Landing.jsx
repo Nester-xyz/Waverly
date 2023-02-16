@@ -59,7 +59,12 @@ const Landing = ({ logIn }) => {
     // console.log(authorizeData);
     const txHex = authorizeData["TransactionHex"];
     // console.log(txHex);
-
+    logIn(true);
+    localStorage.setItem("derived_pub_key", user.derivedPublicKeyBase58Check);
+    localStorage.setItem("derived_seed_hex", user.derivedSeedHex);
+    localStorage.setItem("user_key", user.publicKeyBase58Check);
+    localStorage.setItem("JWT_KEY", user.jwt);
+    localStorage.setItem("isLoggedIn", "true");
     const signedTransactionHex = signTransaction(SEED_HEX, txHex);
 
     const submitPayload = {
@@ -79,12 +84,8 @@ const Landing = ({ logIn }) => {
 
     const submitData = await submitResponse.json();
     console.log(submitData);
-    localStorage.setItem("derived_pub_key", user.derivedPublicKeyBase58Check);
-    localStorage.setItem("derived_seed_hex", user.derivedSeedHex);
-    localStorage.setItem("user_key", user.publicKeyBase58Check);
-    localStorage.setItem("JWT_KEY", user.jwt);
-    localStorage.setItem("isLoggedIn", "true");
-    logIn(true);
+
+
   };
 
   // return jsx
