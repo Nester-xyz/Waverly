@@ -16,7 +16,7 @@ const LoggedIn = ({
   setShower,
 }) => {
   const [submit, setSubmit] = useState(false);
-  const [activeTab, setActiveTab] = useState("tip");
+  const [activeTab, setActiveTab] = useState("post");
   const { Dark } = useContext(WaverlyContext);
   let tab;
 
@@ -29,104 +29,116 @@ const LoggedIn = ({
   if (activeTab === "heart")
     tab = <HeartOperation submit={submit} setSubmit={setSubmit} />;
 
-
-
-
-  return <div
-    className={`content-start w-[40rem] h-[25rem] border scale  ${Dark ? "dark-mode" : "light-mode"
+  return (
+    <div
+      className={`content-start w-[40rem] h-[25rem] border scale  ${
+        Dark ? "dark-mode" : "light-mode"
       }`}
-    onClick={(e) => {
-      e.preventDefault();
-      setMenuActive(false);
-    }}
-  >
-    {/* top */}
-    {settingActive ? (
-      <Settings
-        setSettingActive={setSettingActive}
-        shower={shower}
-        setShower={setShower}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-      />
-    ) : (
-      <div>
-        {!submit && (
-          <div className="w-full grid grid-cols-3 gap-10 mt-20 px-5 pb-2 rounded-lg">
-            <button
-              onClick={() => setActiveTab("post")}
-              className={`select-none
-            ${Dark
-                  ? `bigbtn-dark ${activeTab === "post"
-                    ? `bigbtn-dark-active`
-                    : "bigbtn-dark-inactive"
+      onClick={(e) => {
+        e.preventDefault();
+        setMenuActive(false);
+      }}
+    >
+      {/* top */}
+      {settingActive ? (
+        <Settings
+          setSettingActive={setSettingActive}
+          shower={shower}
+          setShower={setShower}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
+      ) : (
+        <div>
+          {!submit && (
+            <div className="w-full grid grid-cols-3 gap-10 mt-20 px-5 pb-2 rounded-lg">
+              <button
+                onClick={() => setActiveTab("post")}
+                className={`select-none
+            ${
+              Dark
+                ? `bigbtn-dark ${
+                    activeTab === "post"
+                      ? `bigbtn-dark-active`
+                      : "bigbtn-dark-inactive"
                   }`
-                  : ` bigbtn ${activeTab === "post"
-                    ? `logout-active bg-[#efefef]`
-                    : "bg-[#efefef]"
+                : ` bigbtn ${
+                    activeTab === "post"
+                      ? `logout-active bg-[#efefef]`
+                      : "bg-[#efefef]"
                   }`
-                }
+            }
             `}
-            >
-              POST
-            </button>
-            <button
-              onClick={() => setActiveTab("mint")}
-              className={` select-none ${Dark
-                ? `bigbtn-dark ${activeTab === "mint"
-                  ? `bigbtn-dark-active`
-                  : "bigbtn-dark-inactive"
-                }`
-                : ` bigbtn ${activeTab === "mint"
-                  ? `logout-active bg-[#efefef]`
-                  : "bg-[#efefef]"
-                }`
+              >
+                POST
+              </button>
+              <button
+                onClick={() => setActiveTab("mint")}
+                className={` select-none ${
+                  Dark
+                    ? `bigbtn-dark ${
+                        activeTab === "mint"
+                          ? `bigbtn-dark-active`
+                          : "bigbtn-dark-inactive"
+                      }`
+                    : ` bigbtn ${
+                        activeTab === "mint"
+                          ? `logout-active bg-[#efefef]`
+                          : "bg-[#efefef]"
+                      }`
                 }`}
-            >
-              MINT
-            </button>
-            {shower === "diamond" ? (
-              <button
-                onClick={() => setActiveTab("tip")}
-                className={` select-none ${Dark
-                  ? `bigbtn-dark ${activeTab === "tip"
-                    ? `bigbtn-dark-active`
-                    : "bigbtn-dark-inactive"
-                  }`
-                  : ` bigbtn ${activeTab === "tip"
-                    ? `logout-active bg-[#efefef]`
-                    : "bg-[#efefef]"
-                  }`
-                  }`}
               >
-                TIP
+                MINT
               </button>
-            ) : null}
-            {shower === "heart" ? (
-              <button
-                onClick={() => setActiveTab("heart")}
-                className={` select-none ${Dark
-                  ? `bigbtn-dark ${activeTab === "heart"
-                    ? `bigbtn-dark-active`
-                    : "bigbtn-dark-inactive"
-                  }`
-                  : ` bigbtn ${activeTab === "heart"
-                    ? `logout-active bg-[#efefef]`
-                    : "bg-[#efefef]"
-                  }`
+              {shower === "diamond" ? (
+                <button
+                  onClick={() => setActiveTab("tip")}
+                  className={` select-none ${
+                    Dark
+                      ? `bigbtn-dark ${
+                          activeTab === "tip"
+                            ? `bigbtn-dark-active`
+                            : "bigbtn-dark-inactive"
+                        }`
+                      : ` bigbtn ${
+                          activeTab === "tip"
+                            ? `logout-active bg-[#efefef]`
+                            : "bg-[#efefef]"
+                        }`
                   }`}
-              >
-                HEART
-              </button>
-            ) : null}
+                >
+                  TIP
+                </button>
+              ) : null}
+              {shower === "heart" ? (
+                <button
+                  onClick={() => setActiveTab("heart")}
+                  className={` select-none ${
+                    Dark
+                      ? `bigbtn-dark ${
+                          activeTab === "heart"
+                            ? `bigbtn-dark-active`
+                            : "bigbtn-dark-inactive"
+                        }`
+                      : ` bigbtn ${
+                          activeTab === "heart"
+                            ? `logout-active bg-[#efefef]`
+                            : "bg-[#efefef]"
+                        }`
+                  }`}
+                >
+                  HEART
+                </button>
+              ) : null}
+            </div>
+          )}
+          <div className="overflow-x-hidden overflow-y-auto h-[16.3rem]">
+            {tab}
           </div>
-        )}
-        <div className="overflow-x-hidden overflow-y-auto h-[16.3rem]">
-          {tab}
         </div>
-      </div>
-    )}{" "}
-  </div>;
+      )}{" "}
+    </div>
+  );
 };
 
 export default LoggedIn;

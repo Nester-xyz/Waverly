@@ -16,8 +16,6 @@ const sendDiamonds = async (
 ) => {
   senderPublicKey = admin_public_key;
   seedHex = seed;
-  console.log(public_key);
-  console.log(senderPublicKey);
   for (let i = 0; i < postHexes.length; i++) {
     try {
       const diamondPayload = {
@@ -81,10 +79,9 @@ const sendDiamonds = async (
       console.log(submit_transaction_data);
 
       // setTipLevel(`${i + 1}`);
-      chrome.runtime.sendMessage({ message: `change-state` }, function (response) {
-        console.log(response);
-      });
-
+      // chrome.runtime.sendMessage({ message: `change-state` }, function (response) {
+      //   console.log(response);
+      // });
     } catch (error) {
       // setTipLevel(`${i + 1}`);
       continue;
@@ -102,7 +99,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       request.public_key,
       request.admin_public_key,
       request.derived_pub_key,
-      request.seed,
+      request.seed
     )
       .then((result) => {
         sendResponse({ success: result });

@@ -17,6 +17,12 @@ const Landing = ({ logIn }) => {
       },
     };
     const user = await deso.identity.derive(derivePayload);
+    localStorage.setItem("derived_pub_key", user.derivedPublicKeyBase58Check);
+    localStorage.setItem("derived_seed_hex", user.derivedSeedHex);
+    localStorage.setItem("user_key", user.publicKeyBase58Check);
+    localStorage.setItem("JWT_KEY", user.jwt);
+    localStorage.setItem("isLoggedIn", "true");
+    logIn(true);
     //need to be used later
 
     //  let sender_pub_key = user.publicKeyBase58Check;
@@ -32,7 +38,6 @@ const Landing = ({ logIn }) => {
     // user[]
     let SEED_HEX = user.derivedSeedHex;
     // console.log(SEED_HEX);
-
 
     const authorizePayload = {
       OwnerPublicKeyBase58Check: user.publicKeyBase58Check,
@@ -59,12 +64,7 @@ const Landing = ({ logIn }) => {
     // console.log(authorizeData);
     const txHex = authorizeData["TransactionHex"];
     // console.log(txHex);
-    logIn(true);
-    localStorage.setItem("derived_pub_key", user.derivedPublicKeyBase58Check);
-    localStorage.setItem("derived_seed_hex", user.derivedSeedHex);
-    localStorage.setItem("user_key", user.publicKeyBase58Check);
-    localStorage.setItem("JWT_KEY", user.jwt);
-    localStorage.setItem("isLoggedIn", "true");
+
     const signedTransactionHex = signTransaction(SEED_HEX, txHex);
 
     const submitPayload = {
@@ -84,8 +84,6 @@ const Landing = ({ logIn }) => {
 
     const submitData = await submitResponse.json();
     console.log(submitData);
-
-
   };
 
   // return jsx
