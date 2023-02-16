@@ -10,6 +10,7 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { MentionsInput, Mention } from "react-mentions";
 import defaultStyle from "./default";
+import { signTransaction } from "deso-protocol/src/lib/utils/Utils";
 const MintOperation = ({ submit, setSubmit }) => {
   const [data, setData] = useState({
     title: "",
@@ -19,6 +20,7 @@ const MintOperation = ({ submit, setSubmit }) => {
     creatorRoyalty: "10",
     coinHolder: "5",
   });
+  const [imgURLs, setImgURLs] = useState([]);
   const [img, setImg] = useState("");
   const [NOC, setNOC] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -61,6 +63,7 @@ const MintOperation = ({ submit, setSubmit }) => {
     setIsUnlockable(nextChecked);
   };
 
+  let NFT_POST_HASH_HEX;
   const handleUploadImage = async () => {
     try {
       const pub_key = localStorage.getItem("user_key");
@@ -76,84 +79,207 @@ const MintOperation = ({ submit, setSubmit }) => {
   };
 
   async function submitTransactionPost() {
-    try {
-      const pub_key = localStorage.getItem("user_key");
-      const deso = new Deso();
-      let imgURLar = [img];
-      let res = bodyText.replace(/{/g, "");
-      let res1 = res.replaceAll("}", "");
-      const request = {
-        UpdaterPublicKeyBase58Check: pub_key,
-        BodyObj: {
-          Body: res1,
-          VideoURLs: [],
-          ImageURLs: imgURLar,
+    setLoading(true);
+    const pub_key = localStorage.getItem("user_key");
+    let imgURLar = [];
+    if (Object.keys(imgURLs).length !== 0) {
+      imgURLar = [imgURLs[imgURLs.length - 1].name];
+    }
+    // for mention manip
+    let res1 = bodyText.replace(/@\(/g, "");
+    let res2 = res1.replaceAll(")", "");
+    const submitPostPayload = {
+      UpdaterPublicKeyBase58Check: pub_key,
+      BodyObj: {
+        Body: res2,
+        ImageURLs: imgURLar,
+      },
+      IsHidden: false,
+      MinFeeRateNanosPerKB: 1700,
+      InTutorial: false,
+    };
+    if (bodyText.length !== 0 || Object.keys(imgURLs).length !== 0) {
+      const submitPostResponse = await fetch(
+        `https://node.deso.org/api/v0/submit-post`,
+        {
+          method: "POST",
+          body: JSON.stringify(submitPostPayload),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const submitPostData = await submitPostResponse.json();
+      // console.log(submitPostData);
+      const TRANSACTION_HEX = submitPostData.TransactionHex;
+      // console.log(TRANSACTION_HEX);
+
+      let derivedKey = localStorage.getItem("derived_pub_key");
+
+      const appendExtraDataPayload = {
+        TransactionHex: TRANSACTION_HEX,
+        ExtraData: {
+          DerivedPublicKey: derivedKey,
         },
       };
-      const response = await deso.posts.submitPost(request);
-      console.log("submission completed");
-      setSubmitMintResponse(response);
-      return response.submittedTransactionResponse.PostEntryResponse
-        .PostHashHex;
-    } catch (e) {
-      console.log(e);
+
+      const appendPostResponse = await fetch(
+        `https://node.deso.org/api/v0/append-extra-data`,
+        {
+          method: "POST",
+          body: JSON.stringify(appendExtraDataPayload),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const appendPostData = await appendPostResponse.json();
+      // console.log(appendPostData);
+
+      // console.log(appendPostData.TransactionHex);
+      const Transaction_Hex_2 = appendPostData.TransactionHex;
+      let derived_seed_hex = localStorage.getItem("derived_seed_hex");
+      const signed_transaction_hex = signTransaction(
+        derived_seed_hex,
+        Transaction_Hex_2
+      );
+
+      const submit_transaction_payload = {
+        TransactionHex: signed_transaction_hex,
+      };
+
+      const submit_transaction_response = await fetch(
+        `https://node.deso.org/api/v0/submit-transaction
+`,
+        {
+          method: "POST",
+          body: JSON.stringify(submit_transaction_payload),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const submit_transaction_data = await submit_transaction_response.json();
+      // console.log(submit_transaction_data);
+      // console.log(submit_transaction_data.PostEntryResponse.PostHashHex);
+      NFT_POST_HASH_HEX = submit_transaction_data.PostEntryResponse.PostHashHex;
+      let TRANSACTION_TO_CHECK = submit_transaction_data.TxnHashHex;
+      console.log(TRANSACTION_TO_CHECK);
     }
   }
   // handle Submit Button
   const handleMintBtn = async () => {
-    let postHash;
-    try {
-      if (bodyText.length !== 0 || img.length !== 0) {
-        setLoading(true);
-        postHash = await submitTransactionPost();
-      } else {
-        console.log("Submission not completed!");
-      }
-      const pub_key = localStorage.getItem("user_key");
-      const deso = new Deso();
-      let royaltyMap = {};
-      royaltyMap[`${additionalDESORoyalties.PublicKeyBase58Check}`] =
-        parseInt(additionalDESORoyalties.RoyaltyPercent) * 100;
-      console.log(royaltyMap);
-      const request = {
-        UpdaterPublicKeyBase58Check: pub_key,
-        NFTPostHashHex: postHash,
-        NumCopies: NOC.length !== 0 ? parseInt(NOC) : 1,
-        NFTRoyaltyToCreatorBasisPoints:
-          parseInt(data.creatorRoyalty.toString()) * 100,
-        NFTRoyaltyToCoinBasisPoints: parseInt(data.coinHolder.toString()) * 100,
-        HasUnlockable: isUnlockable,
-        IsForSale: isForSale,
-        MinBidAmountNanos: parseInt(data.minimumBid.toString()) * 1000000000,
-        IsBuyNow: isBuyNow,
-        BuyNowPriceNanos: parseInt(data.buyNowPrice.toString()) * 1000000000,
-        MinFeeRateNanosPerKB: 1000,
-      };
-      if (
-        additionalDESORoyalties.Username !== "" ||
-        additionalDESORoyalties.RoyaltyPercent === 0
-      ) {
-        request.AdditionalDESORoyaltiesMap = royaltyMap;
-      }
-      console.log(request);
-      const response = await deso.nft.createNft(request);
-      console.log(response);
-      setData({
-        title: "",
-        copies: "1",
-        minimumBid: "0",
-        buyNowPrice: "0",
-        creatorRoyalty: "10",
-        coinHolder: "5",
-      });
-      setNOC("1");
-      setLoading(false);
-      setSubmit(true);
-      setAdditionalDesoRoyalty(!additionalDESORoyalties);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
+    if (bodyText.length !== 0 || img.length !== 0) {
+      setLoading(true);
+      await submitTransactionPost();
+    } else {
+      console.log("Submission not completed!");
     }
+    const pub_key = localStorage.getItem("user_key");
+    let royaltyMap = {};
+    royaltyMap[`${additionalDESORoyalties.PublicKeyBase58Check}`] =
+      parseInt(additionalDESORoyalties.RoyaltyPercent) * 100;
+    // console.log(royaltyMap);
+    const create_nft_payload = {
+      UpdaterPublicKeyBase58Check: pub_key,
+      NFTPostHashHex: NFT_POST_HASH_HEX,
+      NumCopies: NOC.length !== 0 ? parseInt(NOC) : 1,
+      NFTRoyaltyToCreatorBasisPoints:
+        parseInt(data.creatorRoyalty.toString()) * 100,
+      NFTRoyaltyToCoinBasisPoints: parseInt(data.coinHolder.toString()) * 100,
+      HasUnlockable: isUnlockable,
+      IsForSale: isForSale,
+      MinBidAmountNanos: parseInt(data.minimumBid.toString()) * 1000000000,
+      IsBuyNow: isBuyNow,
+      BuyNowPriceNanos: parseInt(data.buyNowPrice.toString()) * 1000000000,
+      MinFeeRateNanosPerKB: 1700,
+    };
+    if (
+      additionalDESORoyalties.Username !== "" ||
+      additionalDESORoyalties.RoyaltyPercent === 0
+    ) {
+      create_nft_payload.AdditionalDESORoyaltiesMap = royaltyMap;
+    }
+    // console.log(create_nft_payload);
+    const create_nft_response = await fetch(
+      `https://node.deso.org/api/v0/create-nft
+`,
+      {
+        method: "POST",
+        body: JSON.stringify(create_nft_payload),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const create_nft_data = await create_nft_response.json();
+    // console.log(create_nft_data);
+    const TRANSACTION_HEX = create_nft_data.TransactionHex;
+    // console.log(TRANSACTION_HEX);
+
+    let derivedKey = localStorage.getItem("derived_pub_key");
+
+    const appendExtraDataPayload = {
+      TransactionHex: TRANSACTION_HEX,
+      ExtraData: {
+        DerivedPublicKey: derivedKey,
+      },
+    };
+
+    const appendPostResponse = await fetch(
+      `https://node.deso.org/api/v0/append-extra-data`,
+      {
+        method: "POST",
+        body: JSON.stringify(appendExtraDataPayload),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const appendPostData = await appendPostResponse.json();
+    // console.log(appendPostData);
+
+    const Transaction_Hex_2 = appendPostData.TransactionHex;
+    // console.log(Transaction_Hex_2);
+    let derived_seed_hex = localStorage.getItem("derived_seed_hex");
+    // console.log(derived_seed_hex);
+    const signed_transaction_hex = signTransaction(
+      derived_seed_hex,
+      Transaction_Hex_2
+    );
+    // console.log(signed_transaction_hex);
+    const submit_transaction_payload = {
+      TransactionHex: signed_transaction_hex,
+    };
+    // console.log(submit_transaction_payload);
+    const submit_transaction_response_2 = await fetch(
+      `https://node.deso.org/api/v0/submit-transaction
+`,
+      {
+        method: "POST",
+        body: JSON.stringify(submit_transaction_payload),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const submit_transaction_data = await submit_transaction_response_2.json();
+    console.log(submit_transaction_data);
+
+    setSubmitMintResponse(submit_transaction_data);
+    setLoading(false);
+    setData({
+      title: "",
+      copies: "1",
+      minimumBid: "0",
+      buyNowPrice: "0",
+      creatorRoyalty: "10",
+      coinHolder: "5",
+    });
+    setNOC("1");
+    setLoading(false);
+    setSubmit(true);
+    setAdditionalDesoRoyalty(!additionalDESORoyalties);
 
     // const delay = ms => new Promise(res => setTimeout(res, ms));
     // setLoading(true);
@@ -168,7 +294,7 @@ const MintOperation = ({ submit, setSubmit }) => {
   };
 
   async function fetchUsers(query, callback) {
-    console.log(query);
+    // console.log(query);
     if (!query) return;
     const deso = new Deso();
     const request = {
@@ -203,15 +329,15 @@ const MintOperation = ({ submit, setSubmit }) => {
     <div className="flex relative mt-2 px-5">
       <div>
         <div
-          className={`flex-col divide-y ${Dark ? "divide-[#a9a9a9]" : ""}  `}
+          className={`flex-col divide-y ${Dark ? "divide-[#a9a9a9]" : ""} `}
         >
           {/* TextArea, Image Icon, No. Of Copies, Price */}
           <div className="w-[37rem] rounded px-3 border-[#efefef] flex justify-between">
             {/* Text area, Number of copies, image starts here */}
-            {/* Top Left  */}
+            {/* Top Left */}
             <div className="">
               <MentionsInput
-                className="placeholder text-black rounded-xl  border resize-none text-lg pt-2 mb-2 bg-[#efefef] w-[24rem] h-[5rem] mt-4 px-5  focus:outline-none"
+                className="placeholder text-black rounded-xl border resize-none text-lg pt-2 mb-2 bg-[#efefef] w-[24rem] h-[5rem] mt-4 px-5 focus:outline-none"
                 style={defaultStyle}
                 rows={`${textBoxActive2 ? "5" : "6"}`}
                 cols="1"
@@ -287,7 +413,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                     <div className={`img-upload select-none`}>
                       <button
                         className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
-                          }  scale-75 rounded-full lato text-xl`}
+                          } scale-75 rounded-full lato text-xl`}
                         onClick={() => {
                           setNOC(parseInt(NOC + 0) + 1);
                         }}
@@ -298,7 +424,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                     <div className={`img-upload select-none`}>
                       <button
                         className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
-                          }  scale-75 rounded-full lato text-xl`}
+                          } scale-75 rounded-full lato text-xl`}
                         onClick={() => {
                           setNOC(parseInt(NOC + 0) + 5);
                         }}
@@ -319,8 +445,8 @@ const MintOperation = ({ submit, setSubmit }) => {
                 >
                   <div
                     className={`mt-11 select-none ml-1 text-xl text-center text-[#a9a9b0]
-                  ${img ? "hidden" : "block"}
-                  placeholder`}
+${img ? "hidden" : "block"}
+placeholder`}
                   >
                     Preview <br />
                     Image Here
@@ -328,7 +454,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                   <img
                     src={img}
                     alt=""
-                    className={`object-cover w-[11rem] h-[9rem] rounded-lg   ${img ? "block" : "hidden"
+                    className={`object-cover w-[11rem] h-[9rem] rounded-lg ${img ? "block" : "hidden"
                       }`}
                   />
                 </div>
@@ -482,7 +608,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                   </label>
                 </div>
               </div>
-              <div className="flex  items-center justify-between">
+              <div className="flex items-center justify-between">
                 <label
                   htmlFor="creator"
                   className="leading-[1rem] text-center lato select-none"
@@ -548,7 +674,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                     Select the creator:
                   </label>
                   <MentionsInput
-                    className="placeholder text-black rounded-xl  border-0 resize-none text-lg mb-2 bg-white w-[14rem] h-10 mt-1 px-5  focus:outline-none"
+                    className="placeholder text-black rounded-xl border-0 resize-none text-lg mb-2 bg-white w-[14rem] h-10 mt-1 px-5 focus:outline-none"
                     style={defaultStyle}
                     rows={`${textBoxActive2 ? "2" : "2"}`}
                     onKeyDown={handleKeyDown}
@@ -573,7 +699,6 @@ const MintOperation = ({ submit, setSubmit }) => {
                           PublicKeyBase58Check: id,
                           Username: `${display} `,
                         });
-                        console.log(additionalDESORoyalties);
                       }}
                       renderSuggestion={(
                         suggestion,
@@ -597,7 +722,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                 <div className="flex items-center justify-between mb-[0.23rem] w-[34rem]">
                   <label
                     htmlFor="desoRoyaltyPercentage"
-                    className="leading-[1rem]  text-center lato select-none"
+                    className="leading-[1rem] text-center lato select-none"
                   >
                     DeSo Royalty:
                   </label>
@@ -653,10 +778,10 @@ const MintOperation = ({ submit, setSubmit }) => {
         <div className="right-button flex justify-end mt-3 mb-3">
           <button
             className={`select-none btn focus:outline-none ${Dark
-              ? "bigbtn-dark hover:border-[#ff7521] "
-              : "bigbtn bg-[#efefef]"
+                ? "bigbtn-dark hover:border-[#ff7521] "
+                : "bigbtn bg-[#efefef]"
               }`}
-            onClick={() => handleMintBtn()}
+            onClick={handleMintBtn}
             disabled={loading}
           >
             {loading ? (

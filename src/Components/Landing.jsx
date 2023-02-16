@@ -28,15 +28,11 @@ const Landing = ({ logIn }) => {
     //    derived_pub_key,
     //    derived_seed_hex,
     //  });
-
-    let SEED_HEX = user["derivedSeedHex"];
+    console.log(user);
+    // user[]
+    let SEED_HEX = user.derivedSeedHex;
     // console.log(SEED_HEX);
-    localStorage.setItem("derived_pub_key", user.derivedPublicKeyBase58Check);
-    localStorage.setItem("derived_seed_hex", user.derivedSeedHex);
-    localStorage.setItem("user_key", user.publicKeyBase58Check);
-    localStorage.setItem("JWT_KEY", user.jwt);
-    localStorage.setItem("isLoggedIn", "true");
-    logIn(true);
+
 
     const authorizePayload = {
       OwnerPublicKeyBase58Check: user.publicKeyBase58Check,
@@ -83,6 +79,12 @@ const Landing = ({ logIn }) => {
 
     const submitData = await submitResponse.json();
     console.log(submitData);
+    localStorage.setItem("derived_pub_key", user.derivedPublicKeyBase58Check);
+    localStorage.setItem("derived_seed_hex", user.derivedSeedHex);
+    localStorage.setItem("user_key", user.publicKeyBase58Check);
+    localStorage.setItem("JWT_KEY", user.jwt);
+    localStorage.setItem("isLoggedIn", "true");
+    logIn(true);
   };
 
   // return jsx
