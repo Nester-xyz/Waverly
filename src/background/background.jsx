@@ -3,12 +3,19 @@ chrome.runtime.onInstalled.addListener((details) => {
   console.log("Waverly app has been installed successfully!");
 });
 
-
 let senderPublicKey;
 let seedHex;
-const sendDiamonds = async (postHexes, diamonds, public_key, admin_public_key, seed) => {
+const sendDiamonds = async (
+  postHexes,
+  diamonds,
+  public_key,
+  admin_public_key,
+  seed
+) => {
   senderPublicKey = admin_public_key;
   seedHex = seed;
+  console.log(public_key);
+  console.log(senderPublicKey);
   for (let i = 0; i < postHexes.length; i++) {
     try {
       const diamondPayload = {
@@ -20,15 +27,19 @@ const sendDiamonds = async (postHexes, diamonds, public_key, admin_public_key, s
         InTutorial: false,
       };
       // console.log(diamondPayload)
-      const diamondResponse = await fetch('https://node.deso.org/api/v0/send-diamonds', {
-        method: 'POST',
-        body: JSON.stringify(diamondPayload),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      });
+      const diamondResponse = await fetch(
+        "https://node.deso.org/api/v0/send-diamonds",
+        {
+          method: "POST",
+          body: JSON.stringify(diamondPayload),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       // console.log("here 28")
       const diamondData = await diamondResponse.json();
+      console.log(diamondData);
       const TRANSACTION_HEX = diamondData.TransactionHex;
       // console.log(diamondData);
       // console.log("here 33")
@@ -44,15 +55,14 @@ const sendDiamonds = async (postHexes, diamonds, public_key, admin_public_key, s
         false
       );
 
-      console.log(seedHex);
-      console.log(TRANSACTION_HEX);
-      console.log(signed_transaction_hex);
+      // console.log(seedHex);
+      // console.log(TRANSACTION_HEX);
+      // console.log(signed_transaction_hex);
       const submit_transaction_payload = {
         TransactionHex: signed_transaction_hex,
       };
       const submit_transaction_response = await fetch(
-        `https://node.deso.org/api/v0/submit-transaction
-      `,
+        "https://node.deso.org/api/v0/submit-transaction",
         {
           method: "POST",
           body: JSON.stringify(submit_transaction_payload),
@@ -76,26 +86,19 @@ const sendDiamonds = async (postHexes, diamonds, public_key, admin_public_key, s
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.getSendDiamondsFunction) {
-    sendDiamonds(request.postHexes, request.diamonds, request.public_key, request.admin_public_key, request.seed)
-      .then(result => {
+    sendDiamonds(
+      request.postHexes,
+      request.diamonds,
+      request.public_key,
+      request.admin_public_key,
+      request.seed
+    )
+      .then((result) => {
         sendResponse({ success: result });
       })
-      .catch(e => {
-        sendResponse({ error: e })
-      })
+      .catch((e) => {
+        sendResponse({ error: e });
+      });
   }
   return true;
 });
-
-// chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-//   if (request.getLandingFunction) {
-//     getPublicKey(request.sender_pub_key, request.derived_pub_key, request.derived_seed_hex)
-//       .then(result => {
-//         sendResponse({ success: result });
-//       })
-//       .catch(e => {
-//         sendResponse({ error: e })
-//       })
-//   }
-//   return true;
-// });
