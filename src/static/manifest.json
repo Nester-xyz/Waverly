@@ -9,7 +9,7 @@
   },
   "manifest_version": 3,
   "action": {
-    "default_title": "Click Me",
+    "default_title": "WaverlyApp - a deso extension",
     "default_popup": "popup.html"
   },
   "background": {
