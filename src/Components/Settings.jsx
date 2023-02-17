@@ -29,6 +29,15 @@ const Settings = ({
     console.log(menuActive);
   }, [menuActive]);
 
+  function handleRedirect() {
+    const url = "https://github.com/DeWhales-xyz/Waverly";
+    window.location.assign(url);
+    console.log(url)
+    chrome.tabs.create({
+      url: url
+    });
+  }
+
   return (
     <div
       className="mt-20 w-[40rem] select-none "
@@ -158,7 +167,7 @@ const Settings = ({
               className={`flex justify-between items-center ${Dark ? "text-white" : "text-[#151633]"
                 }`}
               href="https://github.com/DeWhales-xyz/Waverly"
-              onClick="https://github.com/DeWhales-xyz/Waverly"
+              onClick={handleRedirect}
               target="_blank"
               rel="noreferrer"
             >
