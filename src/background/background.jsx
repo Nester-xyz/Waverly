@@ -129,7 +129,7 @@ const sendDiamonds = async (
         }
       );
       const submit_transaction_data = await submit_transaction_response.json();
-      // console.log(submit_transaction_data);
+      console.log(submit_transaction_data);
 
       // setTipLevel(`${i + 1}`);
       // chrome.runtime.sendMessage({ message: `change-state` }, function (response) {
