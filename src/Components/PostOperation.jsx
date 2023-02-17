@@ -25,35 +25,6 @@ const PostOperation = ({ submit, setSubmit }) => {
     return <SubmitPost response={submitResponse} toggleSubmit={setSubmit} />;
   }
 
-  // const handleUploadImage = async () => {
-  //   const JWT = localStorage.getItem("JWT_KEY");
-  //   const pub_key = localStorage.getItem("user_key");
-  //   const formData = new FormData();
-  //   formData.append("file", image);
-  //   formData.append("UserPublicBase58Check", pub_key);
-  //   formData.append("JWT", JWT);
-  //   const uploadImageResponse = await fetch(
-  //     `https://node.deso.org/api/v0/upload-image`,
-  //     {
-  //       method: "POST",
-  //       body: formData,
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       },
-  //     }
-  //   );
-  //   const uploadImageData = await uploadImageResponse.json();
-  //   console.log(uploadImageData);
-  // };
-
-  // const response = await deso.media.uploadImage(request);
-  // setDivImg("https://images.deso.org/a5306f0faf3e77360a11f4ea79a9a2fd449eca16f4e708e70bd88d8da1e08430.gif");
-  // setImgURLs([
-  //   ...imgURLs,
-  //   { id: imgURLs.length, name: uploadImagePayload.ImageURL },
-  // ]);
-  // setDivImg(uploadImageData.ImageURL.toString());
-  // console.log(uploadImagePayload.ImageURL);
   async function handleFileUpload() {
     const JWT = localStorage.getItem("JWT_KEY");
     const pub_key = localStorage.getItem("user_key");
@@ -106,24 +77,6 @@ const PostOperation = ({ submit, setSubmit }) => {
     });
   }
 
-  // const JWT = localStorage.getItem("JWT_KEY");
-  // const pub_key = localStorage.getItem("user_key");
-  // const formData = new FormData();
-  // formData.append("file", image);
-  // formData.append("UserPublicBase58Check", pub_key);
-  // formData.append("JWT", JWT);
-  // const uploadImageResponse = await fetch(
-  //   `https://node.deso.org/api/v0/upload-image`,
-  //   {
-  //     method: "POST",
-  //     body: formData,
-  //     headers: {
-  //       "Content-Type": "multipart/form-data",
-  //     },
-  //   }
-  // );
-  // const uploadImageData = await uploadImageResponse.json();
-  // console.log(uploadImageData);
   const handleSubmitPost = async () => {
     setSetLoading(true);
     const pub_key = localStorage.getItem("user_key");
