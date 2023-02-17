@@ -64,19 +64,57 @@ const MintOperation = ({ submit, setSubmit }) => {
   };
 
   let NFT_POST_HASH_HEX;
-  const handleUploadImage = async () => {
+  async function handleFileUpload() {
+    const JWT = localStorage.getItem("JWT_KEY");
+    const pub_key = localStorage.getItem("user_key");
     try {
-      const pub_key = localStorage.getItem("user_key");
-      const deso = new Deso();
-      const request = {
-        UserPublicKeyBase58Check: pub_key,
-      };
-      const response = await deso.media.uploadImage(request);
-      setImg(response.ImageURL.toString());
+      const file = await openFileInput();
+      console.log("File selected:", file);
+      // Call your file upload function here with the selected file
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("UserPublicKeyBase58Check", pub_key);
+      formData.append("JWT", JWT);
+      const uploadImageResponse = await fetch(
+        `https://node.deso.org/api/v0/upload-image`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const uploadImageData = await uploadImageResponse.json();
+      setImgURLs([
+        ...imgURLs,
+        { id: imgURLs.length, name: uploadImageData.ImageURL },
+      ]);
+      setImg(uploadImageData.ImageURL.toString());
+      console.log(uploadImageData.ImageURL);
     } catch (error) {
-      console.error(error);
+      console.error("File selection failed:", error);
     }
-  };
+  }
+
+  function openFileInput() {
+    return new Promise((resolve, reject) => {
+      const fileInput = document.createElement("input");
+      fileInput.type = "file";
+
+      fileInput.addEventListener("change", () => {
+        const file = fileInput.files[0];
+        if (file) {
+          resolve(file);
+        } else {
+          reject(new Error("No file selected"));
+        }
+      });
+
+      fileInput.addEventListener("cancel", () => {
+        reject(new Error("File selection cancelled"));
+      });
+
+      fileInput.click();
+    });
+  }
 
   async function submitTransactionPost() {
     setLoading(true);
@@ -160,7 +198,6 @@ const MintOperation = ({ submit, setSubmit }) => {
         }
       );
       const submit_transaction_data = await submit_transaction_response.json();
-      // console.log(submit_transaction_data);
       // console.log(submit_transaction_data.PostEntryResponse.PostHashHex);
       NFT_POST_HASH_HEX = submit_transaction_data.PostEntryResponse.PostHashHex;
       let TRANSACTION_TO_CHECK = submit_transaction_data.TxnHashHex;
@@ -245,7 +282,6 @@ const MintOperation = ({ submit, setSubmit }) => {
     const Transaction_Hex_2 = appendPostData.TransactionHex;
     // console.log(Transaction_Hex_2);
     let derived_seed_hex = localStorage.getItem("derived_seed_hex");
-    // console.log(derived_seed_hex);
     const signed_transaction_hex = signTransaction(
       derived_seed_hex,
       Transaction_Hex_2
@@ -387,7 +423,7 @@ const MintOperation = ({ submit, setSubmit }) => {
                   <button
                     className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
                       } mr-5 scale-75 rounded-full`}
-                    onClick={handleUploadImage}
+                    onClick={handleFileUpload}
                   >
                     <IconContext.Provider value={{ size: "27px" }}>
                       <RiImageAddFill style={{ size: "200px" }} />
