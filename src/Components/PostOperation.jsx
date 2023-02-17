@@ -239,7 +239,10 @@ const PostOperation = ({ submit, setSubmit }) => {
           image: function () {
             const request = user.PublicKeyBase58Check;
             const response = deso.user.getSingleProfilePicture(request);
-            return response;
+            return (
+              response +
+              "?fallback=https://diamondapp.com/assets/img/default-profile-pic.png"
+            );
           },
         }))
       )
