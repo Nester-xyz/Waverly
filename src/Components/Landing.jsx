@@ -1,8 +1,13 @@
 import React from "react";
 import Deso from "deso-protocol";
-import { signTransaction } from "deso-protocol/src/lib/utils/Utils";
 
 const Landing = ({ logIn }) => {
+  let derivedSeedHex_bg;
+  let dervidedPubKey_bg;
+  let publickey_bg;
+  let transactionSpendingLimitHex_bg;
+  let expirationBlock_bg;
+  let accessSignature_bg;
   const deso = new Deso();
   const handleLogin = async () => {
     const derivePayload = {
@@ -17,73 +22,31 @@ const Landing = ({ logIn }) => {
       },
     };
     const user = await deso.identity.derive(derivePayload);
+    console.log(user);
     localStorage.setItem("derived_pub_key", user.derivedPublicKeyBase58Check);
     localStorage.setItem("derived_seed_hex", user.derivedSeedHex);
     localStorage.setItem("user_key", user.publicKeyBase58Check);
     localStorage.setItem("JWT_KEY", user.jwt);
     localStorage.setItem("isLoggedIn", "true");
     logIn(true);
-    //need to be used later
-
-    //  let sender_pub_key = user.publicKeyBase58Check;
-    //  let derived_pub_key = user.derivedPublicKeyBase58Check;
-    //  let derived_seed_hex = user.derivedSeedHex;
-    //  chrome.runtime.sendMessage({
-    //    getLandingFunction: true,
-    //    sender_pub_key,
-    //    derived_pub_key,
-    //    derived_seed_hex,
-    //  });
+    dervidedPubKey_bg = localStorage.getItem("derived_pub_key");
+    derivedSeedHex_bg = localStorage.getItem("derived_seed_hex");
+    publickey_bg = localStorage.getItem("user_key");
+    transactionSpendingLimitHex_bg = user.transactionSpendingLimitHex;
+    expirationBlock_bg = user.expirationBlock;
+    accessSignature_bg = user.accessSignature;
     console.log(user);
+    await chrome.runtime.sendMessage({
+      getLoginFunction: true,
+      dervidedPubKey_bg,
+      derivedSeedHex_bg,
+      publickey_bg,
+      expirationBlock_bg,
+      transactionSpendingLimitHex_bg,
+      accessSignature_bg,
+    });
+
     // user[]
-    let SEED_HEX = user.derivedSeedHex;
-    // console.log(SEED_HEX);
-
-    const authorizePayload = {
-      OwnerPublicKeyBase58Check: user.publicKeyBase58Check,
-      DerivedPublicKeyBase58Check: user.derivedPublicKeyBase58Check,
-      ExpirationBlock: user.expirationBlock,
-      AccessSignature: user.accessSignature,
-      DeleteKey: false,
-      DerivedKeySignature: true,
-      transactionSpendingLimitHex: user.transactionSpendingLimitHex,
-      MinFeeRateNanosPerKB: 1000,
-    };
-
-    const authorizeResponse = await fetch(
-      `https://node.deso.org/api/v0/authorize-derived-key`,
-      {
-        method: "POST",
-        body: JSON.stringify(authorizePayload),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const authorizeData = await authorizeResponse.json();
-    // console.log(authorizeData);
-    const txHex = authorizeData["TransactionHex"];
-    // console.log(txHex);
-
-    const signedTransactionHex = signTransaction(SEED_HEX, txHex);
-
-    const submitPayload = {
-      TransactionHex: signedTransactionHex,
-    };
-    // console.log(payload3.TransactionHex);
-    const submitResponse = await fetch(
-      `https://node.deso.org/api/v0/submit-transaction`,
-      {
-        method: "POST",
-        body: JSON.stringify(submitPayload),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    const submitData = await submitResponse.json();
-    console.log(submitData);
   };
 
   // return jsx
