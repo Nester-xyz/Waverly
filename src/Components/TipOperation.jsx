@@ -18,7 +18,8 @@ const TipOperations = () => {
   const [postHexes, setPostHexes] = useState([]);
   const [isUsername, setIsUsername] = useState(false);
   const [isValid, setIsValid] = useState(true);
-  const { Dark, textBoxActive2, tipLevel, setTipLevel } = useContext(WaverlyContext);
+  const { Dark, textBoxActive2, tipLevel, setTipLevel } =
+    useContext(WaverlyContext);
 
   useEffect(() => {
     let response;
@@ -85,8 +86,6 @@ const TipOperations = () => {
     // cool got the hexes here
   }
 
-
-
   const handleKeyDown = (event) => {
     if (event.keyCode === 32) {
       event.preventDefault();
@@ -111,7 +110,10 @@ const TipOperations = () => {
           image: function () {
             const request = user.PublicKeyBase58Check;
             const response = deso.user.getSingleProfilePicture(request);
-            return response;
+            return (
+              response +
+              "?fallback=https://diamondapp.com/assets/img/default-profile-pic.png"
+            );
           },
         }))
       )
@@ -136,7 +138,7 @@ const TipOperations = () => {
         public_key,
         admin_public_key,
         derived_pub_key,
-        seed
+        seed,
       });
       setDiamonds("1");
       setNumberOfPost(10);
@@ -148,7 +150,6 @@ const TipOperations = () => {
       setIsUsername(false);
     }
   };
-
 
   return (
     <div className="relative  w-[40rem] px-5 text-xl">
@@ -184,8 +185,9 @@ const TipOperations = () => {
                 focused
               ) => (
                 <div
-                  className={`user ${focused ? "focused" : ""
-                    } flex flex-row rounded-xl lato`}
+                  className={`user ${
+                    focused ? "focused" : ""
+                  } flex flex-row rounded-xl lato`}
                 >
                   <div className=" flex  flex-row rounded-xl lato">
                     <img
@@ -237,34 +239,43 @@ const TipOperations = () => {
           </label>
           <div className="flex select-none text-black">
             <button
-              className={`${Dark ? "darktheme" : "logout"
-                } rounded-2xl lato scale-75 ${diamonds === "1"
-                  ? `${Dark ? "darktheme-active" : "logout-active "
-                  } border-blue-400 border-2`
+              className={`${
+                Dark ? "darktheme" : "logout"
+              } rounded-2xl lato scale-75 ${
+                diamonds === "1"
+                  ? `${
+                      Dark ? "darktheme-active" : "logout-active "
+                    } border-blue-400 border-2`
                   : `hover:border-orange-300`
-                }`}
+              }`}
               onClick={() => setDiamonds("1")}
             >
               1💎
             </button>
             <button
-              className={`${Dark ? "darktheme" : "logout"
-                } rounded-2xl lato scale-75 ${diamonds === "2"
-                  ? `${Dark ? "darktheme-active" : "logout-active "
-                  } border-blue-400 border-2`
+              className={`${
+                Dark ? "darktheme" : "logout"
+              } rounded-2xl lato scale-75 ${
+                diamonds === "2"
+                  ? `${
+                      Dark ? "darktheme-active" : "logout-active "
+                    } border-blue-400 border-2`
                   : `hover:border-orange-300`
-                }`}
+              }`}
               onClick={() => setDiamonds("2")}
             >
               2💎
             </button>
             <button
-              className={`${Dark ? "darktheme" : "logout"
-                } rounded-2xl lato scale-75 ${diamonds === "3"
-                  ? `${Dark ? "darktheme-active" : "logout-active "
-                  } border-blue-400 border-2`
+              className={`${
+                Dark ? "darktheme" : "logout"
+              } rounded-2xl lato scale-75 ${
+                diamonds === "3"
+                  ? `${
+                      Dark ? "darktheme-active" : "logout-active "
+                    } border-blue-400 border-2`
                   : `hover:border-orange-300`
-                }`}
+              }`}
               onClick={() => setDiamonds("3")}
             >
               3💎
@@ -282,14 +293,15 @@ const TipOperations = () => {
               ((Number(diamondData[Number(diamonds)]) / 1e9) *
                 Number(numberOfPost) *
                 Number(rate)) /
-              100
+                100
             ).toFixed(4)}
           </div>
           <button
-            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${Dark
-              ? "bigbtn-dark hover:border-[#ff7521] "
-              : "bigbtn bg-[#efefef]"
-              }`}
+            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${
+              Dark
+                ? "bigbtn-dark hover:border-[#ff7521] "
+                : "bigbtn bg-[#efefef]"
+            }`}
             onClick={handleTipButton}
             disabled={loading}
           >

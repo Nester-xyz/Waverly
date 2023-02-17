@@ -54,7 +54,7 @@ const Landing = ({ logIn }) => {
     <div className="w-[40rem] h-[25rem] border ">
       <div className="w-full h-full flex justify-center items-center   text-center">
         <div>
-          <div className="absolute top-40 left-14  text-3xl text-center welcomewaverly">
+          <div className="absolute top-40 left-14  text-3xl text-center welcomewaverly select-none">
             <span id="welcometo">Welcome to </span>Waverly 🌊👋
           </div>
           <button
@@ -62,7 +62,7 @@ const Landing = ({ logIn }) => {
               handleLogin();
             }}
             className="absolute top-60 left-52 btn focus:outline-none
-            bg-[#efefef] bigbtn"
+            bg-[#efefef] bigbtn select-none"
           >
             {" "}
             GET STARTED
