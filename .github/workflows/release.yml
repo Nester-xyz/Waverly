@@ -1,0 +1,61 @@
+name: Github Releases
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+      - name: Install dependencies
+        run: yarn install
+      # - name: Test
+      #   run: npm test
+      #   env:
+      #     CI: true
+      - name: Generate build
+        run: yarn run watch
+      # Share artifact inside workflow
+      - name: Share artifact inside workflow
+        uses: actions/upload-artifact@v1
+        with:
+          name: react-github-actions-build
+          path: build
+  release:
+    runs-on: ubuntu-latest
+    # We specify that deploys needs to
+    # finish before we create a release
+    needs: build
+    steps:
+      # Download previously shared build
+      - name: Get artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: react-github-actions-build
+      # Zip the build using external action
+      - name: Zip build
+        uses: thedoctor0/zip-release@master
+        with:
+          filename: release.zip
+          path: react-github-actions-build
+      # Upload as an artifact of the current workflow
+      - name: Upload build zip artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: release.zip
+          path: release.zip
+      # Make official GitHub release which will trigger
+      # sending the mail with link for access
+      - name: Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: release.zip
+          token: ${{ secrets.GITHUB_TOKEN }}
