@@ -319,7 +319,7 @@ const MintOperation = ({ submit, setSubmit }) => {
     setNOC("1");
     setLoading(false);
     setSubmit(true);
-    setAdditionalDesoRoyalty(!additionalDESORoyalties);
+    // setAdditionalDesoRoyalty(!additionalDESORoyalties);
 
     // const delay = ms => new Promise(res => setTimeout(res, ms));
     // setLoading(true);
@@ -347,8 +347,7 @@ const MintOperation = ({ submit, setSubmit }) => {
       .then((response) =>
         response.ProfilesFound.map((user) => ({
           display: user.Username,
-          id: user.PublicKeyBase58Check,
-          handle: `@${user.Username}`,
+          id: `@${user.Username}`,
           image: function () {
             const request = user.PublicKeyBase58Check;
             const response = deso.user.getSingleProfilePicture(request);
@@ -389,8 +388,8 @@ const MintOperation = ({ submit, setSubmit }) => {
                 <Mention
                   className="focus:outline-none lato"
                   trigger="@"
-                  markup={`@{{__display__}} `}
-                  displayTransform={(display) => `@${display + ""}`}
+                  markup={`{{__id__}} `}
+                  displayTransform={(id) => `${id + ""}`}
                   data={fetchUsers}
                   renderSuggestion={(
                     suggestion,
@@ -707,7 +706,7 @@ placeholder`}
                 onClick={() => {
                   setDesoRoyalty(false);
                   setPlusSign(true);
-                  setAdditionalDesoRoyalty(!additionalDESORoyalties);
+                  // setAdditionalDesoRoyalty(!additionalDESORoyalties);
                 }}
               >
                 <CrossCircledIcon style={{ size: "100px" }} />
