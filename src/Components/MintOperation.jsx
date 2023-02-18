@@ -323,6 +323,22 @@ const MintOperation = ({ submit, setSubmit }) => {
     setNOC("1");
     setLoading(false);
     setSubmit(true);
+    // reseting the additional states
+    setImg("");
+    setDesoRoyalty(false);
+    setPlusSign(true)
+    setPutSale(false)
+    setBuyNow(false)
+    setUnlockableBtn(false)
+    setBodyText("");
+    setIsUnlockable(false)
+    setIsForSale(false)
+    setIsBuyNow(false)
+    setAdditionalDesoRoyalty({
+      PublicKeyBase58Check: "",
+      RoyaltyPercent: "10",
+      Username: "",
+    })
     // setAdditionalDesoRoyalty(!additionalDESORoyalties);
 
     // const delay = ms => new Promise(res => setTimeout(res, ms));
