@@ -132,10 +132,9 @@ const sendDiamonds = async (
       console.log(submit_transaction_data);
 
       // setTipLevel(`${i + 1}`);
-      // chrome.runtime.sendMessage({ message: `change-state` }, function (response) {
-      //   console.log(response);
-      // });
+      chrome.runtime.sendMessage({ message: `${i + 1}` });
     } catch (error) {
+      chrome.runtime.sendMessage({ message: `${i + 1}` });
       // setTipLevel(`${i + 1}`);
       continue;
     }

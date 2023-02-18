@@ -41,6 +41,7 @@ const TipOperations = () => {
   let public_key;
   let admin_public_key;
   let seed;
+  let derived_pub_key;
 
   async function getProfile() {
     const deso = new Deso();
@@ -130,8 +131,8 @@ const TipOperations = () => {
       // send diamonds required data posthash hex collection array of no of Posts to fetch
       seed = localStorage.getItem("derived_seed_hex");
       admin_public_key = localStorage.getItem("user_key");
-      const derived_pub_key = localStorage.getItem("derived_pub_key");
-      await chrome.runtime.sendMessage({
+      derived_pub_key = localStorage.getItem("derived_pub_key");
+      chrome.runtime.sendMessage({
         getSendDiamondsFunction: true,
         postHexes,
         diamonds,
@@ -140,16 +141,28 @@ const TipOperations = () => {
         derived_pub_key,
         seed,
       });
-      setDiamonds("1");
-      setNumberOfPost(10);
-      setUsername("");
-      setPub_key("");
-      setLoading(false);
-      setPostHexes([]);
-      setTipLevel("0");
-      setIsUsername(false);
+
+
     }
   };
+
+  function handleMessage(message, sender, sendResponse) {
+    // Handle the message here
+    if (postHexes.length == message.message) {
+      setLoading(false)
+      setUsername("");
+      setIsUsername(false);
+      setDiamonds("1");
+      setNumberOfPost(10);
+      setPub_key("");
+      setPostHexes([]);
+      setTipLevel("0");
+    }
+    // Send a response back to the sender
+    setTipLevel(message.message);
+  }
+
+  chrome.runtime.onMessage.addListener(handleMessage);
 
   return (
     <div className="relative  w-[40rem] px-5 text-xl">
@@ -185,9 +198,8 @@ const TipOperations = () => {
                 focused
               ) => (
                 <div
-                  className={`user ${
-                    focused ? "focused" : ""
-                  } flex flex-row rounded-xl lato`}
+                  className={`user ${focused ? "focused" : ""
+                    } flex flex-row rounded-xl lato`}
                 >
                   <div className=" flex  flex-row rounded-xl lato">
                     <img
@@ -239,43 +251,34 @@ const TipOperations = () => {
           </label>
           <div className="flex select-none text-black">
             <button
-              className={`${
-                Dark ? "darktheme" : "logout"
-              } rounded-2xl lato scale-75 ${
-                diamonds === "1"
-                  ? `${
-                      Dark ? "darktheme-active" : "logout-active "
-                    } border-blue-400 border-2`
+              className={`${Dark ? "darktheme" : "logout"
+                } rounded-2xl lato scale-75 ${diamonds === "1"
+                  ? `${Dark ? "darktheme-active" : "logout-active "
+                  } border-blue-400 border-2`
                   : `hover:border-orange-300`
-              }`}
+                }`}
               onClick={() => setDiamonds("1")}
             >
               1💎
             </button>
             <button
-              className={`${
-                Dark ? "darktheme" : "logout"
-              } rounded-2xl lato scale-75 ${
-                diamonds === "2"
-                  ? `${
-                      Dark ? "darktheme-active" : "logout-active "
-                    } border-blue-400 border-2`
+              className={`${Dark ? "darktheme" : "logout"
+                } rounded-2xl lato scale-75 ${diamonds === "2"
+                  ? `${Dark ? "darktheme-active" : "logout-active "
+                  } border-blue-400 border-2`
                   : `hover:border-orange-300`
-              }`}
+                }`}
               onClick={() => setDiamonds("2")}
             >
               2💎
             </button>
             <button
-              className={`${
-                Dark ? "darktheme" : "logout"
-              } rounded-2xl lato scale-75 ${
-                diamonds === "3"
-                  ? `${
-                      Dark ? "darktheme-active" : "logout-active "
-                    } border-blue-400 border-2`
+              className={`${Dark ? "darktheme" : "logout"
+                } rounded-2xl lato scale-75 ${diamonds === "3"
+                  ? `${Dark ? "darktheme-active" : "logout-active "
+                  } border-blue-400 border-2`
                   : `hover:border-orange-300`
-              }`}
+                }`}
               onClick={() => setDiamonds("3")}
             >
               3💎
@@ -293,15 +296,14 @@ const TipOperations = () => {
               ((Number(diamondData[Number(diamonds)]) / 1e9) *
                 Number(numberOfPost) *
                 Number(rate)) /
-                100
+              100
             ).toFixed(4)}
           </div>
           <button
-            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${
-              Dark
-                ? "bigbtn-dark hover:border-[#ff7521] "
-                : "bigbtn bg-[#efefef]"
-            }`}
+            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${Dark
+              ? "bigbtn-dark hover:border-[#ff7521] "
+              : "bigbtn bg-[#efefef]"
+              }`}
             onClick={handleTipButton}
             disabled={loading}
           >
