@@ -25,19 +25,19 @@ jobs:
         run: yarn run watch
       # Share artifact inside workflow
       - name: Share artifact inside workflow
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: react-github-actions-build
-          path: dist
+          path: dist/
   release:
     runs-on: ubuntu-latest
     # We specify that deploys needs to
     # finish before we create a release
-    needs: dist
+    needs: build
     steps:
       # Download previously shared build
       - name: Get artifact
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: react-github-actions-build
       # Zip the build using external action
