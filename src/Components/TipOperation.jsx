@@ -59,7 +59,7 @@ const TipOperations = () => {
         console.log(public_key);
         const delay = (ms) => new Promise((res) => setTimeout(res, ms));
         await delay(2000);
-        setIsUsername(true);
+
       } catch (error) {
         setIsUsername(false);
         setLoading(false);
@@ -85,6 +85,7 @@ const TipOperations = () => {
       postHexes.push(response.Posts[i].PostHashHex);
     }
     // cool got the hexes here
+
   }
 
   const handleKeyDown = (event) => {
@@ -134,6 +135,7 @@ const TipOperations = () => {
       derived_pub_key = localStorage.getItem("derived_pub_key");
       localStorage.setItem("postLen", '0');
       localStorage.setItem("postLen", postHexes.length);
+      setIsUsername(true);
       chrome.runtime.sendMessage({
         getSendDiamondsFunction: true,
         postHexes,
@@ -164,6 +166,7 @@ const TipOperations = () => {
       setPub_key("");
       setPostHexes([]);
       setTipLevel("0");
+      localStorage.setItem("postLen", '0');
     }
     // Send a response back to the sender
     setTipLevel(message.message);

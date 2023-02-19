@@ -37,7 +37,7 @@ const HeartOperation = () => {
         console.log(public_key);
         const delay = (ms) => new Promise((res) => setTimeout(res, ms));
         await delay(2000);
-        setIsUsername(true);
+
       } catch (error) {
         setIsUsername(false);
         setLoading(false);
@@ -63,37 +63,11 @@ const HeartOperation = () => {
       postHexes.push(response.Posts[i].PostHashHex);
     }
     // cool got the hexes here
+
   }
-
-  const sendHearts = async () => {
-    console.log(numberOfPost);
-    console.log(username);
-
-    try {
-      const deso = new Deso();
-      console.log(postHexes.length);
-      for (let i = 0; i < postHexes.length; i++) {
-        try {
-          const sender_pub_key = localStorage.getItem("user_key");
-          const request = {
-            ReaderPublicKeyBase58Check: sender_pub_key,
-            LikedPostHashHex: postHexes[i],
-            MinFeeRateNanosPerKB: 1000,
-            IsUnlike: false,
-          };
-          const response = await deso.social.createLikeStateless(request);
-          console.log(response);
-          setHeartPosts(`${i + 1}`);
-        } catch (error) {
-          setHeartPosts(`${i + 1}`);
-          continue;
-        }
-      }
-    } catch (error) {
-      setLoading(false);
-    }
-  };
-
+  let seed;
+  let senderPubKey;
+  let derived_pub_key;
   const handleHeartButton = async () => {
     // get the profile publicKeyBase58Check using username
     if (username.length !== 0) {
@@ -101,8 +75,22 @@ const HeartOperation = () => {
       await getProfile();
       // fetch post of user
       await fetchPosts();
+      seed = localStorage.getItem("derived_seed_hex");
+      senderPubKey = localStorage.getItem("user_key");
+      derived_pub_key = localStorage.getItem("derived_pub_key");
       // send diamonds required data posthash hex collection array of no of Posts to fetch
-      await sendHearts();
+      localStorage.setItem("postLen", '0');
+      localStorage.setItem("postLen", postHexes.length);
+      setIsUsername(true);
+      chrome.runtime.sendMessage({
+        getSendHeartsFunction: true,
+        postHexes,
+        heartPosts,
+        seed,
+        senderPubKey,
+        derived_pub_key,
+      });
+      // await sendHearts();
       setNumberOfPost(10);
       setUsername("");
       setPub_key("");
@@ -146,6 +134,29 @@ const HeartOperation = () => {
       .then(callback);
   }
 
+  function handleMessage(message, sender, sendResponse) {
+    // Handle the message here
+    setLoading(true);
+    setIsUsername(true);
+    setUsername("Wait...");
+    console.log(message.message);
+    const postLen = localStorage.getItem("postLen")
+    if (postLen == message.message) {
+      setLoading(false)
+      setUsername("");
+      setIsUsername(false);
+      setNumberOfPost(10);
+      setPub_key("");
+      setPostHexes([]);
+      setHeartPosts("0");
+      localStorage.setItem("postLen", '0');
+    }
+    // Send a response back to the sender
+    setHeartPosts(message.message);
+  }
+
+  chrome.runtime.onMessage.addListener(handleMessage);
+
   return (
     <div className="relative w-[40rem] px-5 text-xl">
       <div className="mt-16 ml-10  space-y-2">
@@ -183,9 +194,8 @@ const HeartOperation = () => {
                 focused
               ) => (
                 <div
-                  className={`user ${
-                    focused ? "focused" : ""
-                  } flex flex-row rounded-xl lato`}
+                  className={`user ${focused ? "focused" : ""
+                    } flex flex-row rounded-xl lato`}
                 >
                   <div className=" flex  flex-row rounded-xl lato">
                     <img
@@ -234,11 +244,10 @@ const HeartOperation = () => {
         <div className="lato"></div>
         <div className="flex items-center space-x-5">
           <button
-            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${
-              Dark
-                ? "bigbtn-dark hover:border-[#ff7521] "
-                : "bigbtn bg-[#efefef]"
-            }`}
+            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${Dark
+              ? "bigbtn-dark hover:border-[#ff7521] "
+              : "bigbtn bg-[#efefef]"
+              }`}
             onClick={handleHeartButton}
             disabled={loading}
           >
