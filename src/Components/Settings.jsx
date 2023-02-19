@@ -45,14 +45,14 @@ const Settings = ({
         setMenuActive(false);
       }}
     >
+
       <button
         onClick={(e) => {
           console.count("1");
           setSettingActive(false);
         }}
-        className={`absolute top-20 left-5 text-3xl  focus:outline-none rounded-full bg-[#efefef] ${
-          Dark ? "darktheme hover:border-[#ff7521]" : "logout"
-        }`}
+        className={`absolute top-20 left-5 text-3xl  focus:outline-none rounded-full bg-[#efefef] ${Dark ? "darktheme hover:border-[#ff7521]" : "logout"
+          }`}
       >
         <IoArrowBackCircleOutline />
       </button>
@@ -75,11 +75,10 @@ const Settings = ({
               onMouseLeave={() => setMenuActive(false)}
             >
               <div
-                className={`border  pl-3 flex gap-2 relative items-center px-2 ${
-                  Dark
+                className={`border  pl-3 flex gap-2 relative items-center px-2 ${Dark
                     ? "hover:border-[#f69552] border-white"
                     : "hover:border-blue-400 border-[#252323]"
-                }`}
+                  }`}
                 onClick={() => {
                   setMenuActive(!menuActive);
                 }}
@@ -88,14 +87,12 @@ const Settings = ({
                 <AiOutlineDown />
               </div>
               <div
-                className={`divide-y absolute w-full  top-8 border ${
-                  Dark ? "bg-[#444]" : "bg-white"
-                } ${menuActive ? "block" : "hidden"} text-lg`}
+                className={`divide-y absolute w-full  top-8 border ${Dark ? "bg-[#444]" : "bg-white"
+                  } ${menuActive ? "block" : "hidden"} text-lg`}
               >
                 <div
-                  className={`cursor-pointer px-2 flex items-center gap-2 ${
-                    Dark ? "hover:bg-[#f69552]" : "hover:bg-blue-300"
-                  }`}
+                  className={`cursor-pointer px-2 flex items-center gap-2 ${Dark ? "hover:bg-[#f69552]" : "hover:bg-blue-300"
+                    }`}
                   onClick={() => {
                     setShower("heart");
                     if (activeTab === "tip") {
@@ -110,9 +107,8 @@ const Settings = ({
                   <div className="lato">Heart</div>
                 </div>
                 <div
-                  className={`cursor-pointer px-2 flex items-center gap-2 ${
-                    Dark ? "hover:bg-[#f69552]" : "hover:bg-blue-300"
-                  }`}
+                  className={`cursor-pointer px-2 flex items-center gap-2 ${Dark ? "hover:bg-[#f69552]" : "hover:bg-blue-300"
+                    }`}
                   onClick={() => {
                     setShower("diamond");
                     if (activeTab === "heart") {
@@ -171,9 +167,8 @@ const Settings = ({
           {/* github handle */}
           <div className={`lato mx-3 px-3 py-1 select-none`}>
             <a
-              className={`flex justify-between items-center ${
-                Dark ? "text-white" : "text-[#151633]"
-              }`}
+              className={`flex justify-between items-center ${Dark ? "text-white" : "text-[#151633]"
+                }`}
               href="https://github.com/DeWhales-xyz/Waverly"
               onClick={handleRedirect}
               target="_blank"
