@@ -18,6 +18,7 @@ const Landing = ({ logIn }) => {
           AUTHORIZE_DERIVED_KEY: 2,
           SUBMIT_POST: 1000,
           CREATE_NFT: 100,
+          LIKE: 100000000000,
         },
       },
     };
