@@ -14,7 +14,7 @@ const Landing = ({ logIn }) => {
       transactionSpendingLimitResponse: {
         GlobalDESOLimit: 20 * 1e9,
         TransactionCountLimitMap: {
-          BASIC_TRANSFER: 50,
+          BASIC_TRANSFER: 100000,
           AUTHORIZE_DERIVED_KEY: 2,
           SUBMIT_POST: 1000,
           CREATE_NFT: 100,

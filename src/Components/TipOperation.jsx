@@ -132,6 +132,8 @@ const TipOperations = () => {
       seed = localStorage.getItem("derived_seed_hex");
       admin_public_key = localStorage.getItem("user_key");
       derived_pub_key = localStorage.getItem("derived_pub_key");
+      localStorage.setItem("postLen", '0');
+      localStorage.setItem("postLen", postHexes.length);
       chrome.runtime.sendMessage({
         getSendDiamondsFunction: true,
         postHexes,
@@ -148,7 +150,12 @@ const TipOperations = () => {
 
   function handleMessage(message, sender, sendResponse) {
     // Handle the message here
-    if (postHexes.length == message.message) {
+    setLoading(true);
+    setIsUsername(true);
+    setUsername("Wait...");
+    console.log(message.message);
+    const postLen = localStorage.getItem("postLen")
+    if (postLen == message.message) {
       setLoading(false)
       setUsername("");
       setIsUsername(false);
