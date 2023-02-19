@@ -28,12 +28,12 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: react-github-actions-build
-          path: build
+          path: dist
   release:
     runs-on: ubuntu-latest
     # We specify that deploys needs to
     # finish before we create a release
-    needs: build
+    needs: dist
     steps:
       # Download previously shared build
       - name: Get artifact
