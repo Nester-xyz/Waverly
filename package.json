@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "watch": "webpack --watch --progress --config webpack.config.js"
+    "watch": "webpack --watch --progress --config webpack.config.js",
+    "build": "webpack --mode production --config webpack.config.js"
   },
   "dependencies": {
     "@babel/core": "^7.20.12",
