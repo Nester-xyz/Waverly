@@ -50,8 +50,8 @@ jobs:
       - name: Upload build zip artifact
         uses: actions/upload-artifact@v1
         with:
-          name: zip.zip
-          path: zip.zip
+          name: releases.zip
+          path: releases.zip
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
