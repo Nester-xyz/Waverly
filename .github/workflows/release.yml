@@ -55,7 +55,7 @@ jobs:
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: zip.zip
+          artifacts: releases.zip
           token: ${{ secrets.TOKEN }}
       # Make official GitHub release which will trigger
       # sending the mail with link for accesss
