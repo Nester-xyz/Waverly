@@ -44,7 +44,7 @@ jobs:
       - name: Zip build
         uses: thedoctor0/zip-release@master
         with:
-          filename: zip -r -r zip . -i release.zip
+          filename: zip -r release.zip
           path: react-github-actions-build
       - name: List directory contents
         run: ls -R /home/runner/work/CHROME_EXT/CHROME_EXT/
