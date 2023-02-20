@@ -66,4 +66,4 @@ jobs:
           artifacts: "waverly-${{  github.ref_name }}.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
       # Make official GitHub release which will trigger
-      # sending the mail with link for access
+      # sending the mail with link for accesss
