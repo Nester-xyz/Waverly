@@ -45,7 +45,7 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           filename: release.zip
-          path: react-github-actions-build/dist
+          path: zip -r release.zip . -i react-github-actions-build/dist
       - name: View dist
         run: |
           ls dist
