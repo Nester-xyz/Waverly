@@ -46,6 +46,7 @@ jobs:
         with:
           filename: zip -r release.zip . -i dist
           path: react-github-actions-build
+      - name: View dist
         run: |
           ls dist
       # Upload as an artifact of the current workflow
