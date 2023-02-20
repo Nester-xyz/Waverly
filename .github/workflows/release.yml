@@ -44,7 +44,7 @@ jobs:
       - name: Zip build
         uses: thedoctor0/zip-release@master
         with:
-          filename: zip -r release.zip
+          filename: zip -r release.zip dist
           path: react-github-actions-build
       - name: List directory root
         run: ls -R /home/runner/work/CHROME_EXT/
@@ -56,6 +56,10 @@ jobs:
         with:
           name: release.zip
           path: release.zip
-
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "waverly-${{  github.ref_name }}.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
       # Make official GitHub release which will trigger
       # sending the mail with link for access
