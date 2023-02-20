@@ -80,7 +80,7 @@ const HeartOperation = () => {
       derived_pub_key = localStorage.getItem("derived_pub_key");
       // send diamonds required data posthash hex collection array of no of Posts to fetch
       localStorage.setItem("postLen", '0');
-      localStorage.setItem("postLen", postHexes.length);
+      localStorage.setItem("postLen", numberOfPost.toString());
       setIsUsername(true);
       chrome.runtime.sendMessage({
         getSendHeartsFunction: true,
@@ -91,12 +91,6 @@ const HeartOperation = () => {
         derived_pub_key,
       });
       // await sendHearts();
-      setNumberOfPost(10);
-      setUsername("");
-      setPub_key("");
-      setLoading(false);
-      setPostHexes([]);
-      setIsUsername(false);
     }
   };
 
@@ -139,8 +133,8 @@ const HeartOperation = () => {
     setLoading(true);
     setIsUsername(true);
     setUsername("Wait...");
-    console.log(message.message);
     const postLen = localStorage.getItem("postLen")
+    setNumberOfPost(postLen)
     if (postLen == message.message) {
       setLoading(false)
       setUsername("");
@@ -149,7 +143,7 @@ const HeartOperation = () => {
       setPub_key("");
       setPostHexes([]);
       setHeartPosts("0");
-      localStorage.setItem("postLen", '0');
+      return;
     }
     // Send a response back to the sender
     setHeartPosts(message.message);

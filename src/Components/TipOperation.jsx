@@ -134,7 +134,7 @@ const TipOperations = () => {
       admin_public_key = localStorage.getItem("user_key");
       derived_pub_key = localStorage.getItem("derived_pub_key");
       localStorage.setItem("postLen", '0');
-      localStorage.setItem("postLen", postHexes.length);
+      localStorage.setItem("postLen", numberOfPost.toString());
       setIsUsername(true);
       chrome.runtime.sendMessage({
         getSendDiamondsFunction: true,
@@ -155,10 +155,9 @@ const TipOperations = () => {
     setLoading(true);
     setIsUsername(true);
     setUsername("Wait...");
-    console.log(message.message);
     const postLen = localStorage.getItem("postLen")
+    setNumberOfPost(postLen)
     if (postLen == message.message) {
-      setLoading(false)
       setUsername("");
       setIsUsername(false);
       setDiamonds("1");
@@ -166,7 +165,8 @@ const TipOperations = () => {
       setPub_key("");
       setPostHexes([]);
       setTipLevel("0");
-      localStorage.setItem("postLen", '0');
+      setLoading(false);
+      return;
     }
     // Send a response back to the sender
     setTipLevel(message.message);
