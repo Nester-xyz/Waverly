@@ -61,7 +61,7 @@ jobs:
           name: zip.zip
           path: zip.zip
       - name: Create GitHub Release
-        uses: ncipollo/release-action@v2
+        uses: ncipollo/release-action@v1
         with:
           artifacts: "waverly-${{  github.ref_name }}.zip"
           token: ${{ secrets.TOKEN }}
