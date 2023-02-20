@@ -50,12 +50,12 @@ jobs:
       - name: Upload build zip artifact
         uses: actions/upload-artifact@v1
         with:
-          name: releases.zip
-          path: releases.zip
+          name: zip.zip
+          path: zip.zip
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: releases.zip
+          artifacts: zip.zip
           token: ${{ secrets.TOKEN }}
       # Make official GitHub release which will trigger
       # sending the mail with link for accesss
