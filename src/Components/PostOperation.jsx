@@ -203,7 +203,7 @@ const PostOperation = ({ submit, setSubmit }) => {
   }
   return (
     <div>
-      <div>
+      <div className="overflow-hidden">
         {/* text area */}
         <div
           className={`flex w-full ${
@@ -211,7 +211,7 @@ const PostOperation = ({ submit, setSubmit }) => {
           }`}
         >
           <MentionsInput
-            className="rounded-xl resize-none text-black border text-lg pt-2 bg-[#efefef] w-[25rem] mt-4 px-5 mx-5 focus:outline-none"
+            className="rounded-xl overflow-y-hidden resize-none text-black border text-lg pt-2 bg-[#efefef] w-[25rem] mt-4 px-5 mx-5 focus:outline-none"
             style={defaultStyle}
             rows={`${textBoxActive2 ? "5" : "6"}`}
             cols="1"

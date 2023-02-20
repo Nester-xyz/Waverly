@@ -205,6 +205,10 @@ input[type="number"] {
   box-shadow: 20px 20px 60px #373535, -20px -20px 60px #4b4747;
   color: white;
 }
+.rounded-xl__input {
+  font-family: "Lato", sans-serif !important;
+  overflow: scroll !important;
+}
 .rounded-xl__suggestions__item__display {
   font-family: "Lato", sans-serif !important;
 }
@@ -230,7 +234,6 @@ input[type="number"] {
 .heart__suggestions__item__highlight {
   font-family: "Lato", sans-serif !important;
 }
-
 
 .App {
   text-align: center;

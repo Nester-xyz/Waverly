@@ -128,8 +128,8 @@ const sendDiamonds = async (
           },
         }
       );
-      const submit_transaction_data = await submit_transaction_response.json();
-      console.log(submit_transaction_data);
+      await submit_transaction_response.json();
+      // console.log(submit_transaction_data);
 
       // setTipLevel(`${i + 1}`);
       chrome.runtime.sendMessage({ message: `${i + 1}` });
@@ -213,8 +213,7 @@ const sendHearts = async (
           },
         }
       );
-      const submit_transaction_data = await submit_transaction_response.json();
-      console.log(submit_transaction_data);
+      await submit_transaction_response.json();
       chrome.runtime.sendMessage({ message: `${i + 1}` });
       // setHeartPosts(`${i + 1}`);
     } catch (error) {
