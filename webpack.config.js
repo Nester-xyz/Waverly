@@ -27,7 +27,7 @@ module.exports = override({
     devtool: 'cheap-module-source-map',
     entry: {
         popup: path.resolve('./src/popup/popup.jsx'),
-        background: path.resolve('./src/background/background.jsx')
+        background: path.resolve('./src/background/background.jsx'),
     },
     module: {
         rules: [
@@ -84,6 +84,7 @@ module.exports = override({
         extensions: ['.js', '.jsx'],
     },
     output: {
-        filename: '[name].js'
+        filename: '[name].js',
+        type: 'module',
     }
 });

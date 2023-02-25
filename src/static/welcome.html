@@ -2,6 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="script-src 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' http://localhost:* http://127.0.0.1:*"
+    />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Waverly - Login With DeSo Derived Keys</title>
@@ -24,7 +28,8 @@
   <body>
     <h1 class="welcome">Welcome to Waverly 👋</h1>
     <div class="login-button">
-      <button>Login with DeSo</button>
+      <button id="login-button">Login with DeSo</button>
     </div>
+    <script type="module" src="welcome.js"></script>
   </body>
 </html>
