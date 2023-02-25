@@ -1,6 +1,6 @@
 import { signTransaction } from "deso-protocol/src/lib/utils/Utils";
-chrome.runtime.onInstalled.addListener((details) => {
-  console.log("Waverly app has been installed successfully!");
+chrome.runtime.onInstalled.addListener(function () {
+  chrome.tabs.create({ url: "./welcome.html" });
 });
 
 const derivedLogin = async (
@@ -12,7 +12,12 @@ const derivedLogin = async (
   accessSignature_bg
 ) => {
   let SEED_HEX = derivedSeedHex_bg;
-
+  // console.log(dervidedPubKey_bg);
+  // console.log(derivedSeedHex_bg);
+  // console.log(publickey_bg);
+  // console.log(transactionSpendingLimitHex_bg);
+  // console.log(expirationBlock_bg);
+  // console.log(accessSignature_bg);
   const authorizePayload = {
     OwnerPublicKeyBase58Check: publickey_bg,
     DerivedPublicKeyBase58Check: dervidedPubKey_bg,
@@ -128,14 +133,11 @@ const sendDiamonds = async (
           },
         }
       );
-      await submit_transaction_response.json();
-      // console.log(submit_transaction_data);
-
-      // setTipLevel(`${i + 1}`);
+      let submit_transaction_data = await submit_transaction_response.json();
+      console.log(submit_transaction_data);
       chrome.runtime.sendMessage({ message: `${i + 1}` });
     } catch (error) {
       chrome.runtime.sendMessage({ message: `${i + 1}` });
-      // setTipLevel(`${i + 1}`);
       continue;
     }
   }
@@ -213,7 +215,8 @@ const sendHearts = async (
           },
         }
       );
-      await submit_transaction_response.json();
+      let submit_transaction_data = await submit_transaction_response.json();
+      console.log(submit_transaction_data);
       chrome.runtime.sendMessage({ message: `${i + 1}` });
       // setHeartPosts(`${i + 1}`);
     } catch (error) {

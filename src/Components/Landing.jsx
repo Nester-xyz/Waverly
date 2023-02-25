@@ -2,12 +2,6 @@ import React from "react";
 import Deso from "deso-protocol";
 
 const Landing = ({ logIn }) => {
-  let derivedSeedHex_bg;
-  let dervidedPubKey_bg;
-  let publickey_bg;
-  let transactionSpendingLimitHex_bg;
-  let expirationBlock_bg;
-  let accessSignature_bg;
   const deso = new Deso();
   const handleLogin = async () => {
     const derivePayload = {
@@ -24,20 +18,14 @@ const Landing = ({ logIn }) => {
     };
     const user = await deso.identity.derive(derivePayload);
     console.log(user);
-    localStorage.setItem("derived_pub_key", user.derivedPublicKeyBase58Check);
-    localStorage.setItem("derived_seed_hex", user.derivedSeedHex);
-    localStorage.setItem("user_key", user.publicKeyBase58Check);
-    localStorage.setItem("JWT_KEY", user.jwt);
-    localStorage.setItem("isLoggedIn", "true");
-    logIn(true);
-    dervidedPubKey_bg = localStorage.getItem("derived_pub_key");
-    derivedSeedHex_bg = localStorage.getItem("derived_seed_hex");
-    publickey_bg = localStorage.getItem("user_key");
-    transactionSpendingLimitHex_bg = user.transactionSpendingLimitHex;
-    expirationBlock_bg = user.expirationBlock;
-    accessSignature_bg = user.accessSignature;
+    let dervidedPubKey_bg = user.derivedPublicKeyBase58Check;
+    let derivedSeedHex_bg = user.derivedSeedHex;
+    let publickey_bg = user.publicKeyBase58Check;
+    let transactionSpendingLimitHex_bg = user.transactionSpendingLimitHex;
+    let expirationBlock_bg = user.expirationBlock;
+    let accessSignature_bg = user.accessSignature;
     console.log(user);
-    await chrome.runtime.sendMessage({
+    chrome.runtime.sendMessage({
       getLoginFunction: true,
       dervidedPubKey_bg,
       derivedSeedHex_bg,
@@ -46,14 +34,22 @@ const Landing = ({ logIn }) => {
       transactionSpendingLimitHex_bg,
       accessSignature_bg,
     });
-
+    localStorage.setItem("derived_pub_key", user.derivedPublicKeyBase58Check);
+    localStorage.setItem("derived_seed_hex", user.derivedSeedHex);
+    localStorage.setItem("user_key", user.publicKeyBase58Check);
+    localStorage.setItem("JWT_KEY", user.jwt);
+    localStorage.setItem("isLoggedIn", "true");
+    logIn(true);
+    // dervidedPubKey_bg = localStorage.getItem("derived_pub_key");
+    // derivedSeedHex_bg = localStorage.getItem("derived_seed_hex");
+    // publickey_bg = localStorage.getItem("user_key");
     // user[]
   };
 
   // return jsx
   return (
     <div className="w-[40rem] h-[25rem] border ">
-      <div className="w-full h-full flex justify-center items-center   text-center">
+      <div className="w-full h-full flex justify-center items-center text-center">
         <div>
           <div className="absolute top-40 left-14  text-3xl text-center welcomewaverly select-none">
             <span id="welcometo">Welcome to </span>Waverly 🌊👋

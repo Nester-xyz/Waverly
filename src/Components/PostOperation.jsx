@@ -113,9 +113,9 @@ const PostOperation = ({ submit, setSubmit }) => {
         }
       );
       const submitPostData = await submitPostResponse.json();
-      // console.log(submitPostData);
+      console.log(submitPostData);
       const TRANSACTION_HEX = submitPostData.TransactionHex;
-      // console.log(TRANSACTION_HEX);
+      console.log(TRANSACTION_HEX);
 
       let derivedKey = localStorage.getItem("derived_pub_key");
 
@@ -137,7 +137,7 @@ const PostOperation = ({ submit, setSubmit }) => {
         }
       );
       const appendPostData = await appendPostResponse.json();
-      // console.log(appendPostData);
+      console.log(appendPostData);
 
       // console.log(appendPostData.TransactionHex);
       const Transaction_Hex_2 = appendPostData.TransactionHex;
@@ -280,7 +280,7 @@ const PostOperation = ({ submit, setSubmit }) => {
           />
         </div>
         {/* btn start here */}
-        <div className="buttons mt-2 px-5 flex justify-between">
+        <div className="buttons  px-5 flex justify-between">
           {/* left buttons start here */}
           <div className="left-buttons -space-x-5 flex">
             {/* img upload btn start here */}
