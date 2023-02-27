@@ -26,8 +26,8 @@ const PostOperation = ({ submit, setSubmit }) => {
   }
 
   async function handleFileUpload() {
-    const JWT = localStorage.getItem("JWT_KEY");
-    const pub_key = localStorage.getItem("user_key");
+    const JWT = localStorage.getItem("jwt_key_popup");
+    const pub_key = localStorage.getItem("user_key_popup");
     try {
       const file = await openFileInput();
       console.log("File selected:", file);
@@ -79,7 +79,7 @@ const PostOperation = ({ submit, setSubmit }) => {
 
   const handleSubmitPost = async () => {
     setSetLoading(true);
-    const pub_key = localStorage.getItem("user_key");
+    const pub_key = localStorage.getItem("user_key_popup");
     let imgURLar = [];
     if (Object.keys(imgURLs).length !== 0) {
       imgURLar = [imgURLs[imgURLs.length - 1].name];
@@ -116,8 +116,7 @@ const PostOperation = ({ submit, setSubmit }) => {
       console.log(submitPostData);
       const TRANSACTION_HEX = submitPostData.TransactionHex;
       console.log(TRANSACTION_HEX);
-
-      let derivedKey = localStorage.getItem("derived_pub_key");
+      let derivedKey = localStorage.getItem("derived_pub_key_popup");
 
       const appendExtraDataPayload = {
         TransactionHex: TRANSACTION_HEX,
@@ -141,7 +140,7 @@ const PostOperation = ({ submit, setSubmit }) => {
 
       // console.log(appendPostData.TransactionHex);
       const Transaction_Hex_2 = appendPostData.TransactionHex;
-      let derived_seed_hex = localStorage.getItem("derived_seed_hex");
+      let derived_seed_hex = localStorage.getItem("derived_seed_hex_popup");
       const signed_transaction_hex = signTransaction(
         derived_seed_hex,
         Transaction_Hex_2

@@ -59,7 +59,6 @@ const TipOperations = () => {
         console.log(public_key);
         const delay = (ms) => new Promise((res) => setTimeout(res, ms));
         await delay(2000);
-
       } catch (error) {
         setIsUsername(false);
         setLoading(false);
@@ -73,7 +72,7 @@ const TipOperations = () => {
     // fetch posthash hex of numberofpost to an array
     const deso = new Deso();
     const no_of_posts = Number(numberOfPost);
-    const reader_pub_key = localStorage.getItem("user_key");
+    const reader_pub_key = localStorage.getItem("user_key_popup");
     const reading_pub_key = public_key;
     const request = {
       PublicKeyBase58Check: reading_pub_key,
@@ -85,7 +84,6 @@ const TipOperations = () => {
       postHexes.push(response.Posts[i].PostHashHex);
     }
     // cool got the hexes here
-
   }
 
   const handleKeyDown = (event) => {
@@ -130,10 +128,10 @@ const TipOperations = () => {
       // fetch post of user
       await fetchPosts();
       // send diamonds required data posthash hex collection array of no of Posts to fetch
-      seed = localStorage.getItem("derived_seed_hex");
-      admin_public_key = localStorage.getItem("user_key");
-      derived_pub_key = localStorage.getItem("derived_pub_key");
-      localStorage.setItem("postLen", '0');
+      seed = localStorage.getItem("derived_seed_hex_popup");
+      admin_public_key = localStorage.getItem("user_key_popup");
+      derived_pub_key = localStorage.getItem("derived_pub_key_popup");
+      localStorage.setItem("postLen", "0");
       localStorage.setItem("postLen", numberOfPost.toString());
       setIsUsername(true);
       chrome.runtime.sendMessage({
@@ -145,8 +143,6 @@ const TipOperations = () => {
         derived_pub_key,
         seed,
       });
-
-
     }
   };
 
@@ -155,8 +151,8 @@ const TipOperations = () => {
     setLoading(true);
     setIsUsername(true);
     setUsername("Wait...");
-    const postLen = localStorage.getItem("postLen")
-    setNumberOfPost(postLen)
+    const postLen = localStorage.getItem("postLen");
+    setNumberOfPost(postLen);
     if (postLen == message.message) {
       setUsername("");
       setIsUsername(false);
@@ -208,8 +204,9 @@ const TipOperations = () => {
                 focused
               ) => (
                 <div
-                  className={`user ${focused ? "focused" : ""
-                    } flex flex-row rounded-xl lato`}
+                  className={`user ${
+                    focused ? "focused" : ""
+                  } flex flex-row rounded-xl lato`}
                 >
                   <div className=" flex  flex-row rounded-xl lato">
                     <img
@@ -261,34 +258,43 @@ const TipOperations = () => {
           </label>
           <div className="flex select-none text-black">
             <button
-              className={`${Dark ? "darktheme" : "logout"
-                } rounded-2xl lato scale-75 ${diamonds === "1"
-                  ? `${Dark ? "darktheme-active" : "logout-active "
-                  } border-blue-400 border-2`
+              className={`${
+                Dark ? "darktheme" : "logout"
+              } rounded-2xl lato scale-75 ${
+                diamonds === "1"
+                  ? `${
+                      Dark ? "darktheme-active" : "logout-active "
+                    } border-blue-400 border-2`
                   : `hover:border-orange-300`
-                }`}
+              }`}
               onClick={() => setDiamonds("1")}
             >
               1💎
             </button>
             <button
-              className={`${Dark ? "darktheme" : "logout"
-                } rounded-2xl lato scale-75 ${diamonds === "2"
-                  ? `${Dark ? "darktheme-active" : "logout-active "
-                  } border-blue-400 border-2`
+              className={`${
+                Dark ? "darktheme" : "logout"
+              } rounded-2xl lato scale-75 ${
+                diamonds === "2"
+                  ? `${
+                      Dark ? "darktheme-active" : "logout-active "
+                    } border-blue-400 border-2`
                   : `hover:border-orange-300`
-                }`}
+              }`}
               onClick={() => setDiamonds("2")}
             >
               2💎
             </button>
             <button
-              className={`${Dark ? "darktheme" : "logout"
-                } rounded-2xl lato scale-75 ${diamonds === "3"
-                  ? `${Dark ? "darktheme-active" : "logout-active "
-                  } border-blue-400 border-2`
+              className={`${
+                Dark ? "darktheme" : "logout"
+              } rounded-2xl lato scale-75 ${
+                diamonds === "3"
+                  ? `${
+                      Dark ? "darktheme-active" : "logout-active "
+                    } border-blue-400 border-2`
                   : `hover:border-orange-300`
-                }`}
+              }`}
               onClick={() => setDiamonds("3")}
             >
               3💎
@@ -306,14 +312,15 @@ const TipOperations = () => {
               ((Number(diamondData[Number(diamonds)]) / 1e9) *
                 Number(numberOfPost) *
                 Number(rate)) /
-              100
+                100
             ).toFixed(4)}
           </div>
           <button
-            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${Dark
-              ? "bigbtn-dark hover:border-[#ff7521] "
-              : "bigbtn bg-[#efefef]"
-              }`}
+            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${
+              Dark
+                ? "bigbtn-dark hover:border-[#ff7521] "
+                : "bigbtn bg-[#efefef]"
+            }`}
             onClick={handleTipButton}
             disabled={loading}
           >

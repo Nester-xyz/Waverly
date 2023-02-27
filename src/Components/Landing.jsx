@@ -38,12 +38,6 @@ const Landing = ({ logIn }) => {
     localStorage.setItem("derived_seed_hex", user.derivedSeedHex);
     localStorage.setItem("user_key", user.publicKeyBase58Check);
     localStorage.setItem("JWT_KEY", user.jwt);
-    localStorage.setItem("isLoggedIn", "true");
-    logIn(true);
-    // dervidedPubKey_bg = localStorage.getItem("derived_pub_key");
-    // derivedSeedHex_bg = localStorage.getItem("derived_seed_hex");
-    // publickey_bg = localStorage.getItem("user_key");
-    // user[]
   };
 
   // return jsx

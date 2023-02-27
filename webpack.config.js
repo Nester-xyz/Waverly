@@ -28,6 +28,7 @@ module.exports = override({
     entry: {
         popup: path.resolve('./src/popup/popup.jsx'),
         background: path.resolve('./src/background/background.jsx'),
+        welcome: path.resolve('/src/welcome/welcome.jsx')
     },
     module: {
         rules: [
@@ -85,6 +86,5 @@ module.exports = override({
     },
     output: {
         filename: '[name].js',
-        type: 'module',
     }
 });

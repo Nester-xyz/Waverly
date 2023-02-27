@@ -65,8 +65,8 @@ const MintOperation = ({ submit, setSubmit }) => {
 
   let NFT_POST_HASH_HEX;
   async function handleFileUpload() {
-    const JWT = localStorage.getItem("JWT_KEY");
-    const pub_key = localStorage.getItem("user_key");
+    const JWT = localStorage.getItem("jwt_key_popup");
+    const pub_key = localStorage.getItem("user_key_popup");
     try {
       const file = await openFileInput();
       console.log("File selected:", file);
@@ -118,7 +118,7 @@ const MintOperation = ({ submit, setSubmit }) => {
 
   async function submitTransactionPost() {
     setLoading(true);
-    const pub_key = localStorage.getItem("user_key");
+    const pub_key = localStorage.getItem("user_key_popup");
     let imgURLar = [];
     if (Object.keys(imgURLs).length !== 0) {
       imgURLar = [imgURLs[imgURLs.length - 1].name];
@@ -127,7 +127,7 @@ const MintOperation = ({ submit, setSubmit }) => {
     console.log(bodyText);
     let res1 = bodyText.replace(/@{{/g, "@");
     let res2 = res1.replace(/}}/g, "");
-    console.log(res2)
+    console.log(res2);
     const submitPostPayload = {
       UpdaterPublicKeyBase58Check: pub_key,
       BodyObj: {
@@ -154,7 +154,7 @@ const MintOperation = ({ submit, setSubmit }) => {
       const TRANSACTION_HEX = submitPostData.TransactionHex;
       // console.log(TRANSACTION_HEX);
 
-      let derivedKey = localStorage.getItem("derived_pub_key");
+      let derivedKey = localStorage.getItem("derived_pub_key_popup");
 
       const appendExtraDataPayload = {
         TransactionHex: TRANSACTION_HEX,
@@ -178,7 +178,7 @@ const MintOperation = ({ submit, setSubmit }) => {
 
       // console.log(appendPostData.TransactionHex);
       const Transaction_Hex_2 = appendPostData.TransactionHex;
-      let derived_seed_hex = localStorage.getItem("derived_seed_hex");
+      let derived_seed_hex = localStorage.getItem("derived_seed_hex_popup");
       const signed_transaction_hex = signTransaction(
         derived_seed_hex,
         Transaction_Hex_2
@@ -214,7 +214,7 @@ const MintOperation = ({ submit, setSubmit }) => {
     } else {
       console.log("Submission not completed!");
     }
-    const pub_key = localStorage.getItem("user_key");
+    const pub_key = localStorage.getItem("user_key_popup");
     let royaltyMap = {};
     royaltyMap[`${additionalDESORoyalties.PublicKeyBase58Check}`] =
       parseInt(additionalDESORoyalties.RoyaltyPercent) * 100;
@@ -263,7 +263,7 @@ const MintOperation = ({ submit, setSubmit }) => {
     const TRANSACTION_HEX = create_nft_data.TransactionHex;
     // console.log(TRANSACTION_HEX);
 
-    let derivedKey = localStorage.getItem("derived_pub_key");
+    let derivedKey = localStorage.getItem("derived_pub_key_popup");
 
     const appendExtraDataPayload = {
       TransactionHex: TRANSACTION_HEX,
@@ -287,7 +287,7 @@ const MintOperation = ({ submit, setSubmit }) => {
 
     const Transaction_Hex_2 = appendPostData.TransactionHex;
     // console.log(Transaction_Hex_2);
-    let derived_seed_hex = localStorage.getItem("derived_seed_hex");
+    let derived_seed_hex = localStorage.getItem("derived_seed_hex_popup");
     const signed_transaction_hex = signTransaction(
       derived_seed_hex,
       Transaction_Hex_2
@@ -326,19 +326,19 @@ const MintOperation = ({ submit, setSubmit }) => {
     // reseting the additional states
     setImg("");
     setDesoRoyalty(false);
-    setPlusSign(true)
-    setPutSale(false)
-    setBuyNow(false)
-    setUnlockableBtn(false)
+    setPlusSign(true);
+    setPutSale(false);
+    setBuyNow(false);
+    setUnlockableBtn(false);
     setBodyText("");
-    setIsUnlockable(false)
-    setIsForSale(false)
-    setIsBuyNow(false)
+    setIsUnlockable(false);
+    setIsForSale(false);
+    setIsBuyNow(false);
     setAdditionalDesoRoyalty({
       PublicKeyBase58Check: "",
       RoyaltyPercent: "10",
       Username: "",
-    })
+    });
     // setAdditionalDesoRoyalty(!additionalDESORoyalties);
 
     // const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -419,8 +419,9 @@ const MintOperation = ({ submit, setSubmit }) => {
                     focused
                   ) => (
                     <div
-                      className={`user ${focused ? "focused" : ""
-                        } flex flex-row rounded-xl lato`}
+                      className={`user ${
+                        focused ? "focused" : ""
+                      } flex flex-row rounded-xl lato`}
                     >
                       <div className=" flex flex-row rounded-xl lato">
                         <img
@@ -442,8 +443,9 @@ const MintOperation = ({ submit, setSubmit }) => {
                 {/* Image upload starts here */}
                 <div className={`img-upload`}>
                   <button
-                    className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
-                      } mr-5 scale-75 rounded-full`}
+                    className={`${
+                      Dark ? "darktheme hover:border-orange-300" : "logout"
+                    } mr-5 scale-75 rounded-full`}
                     onClick={handleFileUpload}
                   >
                     <IconContext.Provider value={{ size: "27px" }}>
@@ -472,8 +474,9 @@ const MintOperation = ({ submit, setSubmit }) => {
                     {/* btn */}{" "}
                     <div className={`img-upload select-none`}>
                       <button
-                        className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
-                          } scale-75 rounded-full lato text-xl`}
+                        className={`${
+                          Dark ? "darktheme hover:border-orange-300" : "logout"
+                        } scale-75 rounded-full lato text-xl`}
                         onClick={() => {
                           setNOC(parseInt(NOC + 0) + 1);
                         }}
@@ -483,8 +486,9 @@ const MintOperation = ({ submit, setSubmit }) => {
                     </div>
                     <div className={`img-upload select-none`}>
                       <button
-                        className={`${Dark ? "darktheme hover:border-orange-300" : "logout"
-                          } scale-75 rounded-full lato text-xl`}
+                        className={`${
+                          Dark ? "darktheme hover:border-orange-300" : "logout"
+                        } scale-75 rounded-full lato text-xl`}
                         onClick={() => {
                           setNOC(parseInt(NOC + 0) + 5);
                         }}
@@ -500,8 +504,9 @@ const MintOperation = ({ submit, setSubmit }) => {
             <div>
               <div>
                 <div
-                  className={` ${img === "" ? "border-2" : "border-none"
-                    } w-[10rem] ml- rounded-lg h-[9rem] mt-1`}
+                  className={` ${
+                    img === "" ? "border-2" : "border-none"
+                  } w-[10rem] ml- rounded-lg h-[9rem] mt-1`}
                 >
                   <div
                     className={`mt-11 select-none ml-1 text-xl text-center text-[#a9a9b0]
@@ -514,8 +519,9 @@ placeholder`}
                   <img
                     src={img}
                     alt=""
-                    className={`object-cover w-[11rem] h-[9rem] rounded-lg ${img ? "block" : "hidden"
-                      }`}
+                    className={`object-cover w-[11rem] h-[9rem] rounded-lg ${
+                      img ? "block" : "hidden"
+                    }`}
                   />
                 </div>
               </div>
@@ -526,8 +532,9 @@ placeholder`}
           <div>
             {/* Pricing */}
             <div
-              className={`${Dark ? "border-[#a9a9a9]" : ""
-                } border-b flex-col py-1 px-3`}
+              className={`${
+                Dark ? "border-[#a9a9a9]" : ""
+              } border-b flex-col py-1 px-3`}
             >
               <label className="flex select-none justify-between mt-1 items-center pr-[6rem] ">
                 <span className="text-lg lato -pl-5">Put it on sale:</span>
@@ -578,8 +585,9 @@ placeholder`}
             </div>
             {isForSale ? (
               <div
-                className={`flex-col border-b pl-3 space-y-2 px-3 py-2 ${Dark ? "border-[#a9a9a9]" : ""
-                  }`}
+                className={`flex-col border-b pl-3 space-y-2 px-3 py-2 ${
+                  Dark ? "border-[#a9a9a9]" : ""
+                }`}
               >
                 <div>
                   <label className="flex select-none justify-between text-lg items-center pr-[6rem] ">
@@ -641,8 +649,9 @@ placeholder`}
         <div className="flex-col space-y-2 mt-2">
           {/* Preview Image and Royalty */}
           <div
-            className={`border-b py-1 ${Dark ? "border-[#a9a9a9]" : ""
-              } pb-2 pr-1 pl-3`}
+            className={`border-b py-1 ${
+              Dark ? "border-[#a9a9a9]" : ""
+            } pb-2 pr-1 pl-3`}
           >
             {/* <div className="text-xl">Royalty:</div> */}
             <div className="flex-col space-y-3 text-lg">
@@ -693,14 +702,16 @@ placeholder`}
             </div>
           </div>
           <div
-            className={`flex text-lg flex-col gap-2 justify-center ${buyNow ? "" : "border-b"
-              } p-1 ${Dark ? "border-[#a9a9a9]" : ""} pb-2 pr-1 pl-2`}
+            className={`flex text-lg flex-col gap-2 justify-center ${
+              buyNow ? "" : "border-b"
+            } p-1 ${Dark ? "border-[#a9a9a9]" : ""} pb-2 pr-1 pl-2`}
           >
             <div className="flex gap-2 items-center select-none">
               <div className="lato">Additional DeSo Royalty</div>
               <div
-                className={`${plusSign ? "block" : "hidden"
-                  } cursor-pointer text-2xl mt-0.5 ml-[16.7rem]`}
+                className={`${
+                  plusSign ? "block" : "hidden"
+                } cursor-pointer text-2xl mt-0.5 ml-[16.7rem]`}
                 onClick={() => {
                   setDesoRoyalty(true);
                   setPlusSign(!plusSign);
@@ -709,8 +720,9 @@ placeholder`}
                 <AiOutlinePlusCircle />
               </div>
               <div
-                className={`cursor-pointer scale-150 mt-0.5 ml-[17rem] ${plusSign ? "hidden" : "block"
-                  }`}
+                className={`cursor-pointer scale-150 mt-0.5 ml-[17rem] ${
+                  plusSign ? "hidden" : "block"
+                }`}
                 onClick={() => {
                   setDesoRoyalty(false);
                   setPlusSign(true);
@@ -722,8 +734,9 @@ placeholder`}
             </div>
 
             <div
-              className={`flex items-center p-2 gap-[0.40rem] border border-[#a9a9a9] rounded-lg py-1 ${desoRoyalty ? "block" : "hidden"
-                }`}
+              className={`flex items-center p-2 gap-[0.40rem] border border-[#a9a9a9] rounded-lg py-1 ${
+                desoRoyalty ? "block" : "hidden"
+              }`}
             >
               <div className={`flex flex-col gap-1`}>
                 <div className="flex items-center justify-between w-[34rem]">
@@ -754,11 +767,11 @@ placeholder`}
                       markup="__display__ "
                       data={fetchUsers}
                       onAdd={(id, display) => {
-                        console.log(id)
-                        console.log(display)
+                        console.log(id);
+                        console.log(display);
                         setAdditionalDesoRoyalty({
                           ...additionalDESORoyalties,
-                          PublicKeyBase58Check: `${id.replaceAll('@', '')}`,
+                          PublicKeyBase58Check: `${id.replaceAll("@", "")}`,
                           Username: `${display} `,
                         });
                         console.log(additionalDESORoyalties);
@@ -771,8 +784,9 @@ placeholder`}
                         focused
                       ) => (
                         <div
-                          className={`user ${focused ? "focused" : ""
-                            } flex flex-row rounded-xl lato`}
+                          className={`user ${
+                            focused ? "focused" : ""
+                          } flex flex-row rounded-xl lato`}
                         >
                           <div className=" flex flex-row rounded-xl lato">
                             <div className="p-2 lato">{highlightedDisplay}</div>
@@ -840,10 +854,11 @@ placeholder`}
         </div>
         <div className="right-button flex justify-end mt-3 mb-3">
           <button
-            className={`select-none btn focus:outline-none ${Dark
-              ? "bigbtn-dark hover:border-[#ff7521] "
-              : "bigbtn bg-[#efefef]"
-              }`}
+            className={`select-none btn focus:outline-none ${
+              Dark
+                ? "bigbtn-dark hover:border-[#ff7521] "
+                : "bigbtn bg-[#efefef]"
+            }`}
             onClick={handleMintBtn}
             disabled={loading}
           >

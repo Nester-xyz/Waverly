@@ -1,6 +1,6 @@
 {
-  "name": "Waverly",
-  "description": "A Chrome Extension to post & mint contents on DeSo Blockchain in few simple clicks!",
+  "name": "Waverly - A Decentralized Social App",
+  "description": "A Decentralized Social Chrome Extension App to put contents, mint NFTs on-chain & tip Contents!",
   "version": "2.13",
   "icons": {
     "16": "./favicon_io/favicon-16x16.png",
@@ -9,9 +9,9 @@
   },
   "manifest_version": 3,
   "action": {
-    "default_title": "WaverlyApp - a deso extension",
-    "default_popup": "popup.html"
+    "default_title": "WaverlyApp - a deso extension"
   },
+  "permissions": ["storage", "browserAction", "activeTab", "scripting"],
   "background": {
     "service_worker": "background.js",
     "type": "module"
