@@ -11,24 +11,58 @@
     <title>Waverly - Login With DeSo Derived Keys</title>
   </head>
   <style>
-    .welcome {
+    @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+    .welcome-to {
+      user-select: none;
+      color: #433d3d;
+      font-family: "PT SANS";
       margin-top: 10rem;
-      font-size: 3rem;
+      font-size: 4rem;
       text-align: center;
     }
+    .waverly {
+      color: #ff7521;
+    }
     .login-button {
-      margin: 0;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      -ms-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
+      user-select: none;
+      font-family: "PT Sans", sans-serif;
+      padding: 10px 30px;
+      margin-left: 39%;
+      /* background: #efefef; */
+      border: none;
+      border-radius: 20px;
+      color: #444;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.2rem;
+      text-align: center;
+      outline: none;
+      cursor: pointer;
+      transition: 0.2s ease-in-out;
+      box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.7),
+        -6px -6px 10px rgba(255, 255, 255, 0.5),
+        6px 6px 8px rgba(255, 255, 255, 0.075), 6px 6px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .login-button:hover {
+      box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.6),
+        -2px -2px 4px rgba(255, 255, 255, 0.4),
+        2px 2px 2px rgba(255, 255, 255, 0.05), 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-button:active {
+      box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.7),
+        inset -2px -2px 4px rgba(255, 255, 255, 0.5),
+        inset 2px 2px 2px rgba(255, 255, 255, 0.075),
+        inset 2px 2px 4px rgba(0, 0, 0, 0.15);
     }
   </style>
   <body>
-    <h1 class="welcome">Welcome to Waverly 👋</h1>
-    <div class="login-button">
-      <button id="login-button">Login with DeSo</button>
+    <h1 class="welcome-to">
+      WELCOME TO <span class="waverly">WAVERLY</span> 👋
+    </h1>
+    <div class="login">
+      <button id="login-button" class="login-button">LOGIN WITH DESO</button>
     </div>
     <p id="counter"></p>
     <script type="module" src="welcome.js"></script>

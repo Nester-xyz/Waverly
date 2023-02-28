@@ -201,7 +201,7 @@ const PostOperation = ({ submit, setSubmit }) => {
       .then(callback);
   }
   return (
-    <div>
+    <div className="h-[15rem]">
       <div className="overflow-hidden">
         {/* text area */}
         <div
