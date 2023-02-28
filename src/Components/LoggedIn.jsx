@@ -50,7 +50,7 @@ const LoggedIn = ({
       ) : (
         <div>
           {!submit && (
-            <div className="w-full grid grid-cols-3 gap-10 mt-20 px-5 pb-2 rounded-lg">
+            <div className="w-full grid grid-cols-3 gap-10 mt-20 px-5 rounded-lg">
               <button
                 onClick={() => setActiveTab("post")}
                 className={`select-none

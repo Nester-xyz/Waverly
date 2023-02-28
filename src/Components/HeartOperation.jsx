@@ -233,7 +233,7 @@ const HeartOperation = () => {
         </div>
       </div>
       {/* Submit Button */}
-      <div className="flex justify-between items-center mt-[2.7rem] mr-1">
+      <div className="flex justify-between items-center mt-[2.5rem] mr-1">
         <div className="lato"></div>
         <div className="flex items-center space-x-5">
           <button

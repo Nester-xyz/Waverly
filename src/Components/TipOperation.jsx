@@ -303,7 +303,7 @@ const TipOperations = () => {
         </div>
       </div>
       {/* Submit Button & Calculations */}
-      <div className="flex justify-between items-center mt-3">
+      <div className="flex justify-between items-center mt-2">
         <div className="lato"></div>
         <div className="flex items-center space-x-5">
           <div className="lato select-none">

@@ -270,7 +270,7 @@ const PostOperation = ({ submit, setSubmit }) => {
             />
           </div>
         </div>
-        <div className="mt-3">
+        <div className="mt-2">
           <EmbeddBtn
             visibility={textBoxActive2}
             changeData={setEmbedText}
@@ -279,9 +279,9 @@ const PostOperation = ({ submit, setSubmit }) => {
           />
         </div>
         {/* btn start here */}
-        <div className="buttons  px-5 flex justify-between">
+        <div className="px-5 pb-2 flex justify-between">
           {/* left buttons start here */}
-          <div className="left-buttons -space-x-5 flex">
+          <div className="-space-x-5 flex">
             {/* img upload btn start here */}
             <div className="img-upload">
               <button
@@ -344,10 +344,10 @@ const PostOperation = ({ submit, setSubmit }) => {
             </div>
           </div>
           {/* right buttons start here */}
-          <div className="right-button">
+          <div>
             <button
               onClick={handleSubmitPost}
-              className={`select-none btn focus:outline-none  ${
+              className={`select-none focus:outline-none  ${
                 Dark
                   ? "bigbtn-dark hover:border-[#ff7521] "
                   : "bigbtn bg-[#efefef]"
