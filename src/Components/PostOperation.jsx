@@ -26,8 +26,8 @@ const PostOperation = ({ submit, setSubmit }) => {
   }
 
   async function handleFileUpload() {
-    const JWT = localStorage.getItem("JWT_KEY");
-    const pub_key = localStorage.getItem("user_key");
+    const JWT = localStorage.getItem("jwt_key_popup");
+    const pub_key = localStorage.getItem("user_key_popup");
     try {
       const file = await openFileInput();
       console.log("File selected:", file);
@@ -79,7 +79,7 @@ const PostOperation = ({ submit, setSubmit }) => {
 
   const handleSubmitPost = async () => {
     setSetLoading(true);
-    const pub_key = localStorage.getItem("user_key");
+    const pub_key = localStorage.getItem("user_key_popup");
     let imgURLar = [];
     if (Object.keys(imgURLs).length !== 0) {
       imgURLar = [imgURLs[imgURLs.length - 1].name];
@@ -113,11 +113,10 @@ const PostOperation = ({ submit, setSubmit }) => {
         }
       );
       const submitPostData = await submitPostResponse.json();
-      // console.log(submitPostData);
+      console.log(submitPostData);
       const TRANSACTION_HEX = submitPostData.TransactionHex;
-      // console.log(TRANSACTION_HEX);
-
-      let derivedKey = localStorage.getItem("derived_pub_key");
+      console.log(TRANSACTION_HEX);
+      let derivedKey = localStorage.getItem("derived_pub_key_popup");
 
       const appendExtraDataPayload = {
         TransactionHex: TRANSACTION_HEX,
@@ -137,11 +136,11 @@ const PostOperation = ({ submit, setSubmit }) => {
         }
       );
       const appendPostData = await appendPostResponse.json();
-      // console.log(appendPostData);
+      console.log(appendPostData);
 
       // console.log(appendPostData.TransactionHex);
       const Transaction_Hex_2 = appendPostData.TransactionHex;
-      let derived_seed_hex = localStorage.getItem("derived_seed_hex");
+      let derived_seed_hex = localStorage.getItem("derived_seed_hex_popup");
       const signed_transaction_hex = signTransaction(
         derived_seed_hex,
         Transaction_Hex_2
@@ -202,7 +201,7 @@ const PostOperation = ({ submit, setSubmit }) => {
       .then(callback);
   }
   return (
-    <div>
+    <div className="h-[15rem]">
       <div className="overflow-hidden">
         {/* text area */}
         <div
@@ -271,7 +270,7 @@ const PostOperation = ({ submit, setSubmit }) => {
             />
           </div>
         </div>
-        <div className="mt-3">
+        <div className="mt-2">
           <EmbeddBtn
             visibility={textBoxActive2}
             changeData={setEmbedText}
@@ -280,9 +279,9 @@ const PostOperation = ({ submit, setSubmit }) => {
           />
         </div>
         {/* btn start here */}
-        <div className="buttons mt-2 px-5 flex justify-between">
+        <div className="px-5 pb-2 flex justify-between">
           {/* left buttons start here */}
-          <div className="left-buttons -space-x-5 flex">
+          <div className="-space-x-5 flex">
             {/* img upload btn start here */}
             <div className="img-upload">
               <button
@@ -345,10 +344,10 @@ const PostOperation = ({ submit, setSubmit }) => {
             </div>
           </div>
           {/* right buttons start here */}
-          <div className="right-button">
+          <div>
             <button
               onClick={handleSubmitPost}
-              className={`select-none btn focus:outline-none  ${
+              className={`select-none focus:outline-none  ${
                 Dark
                   ? "bigbtn-dark hover:border-[#ff7521] "
                   : "bigbtn bg-[#efefef]"

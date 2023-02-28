@@ -37,7 +37,6 @@ const HeartOperation = () => {
         console.log(public_key);
         const delay = (ms) => new Promise((res) => setTimeout(res, ms));
         await delay(2000);
-
       } catch (error) {
         setIsUsername(false);
         setLoading(false);
@@ -51,7 +50,7 @@ const HeartOperation = () => {
     // fetch posthash hex of numberofpost to an array
     const deso = new Deso();
     const no_of_posts = Number(numberOfPost);
-    const reader_pub_key = localStorage.getItem("user_key");
+    const reader_pub_key = localStorage.getItem("user_key_popup");
     const reading_pub_key = public_key;
     const request = {
       PublicKeyBase58Check: reading_pub_key,
@@ -63,7 +62,6 @@ const HeartOperation = () => {
       postHexes.push(response.Posts[i].PostHashHex);
     }
     // cool got the hexes here
-
   }
   let seed;
   let senderPubKey;
@@ -75,11 +73,11 @@ const HeartOperation = () => {
       await getProfile();
       // fetch post of user
       await fetchPosts();
-      seed = localStorage.getItem("derived_seed_hex");
-      senderPubKey = localStorage.getItem("user_key");
-      derived_pub_key = localStorage.getItem("derived_pub_key");
+      seed = localStorage.getItem("derived_seed_hex_popup");
+      senderPubKey = localStorage.getItem("user_key_popup");
+      derived_pub_key = localStorage.getItem("derived_pub_key_popup");
       // send diamonds required data posthash hex collection array of no of Posts to fetch
-      localStorage.setItem("postLen", '0');
+      localStorage.setItem("postLen", "0");
       localStorage.setItem("postLen", numberOfPost.toString());
       setIsUsername(true);
       chrome.runtime.sendMessage({
@@ -133,10 +131,10 @@ const HeartOperation = () => {
     setLoading(true);
     setIsUsername(true);
     setUsername("Wait...");
-    const postLen = localStorage.getItem("postLen")
-    setNumberOfPost(postLen)
+    const postLen = localStorage.getItem("postLen");
+    setNumberOfPost(postLen);
     if (postLen == message.message) {
-      setLoading(false)
+      setLoading(false);
       setUsername("");
       setIsUsername(false);
       setNumberOfPost(10);
@@ -188,8 +186,9 @@ const HeartOperation = () => {
                 focused
               ) => (
                 <div
-                  className={`user ${focused ? "focused" : ""
-                    } flex flex-row rounded-xl lato`}
+                  className={`user ${
+                    focused ? "focused" : ""
+                  } flex flex-row rounded-xl lato`}
                 >
                   <div className=" flex  flex-row rounded-xl lato">
                     <img
@@ -234,14 +233,15 @@ const HeartOperation = () => {
         </div>
       </div>
       {/* Submit Button */}
-      <div className="flex justify-between items-center mt-[2.7rem] mr-1">
+      <div className="flex justify-between items-center mt-[2.5rem] mr-1">
         <div className="lato"></div>
         <div className="flex items-center space-x-5">
           <button
-            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${Dark
-              ? "bigbtn-dark hover:border-[#ff7521] "
-              : "bigbtn bg-[#efefef]"
-              }`}
+            className={`select-none focus:outline-none bg-[#efefef]  mt-2 ${
+              Dark
+                ? "bigbtn-dark hover:border-[#ff7521] "
+                : "bigbtn bg-[#efefef]"
+            }`}
             onClick={handleHeartButton}
             disabled={loading}
           >
