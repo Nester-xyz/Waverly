@@ -17,6 +17,7 @@ const handleLogin = async () => {
   };
   const user = await deso.identity.derive(derivePayload);
   console.log(user);
+  document.getElementById("counter").innerHTML = "Closing in few seconds...";
   const authorizePayload = {
     OwnerPublicKeyBase58Check: user.publicKeyBase58Check,
     DerivedPublicKeyBase58Check: user.derivedPublicKeyBase58Check,
