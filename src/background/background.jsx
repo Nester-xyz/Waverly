@@ -1,4 +1,3 @@
-import { signTransaction } from "deso-protocol/src/lib/utils/Utils";
 chrome.runtime.onInstalled.addListener(function () {
   chrome.tabs.create({ url: "./welcome.html" });
 });

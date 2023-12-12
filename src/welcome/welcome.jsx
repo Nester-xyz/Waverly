@@ -1,77 +1,65 @@
-import Deso from "deso-protocol";
-import { signTransaction } from "deso-protocol/src/lib/utils/Utils.js";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { identity } from "deso-protocol";
 
-const handleLogin = async () => {
-  const deso = new Deso();
-  const derivePayload = {
-    transactionSpendingLimitResponse: {
-      GlobalDESOLimit: 10 * 1e9,
-      TransactionCountLimitMap: {
-        BASIC_TRANSFER: 100000000000,
-        AUTHORIZE_DERIVED_KEY: 2,
-        SUBMIT_POST: 100000000000,
-        CREATE_NFT: 100000000000,
-        LIKE: 100000000000,
-      },
-    },
-  };
-  const user = await deso.identity.derive(derivePayload);
-  console.log(user);
-  document.getElementById("counter").innerHTML = "Closing in few seconds...";
-  const authorizePayload = {
-    OwnerPublicKeyBase58Check: user.publicKeyBase58Check,
-    DerivedPublicKeyBase58Check: user.derivedPublicKeyBase58Check,
-    ExpirationBlock: user.expirationBlock,
-    AccessSignature: user.accessSignature,
-    DeleteKey: false,
-    DerivedKeySignature: true,
-    transactionSpendingLimitHex: user.transactionSpendingLimitHex,
-    MinFeeRateNanosPerKB: 1000,
-  };
-  const authorizeResponse = await fetch(
-    `https://node.deso.org/api/v0/authorize-derived-key`,
-    {
-      method: "POST",
-      body: JSON.stringify(authorizePayload),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
+const Welcome = () => {
+  return (
+    <>
+      <style>{`
+        .welcome-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          background-color: #f3f4f6;
+        }
+
+        .welcome-title {
+          font-size: 2rem;
+          font-weight: bold;
+          color: #2d3748;
+          margin-bottom: 2rem;
+        }
+
+        .login-container {
+          background-color: white;
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+          padding: 2rem;
+          border-radius: 0.5rem;
+          margin-bottom: 1rem;
+        }
+
+        .login-button {
+          background-color: #4299e1;
+          color: white;
+          font-weight: bold;
+          padding: 0.5rem 1rem;
+          border-radius: 0.25rem;
+          transition: background-color 0.3s;
+        }
+
+        .login-button:hover {
+          background-color: #2b6cb0;
+        }
+      `}</style>
+      <div className="welcome-container">
+        <h1 className="welcome-title">Welcome to WaverlyApp</h1>
+        <div className="login-container">
+          <button className="login-button" onClick={() => identity.login()}>
+            Login/Signup
+          </button>
+        </div>
+      </div>
+    </>
   );
-  const authorizeData = await authorizeResponse.json();
-  console.log(authorizeData);
-  const txHex = authorizeData.TransactionHex;
-  const seedHex = user.derivedSeedHex;
-  const signedTransactionHex = signTransaction(seedHex, txHex);
-  const submitPayload = {
-    TransactionHex: signedTransactionHex,
-  };
-  const submitResponse = await fetch(
-    `https://node.deso.org/api/v0/submit-transaction`,
-    {
-      method: "POST",
-      body: JSON.stringify(submitPayload),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  const submitData = await submitResponse.json();
-  console.log(submitData);
-  chrome.storage.local.set({
-    derived_pub_key: user.derivedPublicKeyBase58Check,
-    derived_seed_hex: user.derivedSeedHex,
-    user_key: user.publicKeyBase58Check,
-    jwt_key: user.jwt,
-  });
-
-  if (chrome && chrome.action && chrome.action.setPopup) {
-    chrome.action.setPopup({ popup: "popup.html" });
-  } else {
-    console.error("Error: browserAction API is not available");
-  }
-  window.close();
 };
 
-document.getElementById("login-button").addEventListener("click", handleLogin);
+const rootElement = document.getElementById("root");
+if (rootElement) {
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+      <Welcome />
+    </React.StrictMode>
+  );
+}

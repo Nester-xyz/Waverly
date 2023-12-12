@@ -10,7 +10,6 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { MentionsInput, Mention } from "react-mentions";
 import defaultStyle from "./default";
-import { signTransaction } from "deso-protocol/src/lib/utils/Utils";
 const MintOperation = ({ submit, setSubmit }) => {
   const [data, setData] = useState({
     title: "",

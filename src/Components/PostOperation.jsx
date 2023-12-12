@@ -9,7 +9,6 @@ import EmbeddBtn from "./EmbeddBtn";
 import { Puff } from "react-loading-icons";
 import { MdOutlineCancel } from "react-icons/md";
 import { MentionsInput, Mention } from "react-mentions";
-import { signTransaction } from "deso-protocol/src/lib/utils/Utils";
 import defaultStyle from "./default.js";
 const PostOperation = ({ submit, setSubmit }) => {
   const [imgURLs, setImgURLs] = useState([]);

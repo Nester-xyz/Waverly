@@ -2,76 +2,23 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="script-src 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' http://localhost:* http://127.0.0.1:*"
-    />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Waverly - Login With DeSo Derived Keys</title>
+    <title>Login/Signup</title>
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- roberto mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- cabin font --google font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
-    .welcome-to {
-      user-select: none;
-      color: #433d3d;
-      font-family: "PT SANS";
-      margin-top: 10rem;
-      font-size: 4rem;
-      text-align: center;
-    }
-    .waverly {
-      color: #ff7521;
-    }
-    .login-button {
-      user-select: none;
-      font-family: "PT Sans", sans-serif;
-      padding: 10px 30px;
-      margin-left: 42%;
-      /* background: #efefef; */
-      border: none;
-      border-radius: 20px;
-      color: #444;
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: 0.2rem;
-      text-align: center;
-      outline: none;
-      cursor: pointer;
-      transition: 0.2s ease-in-out;
-      box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.7),
-        -6px -6px 10px rgba(255, 255, 255, 0.5),
-        6px 6px 8px rgba(255, 255, 255, 0.075), 6px 6px 10px rgba(0, 0, 0, 0.15);
-    }
-
-    .login-button:hover {
-      box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.6),
-        -2px -2px 4px rgba(255, 255, 255, 0.4),
-        2px 2px 2px rgba(255, 255, 255, 0.05), 2px 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .login-button:active {
-      box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.7),
-        inset -2px -2px 4px rgba(255, 255, 255, 0.5),
-        inset 2px 2px 2px rgba(255, 255, 255, 0.075),
-        inset 2px 2px 4px rgba(0, 0, 0, 0.15);
-    }
-    .counter {
-      margin-top: 3%;
-      color: #ff7521;
-      text-align: center;
-      opacity: 90%;
-    }
-  </style>
   <body>
-    <h1 class="welcome-to">
-      WELCOME TO <span class="waverly">WAVERLY</span> 👋
-    </h1>
-    <div class="login">
-      <button id="login-button" class="login-button">GET STARTED</button>
-    </div>
-      <h1 id="counter" class="counter"></h1>
-    </div>
-    <script type="module" src="welcome.js"></script>
+    <div id="root"></div>
+    <script type="module" src="./welcome.js"></script>
   </body>
 </html>
