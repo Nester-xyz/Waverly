@@ -1,8 +1,44 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { identity } from "deso-protocol";
+import { configure } from "deso-protocol";
+
+configure({
+  spendingLimitOptions: {
+    GlobalDESOLimit: 1 * 1e9,
+    TransactionCountLimitMap: {
+      BASIC_TRANSFER: "UNLIMITED",
+      SUBMIT_POST: "UNLIMITED",
+      CREATE_NFT: "UNLIMITED",
+    },
+  },
+});
 
 const Welcome = () => {
+  const handleLogin = async () => {
+    try {
+      await identity
+        .login()
+        .then((data) => {
+          console.log(data);
+          chrome.storage.local.set({
+            derived_pub_key: data.derivedPublicKeyBase58Check,
+            user_key: data.publicKeyBase58Check,
+            jwt_key: data.jwt,
+          });
+          if (chrome && chrome.action && chrome.action.setPopup) {
+            chrome.action.setPopup({ popup: "popup.html" });
+          }
+        })
+        .catch((error) => {
+          console.error("Error logging in:", error);
+        });
+    } catch (error) {
+      console.error("Error in handleLogin function:", error);
+    }
+    // window.close();
+  };
+
   return (
     <>
       <style>{`
@@ -46,7 +82,7 @@ const Welcome = () => {
       <div className="welcome-container">
         <h1 className="welcome-title">Welcome to WaverlyApp</h1>
         <div className="login-container">
-          <button className="login-button" onClick={() => identity.login()}>
+          <button className="login-button" onClick={handleLogin}>
             Login/Signup
           </button>
         </div>

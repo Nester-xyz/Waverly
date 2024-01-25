@@ -5,11 +5,17 @@ import darkimg from "../img/waverlydark.png";
 import { FiSettings } from "react-icons/fi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
-import Deso from "deso-protocol";
+import {
+  getSingleProfile,
+  publicKeyToBase58Check,
+  identity,
+} from "deso-protocol";
+import axios from "axios";
 
 function Nav({ setSettingActive, menuActive, setMenuActive }) {
   // change this accordingly. Make it props or whatever you wish
   const [modalOpen, setModalOpen] = useState(false);
+  const [pubKey, setPubKey] = useState("");
   const { Dark, setDark } = useContext(WaverlyContext);
   const [username, setUsername] = useState("Waverly");
   const [profile, setProfile] = useState(
@@ -24,6 +30,8 @@ function Nav({ setSettingActive, menuActive, setMenuActive }) {
       }
     }
     chrome.storage.local.get("user_key", function (result) {
+      console.log(result);
+      setPubKey(result.user_key);
       localStorage.setItem("user_key_popup", result.user_key);
     });
     chrome.storage.local.get("jwt_key", function (result) {
@@ -54,32 +62,6 @@ function Nav({ setSettingActive, menuActive, setMenuActive }) {
       console.error(error);
     }
   };
-  async function getProfileImage() {
-    try {
-      const pub_key = localStorage.getItem("user_key_popup");
-      const deso = new Deso();
-      const request1 = {
-        PublicKeyBase58Check: pub_key,
-      };
-      const response1 = await deso.user.getSingleProfile(request1);
-      const request2 = pub_key;
-      const response2 = await deso.user.getSingleProfilePicture(request2);
-      setUsername(response1.Profile.Username);
-      if (response1.Profile.ExtraData != null) {
-        if (response1.Profile.ExtraData.NFTProfilePictureUrl != null) {
-          setProfile(response1.Profile.ExtraData.NFTProfilePictureUrl);
-        } else {
-          setProfile(response2);
-        }
-      } else {
-        setProfile(response2);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  getProfileImage();
 
   return (
     <div className={`absolute w-[40rem] ${!Dark ? "navbar" : "darknav"}`}>
@@ -99,7 +81,7 @@ function Nav({ setSettingActive, menuActive, setMenuActive }) {
             onMouseLeave={() => setModalOpen(false)}
           >
             <img
-              src={profile}
+              src={`https://node.deso.org/api/v0/get-single-profile-picture/${pubKey}?fallback=https://diamondapp.com/assets/img/default-profile-pic.png`}
               className={`${
                 Dark ? "profile-dark" : "logout"
               } select-none w-11 h-11 rounded-full  mr-5 scale-90`}

@@ -1,8 +1,9 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlPlugin = require('html-webpack-plugin');
 const tailwindcss = require('tailwindcss');
 const autoprefixer = require('autoprefixer');
+const webpack = require("webpack")
 
 module.exports = {
     mode: "development",
@@ -11,12 +12,6 @@ module.exports = {
         popup: path.resolve('./src/popup/popup.jsx'),
         background: path.resolve('./src/background/background.jsx'),
         welcome: path.resolve('/src/welcome/welcome.jsx')
-    },
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: '[name].js',
-        chunkFilename: 'chunks/[name].[contenthash].js',
-        clean: true,
     },
     module: {
         rules: [
@@ -61,11 +56,12 @@ module.exports = {
                 }
             ]
         }),
-        new HtmlWebpackPlugin({
-            template: './src/static/welcome.html',
-            filename: 'welcome.html',
-            chunks: ['main'],
-        }),
+        new HtmlPlugin({
+            title: "WaverlyApp",
+            filename: "popup.html",
+            chunks: ['popup']
+        }
+        )
     ],
     resolve: {
         modules: ['node_modules'],

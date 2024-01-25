@@ -1,7 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { WaverlyContext } from "../Contexts/WaverlyContext";
 import SubmitPost from "./SubmitPost";
-import Deso from "deso-protocol";
+import axios from "axios";
+import { submitPost, getProfiles, signTransaction } from "deso-protocol";
 import { RiImageAddFill } from "react-icons/ri";
 import { IconContext } from "react-icons";
 import { ImEmbed } from "react-icons/im";
@@ -86,7 +87,7 @@ const PostOperation = ({ submit, setSubmit }) => {
     // for mention manip
     let res1 = bodyText.replace(/{{@/g, "@");
     let res2 = res1.replace(/}}/g, "");
-    const submitPostPayload = {
+    const txInfo = await submitPost({
       UpdaterPublicKeyBase58Check: pub_key,
       BodyObj: {
         Body: `${res2} \n\n Posted via @waverlyapp`,
@@ -99,101 +100,118 @@ const PostOperation = ({ submit, setSubmit }) => {
       IsHidden: false,
       MinFeeRateNanosPerKB: 1700,
       InTutorial: false,
-    };
-    if (bodyText.length !== 0 || Object.keys(imgURLs).length !== 0) {
-      const submitPostResponse = await fetch(
-        `https://node.deso.org/api/v0/submit-post`,
-        {
-          method: "POST",
-          body: JSON.stringify(submitPostPayload),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const submitPostData = await submitPostResponse.json();
-      console.log(submitPostData);
-      const TRANSACTION_HEX = submitPostData.TransactionHex;
-      console.log(TRANSACTION_HEX);
-      let derivedKey = localStorage.getItem("derived_pub_key_popup");
+    });
+    console.log(txInfo);
+    // const submitPostPayload = {
+    //   UpdaterPublicKeyBase58Check: pub_key,
+    //   BodyObj: {
+    //     Body: `${res2} \n\n Posted via @waverlyapp`,
+    //     VideoURLs: [],
+    //     ImageURLs: imgURLar,
+    //   },
+    //   PostExtraData: {
+    //     EmbedVideoURL: embedText,
+    //   },
+    //   IsHidden: false,
+    //   MinFeeRateNanosPerKB: 1700,
+    //   InTutorial: false,
+    // };
+    // if (bodyText.length !== 0 || Object.keys(imgURLs).length !== 0) {
+    //   const submitPostResponse = await fetch(
+    //     `https://node.deso.org/api/v0/submit-post`,
+    //     {
+    //       method: "POST",
+    //       body: JSON.stringify(submitPostPayload),
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   );
+    //   const submitPostData = await submitPostResponse.json();
+    //   console.log(submitPostData);
+    //   const TRANSACTION_HEX = submitPostData.TransactionHex;
+    //   console.log(TRANSACTION_HEX);
+    //   let derivedKey = localStorage.getItem("derived_pub_key_popup");
 
-      const appendExtraDataPayload = {
-        TransactionHex: TRANSACTION_HEX,
-        ExtraData: {
-          DerivedPublicKey: derivedKey,
-        },
-      };
+    //   const appendExtraDataPayload = {
+    //     TransactionHex: TRANSACTION_HEX,
+    //     ExtraData: {
+    //       DerivedPublicKey: derivedKey,
+    //     },
+    //   };
 
-      const appendPostResponse = await fetch(
-        `https://node.deso.org/api/v0/append-extra-data`,
-        {
-          method: "POST",
-          body: JSON.stringify(appendExtraDataPayload),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const appendPostData = await appendPostResponse.json();
-      console.log(appendPostData);
+    //   const appendPostResponse = await fetch(
+    //     `https://node.deso.org/api/v0/append-extra-data`,
+    //     {
+    //       method: "POST",
+    //       body: JSON.stringify(appendExtraDataPayload),
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   );
+    //   const appendPostData = await appendPostResponse.json();
+    //   console.log(appendPostData);
 
-      // console.log(appendPostData.TransactionHex);
-      const Transaction_Hex_2 = appendPostData.TransactionHex;
-      let derived_seed_hex = localStorage.getItem("derived_seed_hex_popup");
-      const signed_transaction_hex = signTransaction(
-        derived_seed_hex,
-        Transaction_Hex_2
-      );
+    //   // console.log(appendPostData.TransactionHex);
+    //   const Transaction_Hex_2 = appendPostData.TransactionHex;
+    //   let derived_seed_hex = localStorage.getItem("derived_seed_hex_popup");
+    //   const signed_transaction_hex = signTransaction(
+    //     derived_seed_hex,
+    //     Transaction_Hex_2
+    //   );
 
-      const submit_transaction_payload = {
-        TransactionHex: signed_transaction_hex,
-      };
+    //   const submit_transaction_payload = {
+    //     TransactionHex: signed_transaction_hex,
+    //   };
 
-      const submit_transaction_response = await fetch(
-        `https://node.deso.org/api/v0/submit-transaction
-      `,
-        {
-          method: "POST",
-          body: JSON.stringify(submit_transaction_payload),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const submit_transaction_data = await submit_transaction_response.json();
-      console.log(submit_transaction_data);
+    //   const submit_transaction_response = await fetch(
+    //     `https://node.deso.org/api/v0/submit-transaction
+    //   `,
+    //     {
+    //       method: "POST",
+    //       body: JSON.stringify(submit_transaction_payload),
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   );
+    //   const submit_transaction_data = await submit_transaction_response.json();
+    //   console.log(submit_transaction_data);
 
-      setSubmitResponse(submit_transaction_data);
-      setSetLoading(false);
-      setBodyText("");
-      setImgURLs([]);
-      setDivImg("");
-      setSubmit(true);
-      setEmbedText("");
-    }
+    setSubmitResponse(submit_transaction_data);
+    setSetLoading(false);
+    setBodyText("");
+    setImgURLs([]);
+    setDivImg("");
+    setSubmit(true);
+    setEmbedText("");
   };
   async function fetchUsers(query, callback) {
     console.log(query);
     if (!query) return;
-    const deso = new Deso();
     const request = {
       UsernamePrefix: query,
       OrderBy: "influencer_coin_price",
       NumToFetch: 4,
     };
-    await deso.user
-      .getProfiles(request)
+    await getProfiles(request)
       .then((response) =>
         response.ProfilesFound.map((user) => ({
           display: user.Username,
           id: `@${user.Username}`,
-          image: function () {
-            const request = user.PublicKeyBase58Check;
-            const response = deso.user.getSingleProfilePicture(request);
-            return (
-              response +
-              "?fallback=https://diamondapp.com/assets/img/default-profile-pic.png"
-            );
+          image: async () => {
+            try {
+              console.log(user.PublicKeyBase58Check);
+              await getSingleProfilePicture(user.PublicKeyBase58Check);
+              return (
+                response +
+                "?fallback=https://diamondapp.com/assets/img/default-profile-pic.png"
+              );
+            } catch (error) {
+              console.error("Error fetching profile picture:", error);
+              return "https://diamondapp.com/assets/img/default-profile-pic.png"; // Fallback image
+            }
           },
         }))
       )
